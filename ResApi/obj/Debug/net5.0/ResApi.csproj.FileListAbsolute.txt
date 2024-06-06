@@ -1,0 +1,7 @@
+C:\Users\ardit\source\repos\ResApi\ResApi\obj\Debug\net5.0\ResApi.csproj.AssemblyReference.cache
+C:\Users\ardit\source\repos\ResApi\ResApi\obj\Debug\net5.0\ResApi.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ardit\source\repos\ResApi\ResApi\obj\Debug\net5.0\ResApi.AssemblyInfoInputs.cache
+C:\Users\ardit\source\repos\ResApi\ResApi\obj\Debug\net5.0\ResApi.AssemblyInfo.cs
+C:\Users\ardit\source\repos\ResApi\ResApi\obj\Debug\net5.0\ResApi.csproj.CoreCompileInputs.cache
+C:\Users\ardit\source\repos\ResApi\ResApi\obj\Debug\net5.0\ResApi.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\ardit\source\repos\ResApi\ResApi\obj\Debug\net5.0\ResApi.MvcApplicationPartsAssemblyInfo.cache
