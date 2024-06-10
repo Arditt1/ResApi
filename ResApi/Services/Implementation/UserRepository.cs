@@ -6,29 +6,28 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 using ResApi.Services.Implementation;
-using System.Data.Entity;
 using Microsoft.EntityFrameworkCore;
-using System.Data.Entity.Infrastructure;
+
 
 namespace ResApi.Services
 {
-    public class UserRepository : Repository<DefOperator>, IUserRepository
+    public class UserRepository : Repository<Employee>, IUserRepository
     {
-        private readonly ILogger<DefOperator> logger;
+        private readonly ILogger<Employee> logger;
 
-        public UserRepository(IDbContextFactory dbContextFactory, ILogger<DefOperator> logger) : base(dbContextFactory, logger)
+        public UserRepository(IDbContextFactory dbContextFactory, ILogger<Employee> logger) : base(dbContextFactory, logger)
         {
             this.logger = logger;
         }
 
-        public async Task<DataResponse<DefOperator>> Authenticate(AuthenticateUserDto authenticateRequest, bool isEmailConfirmationMode)
+        public async Task<DataResponse<Employee>> Authenticate(AuthenticateUserDto authenticateRequest)
         {
-            var result = new DataResponse<DefOperator> { Data = null, Succeeded = false };
+            var result = new DataResponse<Employee> { Data = null, Succeeded = false };
 
             try
             {
-                var entity = await DbContext.DefOperator
-                   .FirstOrDefaultAsync(x => x.Email == authenticateRequest.Username);
+                var entity = await DbContext.Employee
+                   .FirstOrDefaultAsync(x => x.Username == authenticateRequest.Username);
 
                 if (entity == null)
                 {
@@ -37,14 +36,16 @@ namespace ResApi.Services
                     return result;
                 }
 
-                if (isEmailConfirmationMode && !entity.ConfirmedMail)
+                if (!entity.Status)
                 {
                     result.ResponseCode = EDataResponseCode.ProfileNotActive;
                     result.ErrorMessage = "Profili nuk është aktiv";// "Profile is not active";
                     return result;
                 }
 
-                if (!VerifyPassword(authenticateRequest.Password, entity.PasswordHash, entity.PasswordSalt))
+                var entity_pass = await DbContext.Employee
+                    .FirstOrDefaultAsync(x => x.Password == entity.Password);
+                if (entity_pass == null)
                 {
                     result.ResponseCode = EDataResponseCode.NoDataFound;
                     result.ErrorMessage = "Emri I perdoruesit ose fjalekalimi qe keni future eshte I pavlefshem";// "You have entered an invalid username or password";
@@ -64,14 +65,14 @@ namespace ResApi.Services
             }
         }
 
-        public async Task<DataResponse<bool>> ChangePassword(string email, string newPassword)
+        public async Task<DataResponse<bool>> ChangePassword(string username, string newPassword)
         {
             var result = new DataResponse<bool> { Data = false, Succeeded = false };
 
             try
             {
-                var entity = await DbContext.DefOperator
-                   .FirstOrDefaultAsync(x => x.Email == email);
+                var entity = await DbContext.Employee
+                   .FirstOrDefaultAsync(x => x.Username == username);
 
                 if (entity == null)
                 {
@@ -80,11 +81,7 @@ namespace ResApi.Services
                     return result;
                 }
 
-                byte[] passwordHash, passwordSalt;
-                CreatePasswordHash(newPassword, out passwordHash, out passwordSalt);
-
-                entity.PasswordHash = passwordHash;
-                entity.PasswordSalt = passwordSalt;
+                entity.Password = newPassword;
 
                 var changedEntity = await this.UpdateEntity(entity);
 
@@ -110,57 +107,26 @@ namespace ResApi.Services
             }
         }
 
-        public bool VerifyPassword(string password, byte[] passwordHash, byte[] passwordSalt)
+        public async Task<bool> CheckUserExists(string username)
         {
-            using (var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt))
-            {
-                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password)); // Create hash using password salt.
-                for (int i = 0; i < computedHash.Length; i++)
-                { // Loop through the byte array
-                    if (computedHash[i] != passwordHash[i]) return false; // if mismatch
-                }
-            }
-            return true; //if no mismatches.
+            return await DbContext.Employee
+                   .AnyAsync(x => x.Username == username && x.Status);
         }
 
-        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
-        {
-            using (var hmac = new System.Security.Cryptography.HMACSHA512())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-            }
-        }
+        //public async Task<Employee> GetByUsername(string username)
+        //{
+        //    return await DbContext.Employee
+        //        .FirstOrDefaultAsync(x => x.Username == username);
+        //}
 
-        public async Task<bool> CheckUserExists(string email)
+        public async Task<DataResponse<Employee>> Login(string username)
         {
-            return await DbContext.DefOperator
-                   .AnyAsync(x => x.Email == email);
-        }
-
-        public async Task<DefOperator> GetByEmail(string email)
-        {
-            return await DbContext.DefOperator
-                .FirstOrDefaultAsync(x => x.Email == email);
-        }
-
-        public async Task<DefOperator> GetByCodeAndEmail(string verificationCode, string email)
-        {
-            return await DbContext.DefOperator
-                .FirstOrDefaultAsync(x => x.Email == email
-                                          && !string.IsNullOrEmpty(x.VerificationCode)
-                                          && x.VerificationCode == verificationCode
-                                          && !x.ConfirmedMail);
-        }
-
-        public async Task<DataResponse<DefOperator>> Login(string email)
-        {
-            var result = new DataResponse<DefOperator> { Data = null, Succeeded = false };
+            var result = new DataResponse<Employee> { Data = null, Succeeded = false };
 
             try
             {
-                var entity = await DbContext.DefOperator
-                   .FirstOrDefaultAsync(x => x.Email == email && x.ConfirmedMail);
+                var entity = await DbContext.Employee
+                   .FirstOrDefaultAsync(x => !(x.Username != username));
 
                 if (entity == null)
                 {
@@ -169,7 +135,7 @@ namespace ResApi.Services
                     return result;
                 }
 
-                if (!entity.ConfirmedMail)
+                if (!entity.Status)
                 {
                     result.ResponseCode = EDataResponseCode.ProfileNotActive;
                     result.ErrorMessage = "Profili nuk është aktiv";// "Profile is not active";
@@ -189,11 +155,11 @@ namespace ResApi.Services
             }
         }
 
-        public Task<bool> DeleteNotConfirmedProfiles(int emailConfirmExpirationMinutes)
+        public Task<bool> DeleteEmployee(int Username)
         {
             try
             {
-                DbContext.Database.ExecuteSqlRaw("dbo.DeleteNotConfirmedProfiles @p0", emailConfirmExpirationMinutes);
+                DbContext.Database.ExecuteSqlRaw("dbo.DeleteNotConfirmedProfiles @p0", Username);
             }
             catch (Exception ex)
             {

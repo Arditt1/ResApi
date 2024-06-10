@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using ResApi.Models;
 
 namespace ResApi.Controllers
 {
@@ -68,21 +68,21 @@ namespace ResApi.Controllers
             }
         }
 
-        [HttpPost("updateCustomer")]
-        public async Task<IActionResult> UpdateCustomer([FromBody] CustomerDto model)
+        [HttpPost("updateemployee")]
+        public async Task<IActionResult> UpdateEmployee([FromBody] EmployeeDto model)
         {
             try
             {
-                var response = await _service.UpdateCustomer(model);
+                var response = await _service.UpdateEmployee(model);
                 return Ok(response);
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "UpdateCustomer POST request");
+                _logger.LogError(e, "UpdateEmployee POST request");
                 var errRet = new DataResponse<bool>
                 {
                     Succeeded = false,
-                    ErrorMessage = "Error while updating customer"
+                    ErrorMessage = "Error while updating employee"
                 };
                 return BadRequest(errRet);
             }
@@ -129,11 +129,11 @@ namespace ResApi.Controllers
 
         [HttpGet]
         [Route("login")]
-        public async Task<IActionResult> Login(string email)
+        public async Task<IActionResult> Login(string username)
         {
             try
             {
-                var response = await _service.Login(email);
+                var response = await _service.Login(username);
                 return Ok(response);
             }
             catch (Exception e)

@@ -4,7 +4,6 @@ using System;
 using System.Threading.Tasks;
 using Serilog;
 using Microsoft.EntityFrameworkCore;
-using System.Data.Entity.Infrastructure;
 using ResApi.Models;
 
 namespace ResApi.Services.Implementation

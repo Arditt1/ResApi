@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 
 namespace ResApi.Services.Interface
 {
-    public interface IUserRepository : IRepository<DefOperator>
+    public interface IUserRepository : IRepository<Employee>
     {
-        Task<DataResponse<DefOperator>> Authenticate(AuthenticateUserDto authenticateRequest, bool isEmailConfirmationMode = false);
-        Task<DataResponse<bool>> ChangePassword(string email, string newPassword);
-        Task<bool> CheckUserExists(string email);
-        bool VerifyPassword(string password, byte[] passwordHash, byte[] passwordSalt);
-        Task<DataResponse<DefOperator>> Login(string email);
+        Task<DataResponse<Employee>> Authenticate(AuthenticateUserDto authenticateRequest);
+        Task<DataResponse<bool>> ChangePassword(string Username, string newPassword);
+        Task<bool> CheckUserExists(string Username);
+
+        //Task<bool> GetByUsername(string username);
+        Task<DataResponse<Employee>> Login(string username);
+        Task<bool> DeleteEmployee(int Username);
     }
 }

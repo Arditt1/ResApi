@@ -17,7 +17,7 @@ namespace ResApi.Models
         {
         }
 
-        public virtual DbSet<DefOperator> DefOperator { get; set; }
+        public virtual DbSet<Employee> Employee { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -30,157 +30,55 @@ namespace ResApi.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<DefOperator>(entity =>
+            modelBuilder.Entity<Employee>(entity =>
             {
-                entity.Property(e => e.Address)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
 
-                entity.Property(e => e.Birthdate).HasColumnType("date");
-
-                entity.Property(e => e.ClientId)
-                    .HasMaxLength(30)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+               // entity.Property(e => e.CreatedOn).HasColumnType("datetime");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.PasswordHash)
+                entity.Property(e => e.Surname)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Username)
                     .IsRequired()
                     .IsUnicode(false);
 
-                entity.Property(e => e.PasswordSalt)
+                entity.Property(e => e.Password)
                     .IsRequired()
                     .IsUnicode(false);
 
-                entity.Property(e => e.Place)
+                entity.Property(e => e.ContactInfo)
                     .HasMaxLength(250)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Mob)
-                      .HasMaxLength(50)
-                      .IsUnicode(false);
+                //entity.Property(e => e.Orders)
+                //      .HasMaxLength(50)
+                //      .IsUnicode(false);
 
-                entity.Property(e => e.Email)
-                      .HasMaxLength(150)
-                      .IsUnicode(false);
+                //entity.Property(e => e.AssignedTables)
+                //      .HasMaxLength(150)
+                //      .IsUnicode(false);
 
-                entity.Property(e => e.TipKind)
+                entity.Property(e => e.RoleID)
                     .IsRequired()
                     .HasMaxLength(2)
-                    .IsUnicode(false)
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.Email)
-                      .HasMaxLength(150)
-                      .IsUnicode(false);
-
-                entity.Property(e => e.CustomerId)
-                      .IsUnicode(false);
-
-                entity.Property(e => e.ConfirmedMail)
                     .IsUnicode(false);
+                    //.HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.UpdateOn).HasColumnType("datetime");
+
+                //entity.Property(e => e.EmployeeID)
+                //      .IsUnicode(false);
+
+                entity.Property(e => e.Status)
+                    .IsUnicode(false);
             });
 
-            modelBuilder.Entity<PaymentLog>(entity =>
-            {
-                entity.Property(e => e.User)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.PurchAmount)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Currency)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Req_rnd)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Req_hash)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.OrderId)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.OrgOrderId)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TxnResult)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ErrorMessage)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProcReturnCode)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.AuthCode)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.MaskedPan)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CardHolderName)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ResponseRnd)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ResponseHash)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.PolicyType)
-                    .HasMaxLength(5)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.PolicySubtype)
-                    .HasMaxLength(5)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Policy)
-                      .IsUnicode(false);
-
-                entity.Property(e => e.Created)
-                      .IsUnicode(false);
-
-                entity.Property(e => e.PaymentId)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Token)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.PayerId)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Provider)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-
-            });
 
             OnModelCreatingPartial(modelBuilder);
         }

@@ -1,45 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
-namespace ResApi.Dtos
+namespace ResApi.Models
 {
     public partial class AuthenticateUserDto
     {
-        public int Id { get; set; }
+        public int EmployeeID { get; set; }
         public string Name { get; set; }
-        public string TipKind { get; set; }
-        public string Nipt { get; set; }
-        public string Clientno { get; set; }
         public string Surname { get; set; }
-        public string Sex { get; set; }
-        public string Celphone { get; set; }
-        public string Address { get; set; }
-        public string Place { get; set; }
-        public DateTime? BirthDate { get; set; }
+        public int RoleID { get; set; }
+        public Role Role { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
+        public string ContactInfo { get; set; }
+        public List<Order> Orders { get; set; }
+        public List<TableWaiter> AssignedTables { get; set; }
+        public bool Status { get; set; }
         public string Token { get; set; }
-        public Guid CustomerId { get; set; }
-        public List<NotificationDto> Notifications { get; set; }
 
-        public AuthenticateUserDto(int id, string tipKind, string nipt, string clientNo, string name, string surname, string email, string sex, string celphone, string address, string place, DateTime? birthDate, string token, Guid customerId, List<NotificationDto> notifications)
+        public AuthenticateUserDto(int employeeID, string name, string surname, int roleID, Role role, string username, string password, string contactInfo, List<Order> orders, List<TableWaiter> assignedTables, bool status, string token)
         {
-            Id = id;
-            TipKind = tipKind;
-            Nipt = nipt;
-            Clientno = clientNo;
+            EmployeeID = employeeID;
             Name = name;
             Surname = surname;
-            Username = email;
-            Sex = sex;
-            Celphone = celphone;
-            Address = address;
-            Place = place;
-            BirthDate = birthDate;
+            RoleID = roleID;
+            Role = role;
+            Username = username;
+            Password = password;
+            ContactInfo = contactInfo;
+            Orders = orders;
+            AssignedTables = assignedTables;
+            Status = status;
             Token = token;
-            CustomerId = customerId;
-            Notifications = notifications;
         }
 
         public AuthenticateUserDto()

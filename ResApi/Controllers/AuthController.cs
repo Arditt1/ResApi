@@ -10,7 +10,7 @@ namespace ResApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AuthController : UserController
+    public class AuthController
     {
         private readonly ILogger<AuthController> _logger;
 
@@ -19,40 +19,6 @@ namespace ResApi.Controllers
             _logger = logger;
         }   
 
-        private readonly IMapper _mapper;
 
-        public AuthController(IMapper mapper)
-        {
-            _mapper = mapper;
-        }
-
-        [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterRequest request)
-        {
-            var command = _mapper.Map<RegisterCommand>(request);
-            var authResult = await _mediator.Send(command);
-
-            return authResult.Match(
-                result => Ok(_mapper.Map<AuthenticationResponse>(result)),
-                errors => Problem(errors)
-            );
-        }
-
-        [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginRequest request)
-        {
-            var query = _mapper.Map<LoginQuery>(request);
-            var authResult = await _mediator.Send(query);
-
-            if (authResult.FirstError == Errors.Authentication.InvalidCredential)
-            {
-                return Problem(statusCode: StatusCodes.Status403Forbidden, title: authResult.FirstError.Description);
-            }
-
-            return authResult.Match(
-                result => Ok(_mapper.Map<AuthenticationResponse>(result)),
-                errors => Problem(errors)
-            );
-        }
     }
 }
