@@ -1,15 +1,19 @@
-﻿using System;
+﻿using ResApi.Models.Shared;
 using System.Collections.Generic;
-using System.Text;
-using System.Text.Json.Serialization;
 
 namespace ResApi.Models
 {
-    public partial class Role
+    public partial class Role : BaseEntity
     {
-        public int RoleID { get; set; }
-        public string RoleName { get; set; }
-        public List<Permission_waiter> Permissions { get; set; }
-        public List<Employee> Employees { get; set; }
+        public Role()
+        {
+            Employees = new HashSet<Employee>();
+            Permissions = new HashSet<Permission>();
+        }
+
+        public string? RoleName { get; set; }
+
+        public virtual ICollection<Employee> Employees { get; set; }
+        public virtual ICollection<Permission> Permissions { get; set; }
     }
 }

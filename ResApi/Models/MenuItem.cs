@@ -1,18 +1,21 @@
-﻿using System;
+﻿using ResApi.Models.Shared;
 using System.Collections.Generic;
-using System.Text;
-using System.Text.Json.Serialization;
 
 namespace ResApi.Models
 {
-    public partial class MenuItem
+    public partial class MenuItem : BaseEntity
     {
-        public int MenuItemID { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public decimal Price { get; set; }
-        public int CategoryID { get; set; }
-        public CategoryMenu Category { get; set; }
-        public List<OrderDetail> OrderDetails { get; set; }
+        public MenuItem()
+        {
+            OrderDetails = new HashSet<OrderDetail>();
+        }
+
+        public string? Name { get; set; }
+        public string? Description { get; set; }
+        public decimal? Price { get; set; }
+        public int? CategoryId { get; set; }
+
+        public virtual CategoryMenu? Category { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

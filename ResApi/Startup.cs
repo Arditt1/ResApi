@@ -7,6 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using ResApi.DTA.Intefaces;
+using ResApi.DTA.Services;
+using ResApi.DTA.Services.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +29,18 @@ namespace ResApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddScoped<ICategoryMenu, CategoryMenuService>();
+            //services.AddScoped<IEmployee, EmployeeService>();
+            //services.AddScoped<IMenuItem, MenuItemService>();
+            //services.AddScoped<IOrderDetail, OrderDetailService>();
+            //services.AddScoped<IOrder, OrderService>();
+            //services.AddScoped<IPermission, PermissionService>();
+            //services.AddScoped<IRole, RoleService>();
+            //services.AddScoped<ITable, TableService>();
+            //services.AddScoped<ITableWaiter, TableWaiterService>();
+
+
+            //services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -54,6 +69,8 @@ namespace ResApi
             {
                 endpoints.MapControllers();
             });
+
+            //app.Run();
         }
     }
 }

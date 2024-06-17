@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ardit\\source\\repos\\ResApi\\ResApi\\ResApi.csproj": {}
+    "C:\\Users\\ardit\\Desktop\\Ardit\\ResApi_ab\\ResApi\\ResApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ardit\\source\\repos\\ResApi\\ResApi\\ResApi.csproj": {
+    "C:\\Users\\ardit\\Desktop\\Ardit\\ResApi_ab\\ResApi\\ResApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ardit\\source\\repos\\ResApi\\ResApi\\ResApi.csproj",
+        "projectUniqueName": "C:\\Users\\ardit\\Desktop\\Ardit\\ResApi_ab\\ResApi\\ResApi.csproj",
         "projectName": "ResApi",
-        "projectPath": "C:\\Users\\ardit\\source\\repos\\ResApi\\ResApi\\ResApi.csproj",
+        "projectPath": "C:\\Users\\ardit\\Desktop\\Ardit\\ResApi_ab\\ResApi\\ResApi.csproj",
         "packagesPath": "C:\\Users\\ardit\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ardit\\source\\repos\\ResApi\\ResApi\\obj\\",
+        "outputPath": "C:\\Users\\ardit\\Desktop\\Ardit\\ResApi_ab\\ResApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ardit\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,9 +40,17 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
-            "EntityFramework": {
+            "AutoMapper": {
               "target": "Package",
-              "version": "[6.4.4, )"
+              "version": "[12.0.1, )"
+            },
+            "AutoMapper.Extensions": {
+              "target": "Package",
+              "version": "[2.1.0, )"
+            },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[12.0.1, )"
             },
             "IdentityServer4": {
               "target": "Package",
@@ -53,6 +61,10 @@
               "version": "[5.3.0, )"
             },
             "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[5.0.5, )"
             },

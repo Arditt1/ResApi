@@ -7,6 +7,5 @@
     <Import Project="$(NuGetPackageRoot)system.threading.channels\8.0.0\buildTransitive\netcoreapp2.0\System.Threading.Channels.targets" Condition="Exists('$(NuGetPackageRoot)system.threading.channels\8.0.0\buildTransitive\netcoreapp2.0\System.Threading.Channels.targets')" />
     <Import Project="$(NuGetPackageRoot)system.diagnostics.diagnosticsource\8.0.1\buildTransitive\netcoreapp2.0\System.Diagnostics.DiagnosticSource.targets" Condition="Exists('$(NuGetPackageRoot)system.diagnostics.diagnosticsource\8.0.1\buildTransitive\netcoreapp2.0\System.Diagnostics.DiagnosticSource.targets')" />
     <Import Project="$(NuGetPackageRoot)microsoft.extensions.apidescription.server\3.0.0\build\Microsoft.Extensions.ApiDescription.Server.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.extensions.apidescription.server\3.0.0\build\Microsoft.Extensions.ApiDescription.Server.targets')" />
-    <Import Project="$(NuGetPackageRoot)entityframework\6.4.4\buildTransitive\netcoreapp3.0\EntityFramework.targets" Condition="Exists('$(NuGetPackageRoot)entityframework\6.4.4\buildTransitive\netcoreapp3.0\EntityFramework.targets')" />
   </ImportGroup>
 </Project>

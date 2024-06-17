@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.Json.Serialization;
+﻿using ResApi.Models.Shared;
 
 namespace ResApi.Models
 {
-    public class TableWaiter
+    public partial class TableWaiter : BaseEntity
     {
-        public int TableWaiterID { get; set; }
-        public int TableID { get; set; }
-        public Table Table { get; set; }
-        public int WaiterID { get; set; }
-        public Employee Waiter { get; set; }
+        public int? TableId { get; set; }
+        public int? WaiterId { get; set; }
+
+        public virtual Table? Table { get; set; }
+        public virtual Employee? Waiter { get; set; }
     }
 }
