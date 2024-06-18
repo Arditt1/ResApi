@@ -10,8 +10,8 @@ namespace ResApi.DTA.Intefaces
     public interface IEmployee : IBaseService<Employee>
     {
         Task<DataResponse<EmployeeDTO>> Authenticate(EmployeeDTO model);
-        Task<DataResponse<string>> Register(Employee model);
-        Task<DataResponse<Employee>> UpdateEmployee(Employee model);
+        Task<DataResponse<string>> Register(EmployeeDTO model);
+        Task<DataResponse<string>> UpdateEmployee(EmployeeDTO model);
         Task<DataResponse<bool>> ChangePassword(ChangePasswordDto model, CancellationToken cancellationToken);//DisableEmployee
         Task<DataResponse<bool>> DisableEmployee(DisableEmployeeDTO model, CancellationToken cancellationToken);
     }

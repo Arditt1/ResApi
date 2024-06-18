@@ -71,7 +71,7 @@ namespace ResApi.Controllers
 
         [HttpPost]
         [Route("create")]
-        public async Task<ActionResult<Employee>> CreateEmployee([FromBody] Employee entity, CancellationToken cancellationToken)
+        public async Task<ActionResult<EmployeeDTO>> CreateEmployee([FromBody] EmployeeDTO entity, CancellationToken cancellationToken)
         {
             try
             {
@@ -94,7 +94,7 @@ namespace ResApi.Controllers
 
         [HttpPost]
         [Route("update")]
-        public async Task<ActionResult<Employee>> UpdateEmployee([FromBody] Employee entity, CancellationToken cancellationToken)
+        public async Task<ActionResult<EmployeeDTO>> UpdateEmployee([FromBody] EmployeeDTO entity, CancellationToken cancellationToken)
         {
             try
             {
@@ -102,7 +102,7 @@ namespace ResApi.Controllers
 
                 if (entity1 == null)
                     return BadRequest("No entity was found with the provided ID.");
-                var response = await _emp.UpdateEmployee(entity1);
+                var response = await _emp.UpdateEmployee(entity);
                 await _unitOfWork.Save(cancellationToken);
                 return Ok(response);
             }

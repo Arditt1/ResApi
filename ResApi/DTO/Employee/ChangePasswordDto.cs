@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ResApi.DTO
 {
-    public partial class ChangePasswordDto
+    public class ChangePasswordDto
     {
         public int Id { get; set; }
         public string oldPassword { get; set; }

@@ -75,7 +75,7 @@ namespace ResApi.DTA.Services
 
         }
 
-        public async Task<DataResponse<string>> Register(Employee model)
+        public async Task<DataResponse<string>> Register(EmployeeDTO model)
         {
             var response = new DataResponse<string>() { Succeeded = false, Data = string.Empty };
 
@@ -89,17 +89,7 @@ namespace ResApi.DTA.Services
 
             try
             {
-                Employee employee = new Employee();
-                employee.Name = model.Name;
-                employee.Surname = model.Surname;
-                employee.RoleId = model.RoleId;
-                //employee.Role = model.Role;
-                employee.Username = model.Username;
-                employee.Password = model.Password;
-                //employee.ContactInfo = model.Contact;
-                //employee.Status = model.Status;
-
-                //var entity = _emp.Add(employee);
+                Employee employee = Extentions.AutoMapperProfile.MapForUpdate(model);
                 _emp.Add(employee);
                 // Adding the user to context of users.
                 if (employee != null)
@@ -117,9 +107,9 @@ namespace ResApi.DTA.Services
             return response;
         }
 
-        public async Task<DataResponse<Employee>> UpdateEmployee(Employee model)
+        public async Task<DataResponse<string>> UpdateEmployee(EmployeeDTO model)
         {
-            var response = new DataResponse<Employee>
+            var response = new DataResponse<string>
             {
                 Succeeded = false,
                 ErrorMessage = "Per shkak te arsyeve teknike nuk mund te perditesojme klientin"
@@ -127,7 +117,8 @@ namespace ResApi.DTA.Services
 
             try
             {
-                _emp.Update(model);
+                Employee employee = Extentions.AutoMapperProfile.MapForUpdate(model);
+                _emp.Update(employee);
                 //var entity = _repository.Update(employee); // Update the user to context of users.
                 //if (entity != null)
                 //{
@@ -158,7 +149,7 @@ namespace ResApi.DTA.Services
             {
                 if (model.newPassword == model.confirmNewPassword)
                 {
-                    var resultChange = await _emp.UpdateEmployee(user);
+                    _emp.Update(user);
                     response.Succeeded = true;
                     return response;
                 }
@@ -188,7 +179,7 @@ namespace ResApi.DTA.Services
             
                 if (user != null)
                 {
-                    var resultChange = await _emp.UpdateEmployee(user);
+                    _emp.Update(user);
                     response.Succeeded = true;
                     return response;
                 }
