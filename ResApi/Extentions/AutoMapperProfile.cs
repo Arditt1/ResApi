@@ -6,9 +6,11 @@ namespace ResApi.Extentions
 {
     public class AutoMapperProfile : Profile
     {
-        public AutoMapperProfile()
-        {
+        private readonly IMapper _mapper;
 
+        public AutoMapperProfile(IMapper mapper)
+        {
+            _mapper = mapper;
         }
 
         public static Employee MapForUpdate(EmployeeDTO empDTO)
@@ -36,6 +38,11 @@ namespace ResApi.Extentions
             manitem.Price = menuDTO.Price;
             manitem.Description = menuDTO.Description;
             return manitem;
+        }
+        public static MenuItem MapForRegisterOrder(OrderDTO orderDTO)
+        {
+            var menuItem = Map<OrderDTO, Order>(OrderDTO);
+            return menuItem;
         }
     }
 }

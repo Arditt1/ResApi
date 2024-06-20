@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NLog;
 using ResApi.DTA.Intefaces;
 using ResApi.Models;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace ResApi.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ITableWaiter _tableWaiter;
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         public TableWaiterController(IUnitOfWork unitOfWork, ITableWaiter tableWaiter)
         {
             _unitOfWork = unitOfWork;

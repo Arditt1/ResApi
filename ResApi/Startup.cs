@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -10,6 +11,7 @@ using Microsoft.OpenApi.Models;
 using ResApi.DTA.Intefaces;
 using ResApi.DTA.Services;
 using ResApi.DTA.Services.Shared;
+using ResApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,24 +31,30 @@ namespace ResApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddScoped<ICategoryMenu, CategoryMenuService>();
-            //services.AddScoped<IEmployee, EmployeeService>();
-            //services.AddScoped<IMenuItem, MenuItemService>();
-            //services.AddScoped<IOrderDetail, OrderDetailService>();
-            //services.AddScoped<IOrder, OrderService>();
-            //services.AddScoped<IPermission, PermissionService>();
-            //services.AddScoped<IRole, RoleService>();
-            //services.AddScoped<ITable, TableService>();
-            //services.AddScoped<ITableWaiter, TableWaiterService>();
+            // Add DbContext
+            services.AddDbContext<DataContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("restApp")));
+
+            services.AddScoped<ICategoryMenu, CategoryMenuService>();
+            services.AddScoped<IEmployee, EmployeeService>();
+            services.AddScoped<IMenuItem, MenuItemService>();
+            services.AddScoped<IOrderDetail, OrderDetailService>();
+            services.AddScoped<IOrder, OrderService>();
+            services.AddScoped<IPermission, PermissionService>();
+            services.AddScoped<IRole, RoleService>();
+            services.AddScoped<ITable, TableService>();
+            services.AddScoped<ITableWaiter, TableWaiterService>();
 
 
-            //services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ResApi", Version = "v1" });
             });
+
+            services.AddLogging();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using NLog;
 using ResApi.DataResponse;
 using ResApi.DTA.Intefaces;
 using ResApi.Models;
@@ -16,7 +17,7 @@ namespace ResApi.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICategoryMenu _catMenu;
-        private readonly ILogger _logger;
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         public CategoryMenuController(IUnitOfWork unitOfWork,ICategoryMenu catMenu)
         {
             _unitOfWork = unitOfWork;
@@ -33,7 +34,7 @@ namespace ResApi.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Register POST request");
+                _logger.Error(e, "Register POST request");
                 var errRet = new DataResponse<bool>
                 {
                     Succeeded = false,
@@ -56,7 +57,7 @@ namespace ResApi.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Register POST request");
+                _logger.Error(e, "Register POST request");
                 var errRet = new DataResponse<bool>
                 {
                     Succeeded = false,
@@ -80,7 +81,7 @@ namespace ResApi.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Register POST request");
+                _logger.Error(e, "Register POST request");
                 var errRet = new DataResponse<bool>
                 {
                     Succeeded = false,
@@ -106,7 +107,7 @@ namespace ResApi.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Register POST request");
+                _logger.Error(e, "Register POST request");
                 var errRet = new DataResponse<bool>
                 {
                     Succeeded = false,
@@ -136,7 +137,7 @@ namespace ResApi.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Register POST request");
+                _logger.Error(e, "Register POST request");
                 var errRet = new DataResponse<bool>
                 {
                     Succeeded = false,

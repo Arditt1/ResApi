@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using NLog;
 using ResApi.DataResponse;
 using ResApi.DTA.Intefaces;
 using ResApi.DTO;
@@ -17,7 +18,7 @@ namespace ResApi.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IEmployee _emp;
-        private readonly ILogger _logger;
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         public EmployeeController(IUnitOfWork unitOfWork, IEmployee emp)
         {
             _unitOfWork = unitOfWork;
@@ -34,7 +35,7 @@ namespace ResApi.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Register POST request");
+                _logger.Error(e, "Register POST request");
                 var errRet = new DataResponse<bool>
                 {
                     Succeeded = false,
@@ -57,7 +58,7 @@ namespace ResApi.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Register POST request");
+                _logger.Error(e, "Register POST request");
                 var errRet = new DataResponse<bool>
                 {
                     Succeeded = false,
@@ -81,7 +82,7 @@ namespace ResApi.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Register POST request");
+                _logger.Error(e, "Register POST request");
                 var errRet = new DataResponse<bool>
                 {
                     Succeeded = false,
@@ -108,7 +109,7 @@ namespace ResApi.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Register POST request");
+                _logger.Error(e, "Register POST request");
                 var errRet = new DataResponse<bool>
                 {
                     Succeeded = false,
@@ -147,7 +148,7 @@ namespace ResApi.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Register POST request");
+                _logger.Error(e, "Register POST request");
                 var errRet = new DataResponse<bool>
                 {
                     Succeeded = false,
@@ -174,7 +175,7 @@ namespace ResApi.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Register POST request");
+                _logger.Error(e, "Register POST request");
                 var errRet = new DataResponse<bool>
                 {
                     Succeeded = false,
