@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ResApi.DataResponse;
@@ -16,10 +19,26 @@ namespace ResApi.DTA.Services
         private readonly ILogger<EmployeeService> _logger;
         private readonly IEmployee _emp;
         private readonly DataContext _context;
-        public EmployeeService(DataContext context, ILogger<EmployeeService> logger) : base(context)
+        private readonly IMapper _mapper;
+        public EmployeeService(DataContext context, ILogger<EmployeeService> logger,IMapper mapper) : base(context)
 		{
             _logger = logger;
             _context = context;
+            _mapper = mapper;
+        }
+
+
+        public async Task<List<EmployeeDTO>> GetAllKamarierat(CancellationToken cancellationToken)
+        {
+            var entity = await _context.Employees
+                                     .Where(x => x.Role.RoleName == "Kamaerier")
+                                     .Include(x => x.TableWaiters)
+                                     .Include(x => x.Role)
+                                     .ToListAsync(cancellationToken);
+            var kamarierat = _mapper.Map<List<EmployeeDTO>>(entity);
+
+
+            return kamarierat;
         }
 
 

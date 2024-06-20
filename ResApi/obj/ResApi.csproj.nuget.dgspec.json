@@ -1,27 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ardit\\Desktop\\Ardit\\ResApi_ab\\ResApi\\ResApi.csproj": {}
+    "/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/ResApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ardit\\Desktop\\Ardit\\ResApi_ab\\ResApi\\ResApi.csproj": {
+    "/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/ResApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ardit\\Desktop\\Ardit\\ResApi_ab\\ResApi\\ResApi.csproj",
+        "projectUniqueName": "/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/ResApi.csproj",
         "projectName": "ResApi",
-        "projectPath": "C:\\Users\\ardit\\Desktop\\Ardit\\ResApi_ab\\ResApi\\ResApi.csproj",
-        "packagesPath": "C:\\Users\\ardit\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ardit\\Desktop\\Ardit\\ResApi_ab\\ResApi\\obj\\",
+        "projectPath": "/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/ResApi.csproj",
+        "packagesPath": "/Users/leoramadani/.nuget/packages/",
+        "outputPath": "/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ardit\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/leoramadani/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "/usr/local/share/dotnet/sdk/7.0.316/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -83,10 +82,25 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[5.0.0, 5.0.0]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.osx-x64",
+              "version": "[5.0.17, 5.0.17]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[5.0.0, 5.0.0]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -95,7 +109,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.408\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.316/RuntimeIdentifierGraph.json"
         }
       }
     }

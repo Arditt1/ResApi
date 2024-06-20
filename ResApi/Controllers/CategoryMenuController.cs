@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ResApi.DataResponse;
 using ResApi.DTA.Intefaces;
+using ResApi.DTO;
 using ResApi.Models;
 using System;
 using System.Collections.Generic;
@@ -14,13 +16,14 @@ namespace ResApi.Controllers
     [ApiController]
     public class CategoryMenuController : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
         private readonly ICategoryMenu _catMenu;
-        private readonly ILogger _logger;
-        public CategoryMenuController(IUnitOfWork unitOfWork,ICategoryMenu catMenu)
+        private readonly ILogger<CategoryMenuController> _logger;
+        private readonly IMapper _mapper;
+        public CategoryMenuController(ICategoryMenu catMenu,IMapper mapper, ILogger<CategoryMenuController> logger)
         {
-            _unitOfWork = unitOfWork;
             _catMenu = catMenu;
+            _mapper = mapper;
+            _logger = logger;
         }
         [HttpGet]
         [Route("getOne")]
@@ -47,7 +50,7 @@ namespace ResApi.Controllers
 
         [HttpGet]
         [Route("getAll")]
-        public async Task<ActionResult<List<CategoryMenu>>> GetAllCategoryMenu(CancellationToken cancellationToken)
+        public async Task<ActionResult<List<CategoryMenuDTO>>> GetAllCategoryMenu(CancellationToken cancellationToken)
         {
             try
             {
@@ -75,7 +78,6 @@ namespace ResApi.Controllers
             try
             {
                 _catMenu.Add(entity);
-                await _unitOfWork.Save(cancellationToken);
                 return Ok();
             }
             catch (Exception e)
@@ -101,7 +103,6 @@ namespace ResApi.Controllers
             try
             {
                 _catMenu.Update(entity);
-                await _unitOfWork.Save(cancellationToken);
                 return Ok();
             }
             catch (Exception e)
@@ -131,7 +132,6 @@ namespace ResApi.Controllers
                     return BadRequest("No time log was found with the provided ID.");
 
                 _catMenu.Delete(entity);
-                await _unitOfWork.Save(cancellationToken);
                 return Ok();
             }
             catch (Exception e)

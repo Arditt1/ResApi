@@ -30,6 +30,7 @@ namespace ResApi.DTA.Services
             if (checkIfUserExists)
             {
                 response.ErrorMessage = "Kategoria me emrin: " + model.CategoryName + " ekziston";
+                response.Succeeded = false;
                 return response;
             }
 

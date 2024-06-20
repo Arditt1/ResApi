@@ -17,11 +17,12 @@ namespace ResApi.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IEmployee _emp;
-        private readonly ILogger _logger;
-        public EmployeeController(IUnitOfWork unitOfWork, IEmployee emp)
+        private readonly ILogger<Employee> _logger;
+        public EmployeeController(IUnitOfWork unitOfWork, IEmployee emp,ILogger<Employee> logger)
         {
             _unitOfWork = unitOfWork;
             _emp = emp;
+            _logger = logger;
         }
         [HttpGet]
         [Route("getOne")]
@@ -68,6 +69,28 @@ namespace ResApi.Controllers
             }
             //return Ok(await _emp.GetAll(cancellationToken));
         }
+
+        [HttpGet]
+        [Route("getKamarierat")]
+        public async Task<ActionResult<List<EmployeeDTO>>> GetAllKamarierat(CancellationToken cancellationToken)
+        {
+            try
+            {
+                var response = await _emp.GetAllKamarierat(cancellationToken);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                var Error = new DataResponse<bool>
+                {
+                    Succeeded = false,
+                    ErrorMessage = "Problem me marrjen e te dhenave per kamarieret"
+                };
+                return BadRequest(Error);
+            }
+        }
+
 
         [HttpPost]
         [Route("create")]

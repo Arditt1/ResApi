@@ -1,0 +1,38 @@
+﻿<Properties GitUserInfo="UsingGIT" StartupConfiguration="{CF3C8B4C-7B71-4D41-B0E7-62F7D323FCEF}|Default">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints />
+  <MonoDevelop.Ide.ItemProperties.ResApi PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ResApi/Controllers/EmployeeController.cs">
+    <Files>
+      <File FileName="ResApi/Startup.cs" Line="27" Column="35" />
+      <File FileName="ResApi/appsettings.json" Line="8" Column="5" />
+      <File FileName="ResApi/Controllers/EmployeeController.cs" Line="55" Column="1" />
+      <File FileName="ResApi/Models/Employee.cs" Line="19" Column="49" />
+      <File FileName="ResApi/DTA/Services/Shared/BaseService.cs" Line="16" Column="36" />
+      <File FileName="ResApi/DataResponse/DataContext.cs" Line="69" Column="46" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="ResApi">
+            <Node name="ResApi">
+              <Node name="Controllers" expanded="True" />
+              <Node name="DataResponse">
+                <Node name="DataContext.cs" selected="True" />
+              </Node>
+              <Node name="DTA" expanded="True">
+                <Node name="Intefaces" expanded="True" />
+                <Node name="Services" expanded="True">
+                  <Node name="Shared" expanded="True" />
+                </Node>
+              </Node>
+              <Node name="Models" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

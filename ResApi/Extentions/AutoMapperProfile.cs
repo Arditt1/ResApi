@@ -8,7 +8,9 @@ namespace ResApi.Extentions
     {
         public AutoMapperProfile()
         {
-
+            CreateMap<Employee, EmployeeDTO>().ReverseMap();
+            CreateMap<Role, EmployeeDTO>().ReverseMap();
+            CreateMap<TableWaiter, EmployeeDTO>().ReverseMap();
         }
 
         public static Employee MapForUpdate(EmployeeDTO empDTO)
@@ -29,6 +31,17 @@ namespace ResApi.Extentions
             ca.Photo = catDTO.Photo;
             return ca;
         }
+
+        public static Employee Kamarierat(EmployeeDTO emp)
+        {
+            Employee employee = new Employee();
+            employee.Name = emp.Name;
+            employee.Surname = emp.Surname;
+            employee.Username = emp.Username;
+            employee.Status = emp.Status;
+            return employee;
+        }
+
         public static MenuItem MapForRegisterMenu(MenuItemDTO menuDTO)
         {
             MenuItem manitem = new MenuItem();

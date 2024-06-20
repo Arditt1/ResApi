@@ -65,6 +65,9 @@ namespace ResApi.Models
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Status)
+                    .HasColumnName("Status");
+
                 entity.Property(e => e.Password)
                     .HasMaxLength(255)
                     .IsUnicode(false);
