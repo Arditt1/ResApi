@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ResApi.DTO;
+using ResApi.DTO.OrderDetail;
 using ResApi.Models;
 
 namespace ResApi.Extentions
@@ -11,6 +12,19 @@ namespace ResApi.Extentions
             CreateMap<Employee, EmployeeDTO>().ReverseMap();
             CreateMap<Role, EmployeeDTO>().ReverseMap();
             CreateMap<TableWaiter, EmployeeDTO>().ReverseMap();
+            CreateMap<MenuItem, MenuItemDTO>().ReverseMap();
+            CreateMap<CategoryMenu, MenuItemDTO>().ReverseMap();
+
+
+            CreateMap<CategoryMenu, MenuItemDTO>().ReverseMap()
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.CategoryName));
+
+            CreateMap<OrderDetail, GetAllOrderDetailsDTO>().ReverseMap();
+            CreateMap<Order, GetAllOrderDetailsDTO>().ReverseMap();
+            CreateMap<CategoryMenu, GetAllOrderDetailsDTO>().ReverseMap();
+            CreateMap<Table, GetAllOrderDetailsDTO>().ReverseMap();
+            CreateMap<Employee, GetAllOrderDetailsDTO>().ReverseMap();
+
         }
 
         public static Employee MapForUpdate(EmployeeDTO empDTO)
@@ -39,6 +53,7 @@ namespace ResApi.Extentions
             employee.Surname = emp.Surname;
             employee.Username = emp.Username;
             employee.Status = emp.Status;
+            employee.ContactInfo = emp.ContactInfo;
             return employee;
         }
 

@@ -1,10 +1,16 @@
-﻿using ResApi.DTA.Intefaces.Shared;
+﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using ResApi.DTA.Intefaces.Shared;
+using ResApi.DTO;
 using ResApi.Models;
 
 namespace ResApi.DTA.Intefaces
 {
     public interface IMenuItem : IBaseService<MenuItem>
     {
-	}
+        Task<List<MenuItemDTO>> GetAllMenuItems(CancellationToken cancellationToken);
+
+    }
 }
 

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ResApi.DTA.Intefaces;
+using ResApi.DTO;
 using ResApi.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -68,6 +70,25 @@ namespace ResApi.Controllers
             await _unitOfWork.Save(cancellationToken);
 
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("getMenuItemsWithCategories")]
+        public async Task<ActionResult<List<MenuItemDTO>>> GetAllMenuItemsWithCategories(CancellationToken cancellationToken)
+        {
+            try
+            {
+                var entity = await _iMenuItem.GetAllMenuItems(cancellationToken);
+                if (entity == null)
+                    return BadRequest("No menu items found!");
+
+                return Ok(entity);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error=", ex.Message);
+                throw;
+            }
         }
     }
 }
