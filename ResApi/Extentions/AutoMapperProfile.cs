@@ -14,10 +14,12 @@ namespace ResApi.Extentions
             CreateMap<TableWaiter, EmployeeDTO>().ReverseMap();
             CreateMap<MenuItem, MenuItemDTO>().ReverseMap();
             CreateMap<CategoryMenu, MenuItemDTO>().ReverseMap();
+            CreateMap<CategoryMenu, CategoryMenuDTO>().ReverseMap();
 
 
             CreateMap<CategoryMenu, MenuItemDTO>().ReverseMap()
-                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.CategoryName));
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.CategoryName))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.CategoryId));
 
             CreateMap<OrderDetail, GetAllOrderDetailsDTO>().ReverseMap();
             CreateMap<Order, GetAllOrderDetailsDTO>().ReverseMap();

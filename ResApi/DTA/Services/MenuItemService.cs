@@ -25,6 +25,9 @@ namespace ResApi.DTA.Services
 			_mapper = mapper;
 		}
 
+
+
+
 		public async Task<List<MenuItemDTO>> GetAllMenuItems(CancellationToken cancellationToken)
 		{
 			var entity = await _context.MenuItems
@@ -33,6 +36,7 @@ namespace ResApi.DTA.Services
 									   {
 										 Id = x.Id,
 										 CategoryName = x.Category.CategoryName,
+										 CategoryId = x.Category.Id,
 										 Description = x.Description,
 										 Name = x.Name,
 										 Price = (decimal)x.Price,

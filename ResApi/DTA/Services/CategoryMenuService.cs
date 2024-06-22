@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ResApi.DataResponse;
@@ -15,10 +16,32 @@ namespace ResApi.DTA.Services
         private readonly ILogger<CategoryMenuService> _logger;
         private readonly ICategoryMenu _cat;
         private readonly DataContext _context;
-        public CategoryMenuService(DataContext context, ILogger<CategoryMenuService> logger) : base(context)
+        private readonly IMapper _mapper;
+        public CategoryMenuService(DataContext context, ILogger<CategoryMenuService> logger,IMapper mapper) : base(context)
         {
             _logger = logger;
             _context = context;
+            _mapper = mapper;
+        }
+
+        public bool Add(CategoryMenuDTO entity)
+        {
+            try
+            {
+                if (entity != null)
+                {
+                    var catMapped = _mapper.Map<CategoryMenu>(entity);
+                    _context.CategoryMenus.Add(catMapped);
+                    _context.SaveChanges();
+                    return true;
+                }
+                else
+                    return false;
+            }
+            catch 
+            {
+                throw;
+            }
         }
 
         public async Task<DataResponse<string>> Register(CategoryMenuDTO model)
@@ -38,10 +61,9 @@ namespace ResApi.DTA.Services
             {
                 CategoryMenuDTO categoryMenu = new CategoryMenuDTO();
                 categoryMenu.CategoryName = model.CategoryName;
-                categoryMenu.Photo = model.Photo;
 
-                CategoryMenu category = Extentions.AutoMapperProfile.MapForRegisterCategory(model);
-                _cat.Add(category);
+                var entity = _mapper.Map<CategoryMenu>(categoryMenu);
+                _cat.Add(entity);
                 // Adding the user to context of users.
                 if (categoryMenu != null)
                 {

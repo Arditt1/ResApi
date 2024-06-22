@@ -72,6 +72,36 @@ namespace ResApi.Controllers
         }
 
         [HttpPost]
+        [Route("register")]
+        public ActionResult<DataResponse<string>> AddCategory(CategoryMenuDTO model)
+        {
+            try
+            {
+                var response = new DataResponse<string>() { Succeeded = false, Data = string.Empty};
+                var addingCat = _catMenu.Add(model);
+
+                if (addingCat == true)
+                {
+                    response.Succeeded = true;
+                    response.Data = "Success";
+                    return response;
+                }
+                else
+                {
+                    response.Succeeded = false;
+                    response.Data = "Failure";
+                    return response;
+                }
+
+
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        [HttpPost]
         [Route("create")]
         public async Task<ActionResult<CategoryMenu>> CreateCategoryMenu([FromBody] CategoryMenu entity, CancellationToken cancellationToken)
         {
