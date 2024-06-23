@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using ResApi.DTO;
 using ResApi.DTO.OrderDetail;
+using ResApi.DTO.Tables;
+using ResApi.DTO.TableWaiter;
 using ResApi.Models;
 
 namespace ResApi.Extentions
@@ -26,7 +28,11 @@ namespace ResApi.Extentions
             CreateMap<CategoryMenu, GetAllOrderDetailsDTO>().ReverseMap();
             CreateMap<Table, GetAllOrderDetailsDTO>().ReverseMap();
             CreateMap<Employee, GetAllOrderDetailsDTO>().ReverseMap();
-
+            CreateMap<Table, TableDTO>().ReverseMap();
+            CreateMap<TableWaiter, TableWaiterDTO>().ReverseMap();
+            CreateMap<TableDTO, TableWaiter>().ReverseMap()
+                    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Table.Id))
+                    .ForMember(dest => dest.TableNumber, opt => opt.MapFrom(src => src.Table.TableNumber));
         }
 
         public static Employee MapForUpdate(EmployeeDTO empDTO)

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ResApi.DataResponse;
 using ResApi.DTA.Intefaces;
 using ResApi.DTO;
 using ResApi.Models;
@@ -46,6 +47,21 @@ namespace ResApi.Controllers
         }
 
         [HttpPost]
+        [Route("register")]
+        public async Task<DataResponse<string>> Add(MenuItemDTO entity)
+        {
+            try
+            {
+                var addingMenuItem = await _iMenuItem.Add(entity);
+                return addingMenuItem;
+            }
+            catch 
+            {
+                throw;
+            }
+        }
+
+        [HttpPost]
         [Route("update")]
         public async Task<ActionResult<MenuItem>> UpdateMenuItem([FromBody] MenuItem entity, CancellationToken cancellationToken)
         {
@@ -90,6 +106,14 @@ namespace ResApi.Controllers
                 throw;
             }
         }
+        [HttpGet]
+        [Route("getAllMenuItemsByCategory")]
+        public async Task<List<MenuItemDTO>> GetAllMenuItemsByCategory(int CategoryId)
+        {
+            var entity = await _iMenuItem.GetAllMenuItemsByCategory(CategoryId);
+            return entity;
+        }
+
     }
 }
 

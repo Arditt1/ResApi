@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using ResApi.DataResponse;
 using ResApi.DTA.Intefaces;
 using ResApi.DTA.Services.Shared;
 using ResApi.DTO;
@@ -25,29 +26,97 @@ namespace ResApi.DTA.Services
 			_mapper = mapper;
 		}
 
+		public async Task<DataResponse<string>> Add(MenuItemDTO entity)
+		{
+			try
+			{
+                var response = new DataResponse<string>() { Succeeded = false, Data = string.Empty };
+				if(entity != null)
+				{
+					var itemExists = await _context.MenuItems.AnyAsync(x => x.Name == entity.Name);
+					if (itemExists)
+					{
+                        response.Succeeded = false;
+                        response.Data = "Exists";
+                        return response;
+					}
+					else
+					{
+						var itemMapped = _mapper.Map<MenuItem>(entity);
+						_context.MenuItems.Add(itemMapped);
+						_context.SaveChanges();
 
+                        response.Succeeded = true;
+                        response.Data = "Success";
+                        return response;
+                    }
+				}
+				else
+				{
+                    response.Succeeded = false;
+                    response.Data = "Failure";
+                    return response;
+                }
+
+            }
+            catch 
+			{
+				throw;
+			}
+		}
 
 
 		public async Task<List<MenuItemDTO>> GetAllMenuItems(CancellationToken cancellationToken)
 		{
-			var entity = await _context.MenuItems
-									   .Include(x => x.Category)
-									   .Select(x=> new MenuItemDTO()
-									   {
-										 Id = x.Id,
-										 CategoryName = x.Category.CategoryName,
-										 CategoryId = x.Category.Id,
-										 Description = x.Description,
-										 Name = x.Name,
-										 Price = (decimal)x.Price,
-									   })
-									   .ToListAsync(cancellationToken);
+			try
+			{
+                var entity = await _context.MenuItems
+                           .Include(x => x.Category)
+                           .Select(x => new MenuItemDTO()
+                           {
+                               Id = x.Id,
+                               CategoryName = x.Category.CategoryName,
+                               CategoryId = x.Category.Id,
+                               Description = x.Description,
+                               Name = x.Name,
+                               Price = (decimal)x.Price,
+                           })
+                           .ToListAsync(cancellationToken);
 
-			var menuItems = _mapper.Map<List<MenuItemDTO>>(entity);
+                var menuItems = _mapper.Map<List<MenuItemDTO>>(entity);
 
-			return menuItems;
+                return menuItems;
+            }
+			catch 
+			{
+				throw;
+			}
+
 		}
-
+		public async Task<List<MenuItemDTO>> GetAllMenuItemsByCategory(int CategoryId)
+		{
+			try
+			{
+                var entity = await _context.MenuItems
+                                       .Include(x => x.Category)
+                                       .Where(x => x.CategoryId == CategoryId)
+                                       .Select(x => new MenuItemDTO()
+                                       {
+                                           Id = x.Id,
+                                           CategoryName = x.Category.CategoryName,
+                                           CategoryId = x.Category.Id,
+                                           Description = x.Description,
+                                           Name = x.Name,
+                                           Price = (decimal)x.Price,
+                                       }).ToListAsync();
+                return entity;
+            }
+			catch 
+			{
+				throw;
+			}
+			
+		}
 	}
 }
 

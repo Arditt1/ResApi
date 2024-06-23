@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -24,19 +25,38 @@ namespace ResApi.DTA.Services
             _mapper = mapper;
         }
 
-        public bool Add(CategoryMenuDTO entity)
+        public async Task<DataResponse<string>> Add(CategoryMenuDTO entity)
         {
             try
             {
+                var response = new DataResponse<string>() { Succeeded = false, Data = string.Empty };
+
                 if (entity != null)
                 {
-                    var catMapped = _mapper.Map<CategoryMenu>(entity);
-                    _context.CategoryMenus.Add(catMapped);
-                    _context.SaveChanges();
-                    return true;
+
+                    var categoryExists = await _context.CategoryMenus.AnyAsync(x => x.CategoryName == entity.CategoryName);
+                    if(categoryExists)
+                    {
+                        response.Succeeded = false;
+                        response.Data = "Exists";
+                        return response;
+                    }
+                    else
+                    {
+                        var catMapped = _mapper.Map<CategoryMenu>(entity);
+                        _context.CategoryMenus.Add(catMapped);
+                        _context.SaveChanges();
+
+                        response.Succeeded = true;
+                        response.Data = "Success";
+                        return response;
+                    }
+
                 }
                 else
-                    return false;
+                    response.Succeeded = false;
+                    response.Data = "Failure";
+                    return response;
             }
             catch 
             {

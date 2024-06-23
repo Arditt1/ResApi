@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ResApi.DataResponse;
 using ResApi.DTA.Intefaces;
+using ResApi.DTO.Tables;
+using ResApi.DTO.TableWaiter;
 using ResApi.Models;
 using System.Collections.Generic;
 using System.Threading;
@@ -24,6 +27,12 @@ namespace ResApi.Controllers
         {
             return Ok(await _tableWaiter.Get(tableWaiterId, cancellationToken));
         }
+        [HttpGet]
+        [Route("getMyTables")]
+        public async Task<List<TableDTO>> MyTables(int waiterId)
+        {
+            return await _tableWaiter.MyTables(waiterId);
+        }
 
         [HttpGet]
         [Route("getAll")]
@@ -41,7 +50,20 @@ namespace ResApi.Controllers
 
             return Ok();
         }
-
+        [HttpPost]
+        [Route("register")]
+        public async Task<ActionResult<DataResponse<string>>> Register(TableWaiterDTO entity)
+        {
+            try
+            {
+                var addingTableWaiter = await _tableWaiter.Register(entity);
+                return Ok(addingTableWaiter);
+            }
+            catch
+            {
+                throw;
+            }
+        }
         [HttpPost]
         [Route("update")]
         public async Task<ActionResult<TableWaiter>> UpdateTableWaiter([FromBody] TableWaiter entity, CancellationToken cancellationToken)

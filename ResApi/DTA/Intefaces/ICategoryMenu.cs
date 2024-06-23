@@ -10,7 +10,7 @@ namespace ResApi.DTA.Intefaces
 	public interface ICategoryMenu : IBaseService<CategoryMenu>
     {
 		Task<DataResponse<string>> Register(CategoryMenuDTO model);
-        bool Add(CategoryMenuDTO entity);
+        Task<DataResponse<string>> Add(CategoryMenuDTO entity);
 
     }
 }

@@ -22,4 +22,12 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="DTO\Tables\" />
+    <None Remove="DTO\TableWaiter\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DTO\Tables\" />
+    <Folder Include="DTO\TableWaiter\" />
+  </ItemGroup>
 </Project>
