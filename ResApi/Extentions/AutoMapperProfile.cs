@@ -73,10 +73,10 @@ namespace ResApi.Extentions
             manitem.Description = menuDTO.Description;
             return manitem;
         }
-        public static MenuItem MapForRegisterOrder(OrderDTO orderDTO)
-        {
-            var menuItem = Map<OrderDTO, Order>(OrderDTO);
-            return menuItem;
-        }
+        //public static MenuItem MapForRegisterOrder(OrderDTO orderDTO)
+        //{
+        //    var menuItem = Map<OrderDTO, Order>(orderDTO);
+        //    return menuItem;
+        //}
     }
 }

@@ -11,7 +11,7 @@ namespace ResApi.DTA.Intefaces
 	{
 		Task<DataResponse<string>> Register(CategoryMenuDTO model);
 
-		Task<DataResponse<string>> UpdateMenuItem(CategoryMenuDTO model);
+		//Task<DataResponse<string>> UpdateMenuItem(CategoryMenuDTO model);
 		Task<DataResponse<string>> Add(CategoryMenuDTO entity);
 	}
 }

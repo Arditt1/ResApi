@@ -37,7 +37,7 @@ namespace ResApi.Controllers
             }
             catch (Exception e)
             {
-                _logger.Error(e, "Register POST request");
+                //_logger.Error(e, "Register POST request");
                 var errRet = new DataResponse<bool>
                 {
                     Succeeded = false,
@@ -60,7 +60,7 @@ namespace ResApi.Controllers
             }
             catch (Exception e)
             {
-                _logger.Error(e, "Register POST request");
+                //_logger.Error(e, "Register POST request");
                 var errRet = new DataResponse<bool>
                 {
                     Succeeded = false,
@@ -99,7 +99,7 @@ namespace ResApi.Controllers
             }
             catch (Exception e)
             {
-                _logger.Error(e, "Register POST request");
+                //_logger.Error(e, "Register POST request");
                 var errRet = new DataResponse<bool>
                 {
                     Succeeded = false,
@@ -124,7 +124,7 @@ namespace ResApi.Controllers
             }
             catch (Exception e)
             {
-                _logger.Error(e, "Register POST request");
+               // _logger.Error(e, "Register POST request");
                 var errRet = new DataResponse<bool>
                 {
                     Succeeded = false,
@@ -153,7 +153,7 @@ namespace ResApi.Controllers
             }
             catch (Exception e)
             {
-                _logger.Error(e, "Register POST request");
+                //_logger.Error(e, "Register POST request");
                 var errRet = new DataResponse<bool>
                 {
                     Succeeded = false,

@@ -113,7 +113,7 @@ namespace ResApi.Controllers
         {
             try
             {
-                var entity1 = await _iMenuItem.Get(entity.CategoryId, cancellationToken);
+                var entity1 = await _iMenuItem.Get((int)entity.CategoryId, cancellationToken);
 
                 if (entity1 == null)
                     return BadRequest("No entity was found with the provided ID.");

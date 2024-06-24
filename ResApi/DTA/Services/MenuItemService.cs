@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using NLog;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -17,7 +14,7 @@ using ResApi.Models;
 
 namespace ResApi.DTA.Services
 {
-	public class MenuItemService : BaseService<MenuItem>, IMenuItem
+    public class MenuItemService : BaseService<MenuItem>, IMenuItem
     {
 		private readonly ILogger<MenuItem> _logger;
 		private readonly DataContext _context;
@@ -27,7 +24,8 @@ namespace ResApi.DTA.Services
 			_logger = logger;
 			_context = context;
 			_mapper = mapper;
-		}
+
+        }
 
 		public async Task<DataResponse<string>> Add(MenuItemDTO entity)
 		{
@@ -136,7 +134,7 @@ namespace ResApi.DTA.Services
             try
             {
                 MenuItem menuItem = Extentions.AutoMapperProfile.MapForRegisterMenu(model);
-                _iMenuItem.Add(menuItem);
+                _context.MenuItems.Add(menuItem);
                 // Adding the user to context of users.
                 if (menuItem != null)
                 {
@@ -148,7 +146,7 @@ namespace ResApi.DTA.Services
             catch (Exception e)
             {
                 response.ErrorMessage = "Per shkak te problemeve teknike nuk jemi ne gjendje te krijojme profilin.";
-                RequestLogger.WriteResAPIRequests("HTTP POST Response BuyOffer: ", response);
+                //RequestLogger.WriteResAPIRequests("HTTP POST Response BuyOffer: ", response);
                 //ILogger.Error(e, $"CreateCustomerProfile: On adding user in customer portal db error {e.Message}");
             }
             return response;
@@ -165,7 +163,7 @@ namespace ResApi.DTA.Services
             try
             {
                 MenuItem employee = Extentions.AutoMapperProfile.MapForRegisterMenu(model);
-                _iMenuItem.Update(employee);
+                _context.MenuItems.Update(employee);
                 //var entity = _repository.Update(employee); // Update the user to context of users.
                 //if (entity != null)
                 //{
@@ -175,7 +173,7 @@ namespace ResApi.DTA.Services
             }
             catch (Exception e)
             {
-                RequestLogger.WriteResAPIRequests("HTTP POST Response UpdateMenuItem: ", response);
+                //RequestLogger.WriteResAPIRequests("HTTP POST Response UpdateMenuItem: ", response);
                 response.ErrorMessage = "Per shkak te problemeve teknike nuk mund te perditesojme profilin";
             }
 

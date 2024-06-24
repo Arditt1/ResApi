@@ -159,3 +159,5 @@ C:/Users/ardit/Desktop/Ardit/ResApi_ab/ResApi/obj/Debug/net5.0/ResApi.csproj.Ass
 /Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/obj/Debug/net5.0/ResApi.pdb
 /Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/obj/Debug/net5.0/ResApi.genruntimeconfig.cache
 /Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/obj/Debug/net5.0/ref/ResApi.dll
+/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/bin/Debug/net5.0/NLog.dll
+/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/bin/Debug/net5.0/NLog.xml
