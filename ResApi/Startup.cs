@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using ResApi.DTA.Intefaces;
 using ResApi.DTA.Services;
@@ -16,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ResApi.Extentions;
 
 namespace ResApi
 {
@@ -31,11 +31,14 @@ namespace ResApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add DbContext
-            services.AddDbContext<DataContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("restApp")));
+            services.AddLogging();
 
-            services.AddScoped<ICategoryMenu, CategoryMenuService>();
+            services.AddDbContext<DataContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("restApp")));
+
+            services.AddAutoMapper(typeof(AutoMapperProfile));
+
+            services.AddScoped<ICategoryMenu, CategoryMenuService>();   
             services.AddScoped<IEmployee, EmployeeService>();
             services.AddScoped<IMenuItem, MenuItemService>();
             services.AddScoped<IOrderDetail, OrderDetailService>();
@@ -54,8 +57,20 @@ namespace ResApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ResApi", Version = "v1" });
             });
 
-            services.AddLogging();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder => builder
+                    .WithOrigins("http://localhost:3000")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+
+            services.AddHttpContextAccessor();
+
         }
+
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -70,6 +85,8 @@ namespace ResApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("CorsPolicy");
 
             app.UseAuthorization();
 

@@ -93,6 +93,21 @@ namespace ResApi.Controllers
         }
 
         [HttpPost]
+        [Route("register")]
+        public async Task<DataResponse<string>> Add(MenuItemDTO entity)
+        {
+            try
+            {
+                var addingMenuItem = await _iMenuItem.Add(entity);
+                return addingMenuItem;
+            }
+            catch 
+            {
+                throw;
+            }
+        }
+
+        [HttpPost]
         [Route("update")]
         public async Task<ActionResult<MenuItem>> UpdateMenuItem([FromBody] MenuItemDTO entity, CancellationToken cancellationToken)
         {
@@ -132,9 +147,36 @@ namespace ResApi.Controllers
             _iMenuItem.Delete(entity);
 
             await _unitOfWork.Save(cancellationToken);
-
-            return Ok();
+            //asd
+            return Ok();//
         }
+
+        [HttpGet]
+        [Route("getMenuItemsWithCategories")]
+        public async Task<ActionResult<List<MenuItemDTO>>> GetAllMenuItemsWithCategories(CancellationToken cancellationToken)
+        {
+            try
+            {
+                var entity = await _iMenuItem.GetAllMenuItems(cancellationToken);
+                if (entity == null)
+                    return BadRequest("No menu items found!");
+
+                return Ok(entity);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error=", ex.Message);
+                throw;
+            }
+        }
+        [HttpGet]
+        [Route("getAllMenuItemsByCategory")]
+        public async Task<List<MenuItemDTO>> GetAllMenuItemsByCategory(int CategoryId)
+        {
+            var entity = await _iMenuItem.GetAllMenuItemsByCategory(CategoryId);
+            return entity;
+        }
+
     }
 }
 

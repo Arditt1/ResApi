@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NLog;
 using ResApi.DTA.Intefaces;
+using ResApi.DTO.OrderDetail;
 using ResApi.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -69,6 +71,23 @@ namespace ResApi.Controllers
             await _unitOfWork.Save(cancellationToken);
 
             return Ok();
+        }
+        [HttpGet]
+        [Route("getAllOrderDetails")]
+        public async Task<ActionResult<List<GetAllOrderDetailsDTO>>> GetAllOrderDetailsMapped(CancellationToken cancellationToken)
+        {
+            try
+            {
+                var entity = await _orderDetail.GetAllOrderDetails(cancellationToken);
+                if (entity == null)
+                    return NotFound();
+                else
+                    return Ok(entity);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

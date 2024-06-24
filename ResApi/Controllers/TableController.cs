@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NLog;
+using ResApi.DataResponse;
 using ResApi.DTA.Intefaces;
+using ResApi.DTO.Tables;
 using ResApi.Models;
 using System.Collections.Generic;
 using System.Threading;
@@ -43,6 +45,20 @@ namespace ResApi.Controllers
 
             return Ok();
         }
+        [HttpPost]
+        [Route("register")]
+        public async Task<DataResponse<string>> Register(TableDTO entity)
+        {
+            try
+            {
+                var addingTable = await _table.Register(entity);
+                return addingTable;
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
         [HttpPost]
         [Route("update")]
@@ -53,8 +69,13 @@ namespace ResApi.Controllers
 
             return Ok();
         }
-
-        [HttpPost]
+        [HttpGet]
+        [Route("getFreeTables")]
+        public async Task<List<TableDTO>> FreeTables()
+        {
+            return await _table.FreeTables();
+        }
+        [HttpDelete]
         [Route("delete")]
         public async Task<ActionResult> DeleteTable([FromBody] int tableId, CancellationToken cancellationToken)
         {
@@ -70,6 +91,7 @@ namespace ResApi.Controllers
 
             return Ok();
         }
+
 
     }
 }

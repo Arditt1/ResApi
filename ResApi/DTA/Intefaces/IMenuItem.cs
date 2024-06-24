@@ -1,4 +1,9 @@
+
 ﻿using ResApi.DataResponse;
+﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using ResApi.DataResponse;
 using ResApi.DTA.Intefaces.Shared;
 using ResApi.DTO;
 using ResApi.Models;
@@ -11,6 +16,9 @@ namespace ResApi.DTA.Intefaces
         Task<DataResponse<string>> Register(MenuItemDTO model);
 
         Task<DataResponse<string>> UpdateMenuItem(MenuItemDTO model);
+        Task<List<MenuItemDTO>> GetAllMenuItems(CancellationToken cancellationToken);
+        Task<DataResponse<string>> Add(MenuItemDTO entity);
+        Task<List<MenuItemDTO>> GetAllMenuItemsByCategory(int CategoryId);
     }
 }
 

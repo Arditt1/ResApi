@@ -1,0 +1,40 @@
+﻿<Properties GitUserInfo="UsingGIT" StartupConfiguration="{CF3C8B4C-7B71-4D41-B0E7-62F7D323FCEF}|Default">
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.ResApi PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/Controllers/MenuItemController.cs" relfile="ResApi/Controllers/MenuItemController.cs" line="35" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workbench ActiveDocument="ResApi/Controllers/MenuItemController.cs">
+    <Files>
+      <File FileName="ResApi/Controllers/MenuItemController.cs" Line="96" Column="14" />
+      <File FileName="ResApi/DTA/Services/MenuItemService.cs" />
+      <File FileName="ResApi/DTA/Intefaces/IMenuItem.cs" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="ResApi" selected="True">
+            <Node name="ResApi" expanded="True">
+              <Node name="Controllers" expanded="True" />
+              <Node name="DataResponse" expanded="True" />
+              <Node name="DTA" expanded="True">
+                <Node name="Intefaces" expanded="True" />
+                <Node name="Services" expanded="True" />
+              </Node>
+              <Node name="DTO" expanded="True">
+                <Node name="Tables" expanded="True" />
+                <Node name="TableWaiter" expanded="True" />
+              </Node>
+              <Node name="Extentions" expanded="True" />
+              <Node name="Models" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+</Properties>
