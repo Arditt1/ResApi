@@ -84,8 +84,8 @@ namespace ResApi.Controllers
             _iMenuItem.Delete(entity);
 
             await _unitOfWork.Save(cancellationToken);
-
-            return Ok();//test
+            //asd
+            return Ok();//
         }
 
         [HttpGet]
