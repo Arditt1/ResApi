@@ -73,28 +73,12 @@ namespace ResApi.Controllers
         }
 
         [HttpPost]
-        [Route("register")]
-        public async Task<ActionResult<DataResponse<string>>> AddCategory(CategoryMenuDTO model)
-        {
-            try
-            {
-                var addingCat = await _catMenu.Add(model);
-                return addingCat;
-
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        [HttpPost]
         [Route("create")]
         public async Task<ActionResult<CategoryMenu>> CreateCategoryMenu([FromBody] CategoryMenu entity, CancellationToken cancellationToken)
         {
             try
             {
-                _catMenu.Add(entity);
+                _catMenu.CreateCategoryMenu(entity);
                 return Ok();
             }
             catch (Exception e)
@@ -115,11 +99,11 @@ namespace ResApi.Controllers
 
         [HttpPost]
         [Route("update")]
-        public async Task<ActionResult<CategoryMenu>> UpdateCategoryMenu([FromBody] CategoryMenu entity, CancellationToken cancellationToken)
+        public async Task<ActionResult<CategoryMenu>> UpdateCategoryMenu([FromBody] CategoryMenuDTO entity, CancellationToken cancellationToken)
         {
             try
             {
-                _catMenu.Update(entity);
+                _catMenu.UpdateCategoryMenu(entity);
                 return Ok();
             }
             catch (Exception e)

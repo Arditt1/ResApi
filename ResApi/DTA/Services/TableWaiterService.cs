@@ -81,6 +81,39 @@ namespace ResApi.DTA.Services
                 throw;
             }
         }
-	}
+
+        public async Task<DataResponse<string>> UpdateTableWaiter(TableWaiterDTO model)
+        {
+            var response = new DataResponse<string>
+            {
+                Succeeded = false,
+                ErrorMessage = "Per shkak te arsyeve teknike nuk mund te perditesojme klientin"
+            };
+
+            try
+            {
+                var TableWaiterMapp = _mapper.Map<TableWaiter>(model);
+                _context.TableWaiters.Update(TableWaiterMapp);
+                //var entity = _repository.Update(employee); // Update the user to context of users.
+                if (TableWaiterMapp != null)
+                {
+                    response.Succeeded = true;
+                    response.Data = "Success";
+                }
+                else
+                {
+                    response.Succeeded = false;
+                    response.Data = "Error";
+                }
+            }
+            catch (Exception e)
+            {
+                RequestLogger.WriteResAPIRequests("HTTP POST Response UpdateTableWaiter: ", response);
+                response.ErrorMessage = "Per shkak te problemeve teknike nuk mund te perditesojme profilin";
+            }
+
+            return response;
+        }
+    }
 }
 

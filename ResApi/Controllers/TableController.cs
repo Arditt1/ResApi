@@ -4,6 +4,7 @@ using ResApi.DataResponse;
 using ResApi.DTA.Intefaces;
 using ResApi.DTO.Tables;
 using ResApi.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,24 +27,67 @@ namespace ResApi.Controllers
         [Route("getOne")]
         public async Task<ActionResult<Table>> GetTable(int tableId, CancellationToken cancellationToken)
         {
-            return Ok(await _table.Get(tableId, cancellationToken));
+            try
+            {
+                var response = await _table.Get(tableId, cancellationToken);
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Register POST request");
+                var errRet = new DataResponse<bool>
+                {
+                    Succeeded = false,
+                    ErrorMessage = "Error on register user"
+
+                };
+                return BadRequest(errRet);
+            }
         }
 
         [HttpGet]
         [Route("getAll")]
         public async Task<ActionResult<List<Table>>> GetAllTables(CancellationToken cancellationToken)
         {
-            return Ok(await _table.GetAll(cancellationToken));
+            try
+            {
+                var response = await _table.GetAll(cancellationToken);
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Register POST request");
+                var errRet = new DataResponse<bool>
+                {
+                    Succeeded = false,
+                    ErrorMessage = "Error on register user"
+
+                };
+                return BadRequest(errRet);
+            }
         }
 
         [HttpPost]
         [Route("create")]
         public async Task<ActionResult<Table>> CreateTable([FromBody] Table entity, CancellationToken cancellationToken)
         {
-            _table.Add(entity);
-            await _unitOfWork.Save(cancellationToken);
+            try
+            {
+                var response = "";//await _role.CreateRole(entity);
+                await _unitOfWork.Save(cancellationToken);
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Register POST request");
+                var errRet = new DataResponse<bool>
+                {
+                    Succeeded = false,
+                    ErrorMessage = "Error on register user"
 
-            return Ok();
+                };
+                return BadRequest(errRet);
+            }
         }
         [HttpPost]
         [Route("register")]

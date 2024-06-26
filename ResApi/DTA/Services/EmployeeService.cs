@@ -31,7 +31,7 @@ namespace ResApi.DTA.Services
         public async Task<List<EmployeeDTO>> GetAllKamarierat(CancellationToken cancellationToken)
         {
             var entity = await _context.Employees
-                                     .Where(x => x.Role.RoleName == "Kamaerier")
+                                     .Where(x => x.Role.RoleName == "Kamarier")
                                      .Include(x => x.TableWaiters)
                                      .Include(x => x.Role)
                                      .ToListAsync(cancellationToken);
@@ -44,7 +44,7 @@ namespace ResApi.DTA.Services
 
         #region PubliMethods
 
-        public async Task<DataResponse<EmployeeDTO>> Authenticate(EmployeeDTO model)
+        public async Task<DataResponse<EmployeeDTO>> Authenticate(EmployeeDTO model)//Login
         {
             var response = new DataResponse<EmployeeDTO>() { Data = new EmployeeDTO() };
 
@@ -74,7 +74,7 @@ namespace ResApi.DTA.Services
                 }
                 else
                 {
-                    _logger.LogError("Authenticate: User is not activated in eInsure");
+                    _logger.LogError("Authenticate: User is not activated");
                     response.Succeeded = false;
                     response.Data = null;
                     response.ErrorMessage = "Perdoruesi nuk eshte aktiv. Hyrja eshte e ndaluar";// "User is not active, login is forbidden!";
@@ -136,8 +136,8 @@ namespace ResApi.DTA.Services
 
             try
             {
-                Employee employee = Extentions.AutoMapperProfile.MapForUpdate(model);
-                _emp.Update(employee);
+                var employeemap = _mapper.Map<Employee>(model);
+                _emp.Update(employeemap);
                 //var entity = _repository.Update(employee); // Update the user to context of users.
                 //if (entity != null)
                 //{

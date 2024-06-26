@@ -13,7 +13,7 @@ namespace ResApi.DTA.Intefaces
     {
         Task<DataResponse<string>> Register(TableWaiterDTO entity);
         Task<List<TableDTO>> MyTables(int waiterId);
-
+        Task<DataResponse<string>> UpdateTableWaiter(TableWaiterDTO model);
     }
 }
 

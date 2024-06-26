@@ -40,7 +40,7 @@ namespace ResApi.Controllers
                 var errRet = new DataResponse<bool>
                 {
                     Succeeded = false,
-                    ErrorMessage = "Error on register user"
+                    ErrorMessage = "Couldnt find any employees"
 
                 };
                 return BadRequest(errRet);

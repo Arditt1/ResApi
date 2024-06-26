@@ -5,6 +5,7 @@ using ResApi.DTA.Intefaces;
 using ResApi.DTO.Tables;
 using ResApi.DTO.TableWaiter;
 using ResApi.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,7 +28,22 @@ namespace ResApi.Controllers
         [Route("getOne")]
         public async Task<ActionResult<TableWaiter>> GetTableWaiter(int tableWaiterId, CancellationToken cancellationToken)
         {
-            return Ok(await _tableWaiter.Get(tableWaiterId, cancellationToken));
+            try
+            {
+                var response = await _tableWaiter.Get(tableWaiterId, cancellationToken);
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Register POST request");
+                var errRet = new DataResponse<bool>
+                {
+                    Succeeded = false,
+                    ErrorMessage = "Error on register user"
+
+                };
+                return BadRequest(errRet);
+            }
         }
         [HttpGet]
         [Route("getMyTables")]
@@ -40,7 +56,22 @@ namespace ResApi.Controllers
         [Route("getAll")]
         public async Task<ActionResult<List<TableWaiter>>> GetAllTableWaiters(CancellationToken cancellationToken)
         {
-            return Ok(await _tableWaiter.GetAll(cancellationToken));
+            try
+            {
+                var response = await _tableWaiter.GetAll(cancellationToken);
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Register POST request");
+                var errRet = new DataResponse<bool>
+                {
+                    Succeeded = false,
+                    ErrorMessage = "Error on register user"
+
+                };
+                return BadRequest(errRet);
+            }
         }
 
         [HttpPost]
@@ -61,19 +92,39 @@ namespace ResApi.Controllers
                 var addingTableWaiter = await _tableWaiter.Register(entity);
                 return Ok(addingTableWaiter);
             }
-            catch
+            catch (Exception e)
             {
-                throw;
+                _logger.Error(e, "Register POST request");
+                var errRet = new DataResponse<bool>
+                {
+                    Succeeded = false,
+                    ErrorMessage = "Error on register user"
+
+                };
+                return BadRequest(errRet);
             }
         }
         [HttpPost]
         [Route("update")]
-        public async Task<ActionResult<TableWaiter>> UpdateTableWaiter([FromBody] TableWaiter entity, CancellationToken cancellationToken)
+        public async Task<ActionResult<TableWaiter>> UpdateTableWaiter([FromBody] TableWaiterDTO entity, CancellationToken cancellationToken)
         {
-            _tableWaiter.Update(entity);
-            await _unitOfWork.Save(cancellationToken);
+            try
+            {
+                var response = _tableWaiter.UpdateTableWaiter(entity);
+                await _unitOfWork.Save(cancellationToken);
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Register POST request");
+                var errRet = new DataResponse<bool>
+                {
+                    Succeeded = false,
+                    ErrorMessage = "Error on register user"
 
-            return Ok();
+                };
+                return BadRequest(errRet);
+            }
         }
 
         [HttpPost]

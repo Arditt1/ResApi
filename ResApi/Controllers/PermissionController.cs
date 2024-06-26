@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NLog;
+using ResApi.DataResponse;
 using ResApi.DTA.Intefaces;
 using ResApi.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,34 +26,91 @@ namespace ResApi.Controllers
         [Route("getOne")]
         public async Task<ActionResult<Permission>> GetPermission(int permissionId, CancellationToken cancellationToken)
         {
-            return Ok(await _permission.Get(permissionId, cancellationToken));
+            try
+            {
+                var response = await _permission.Get(permissionId, cancellationToken);
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Register POST request");
+                var errRet = new DataResponse<bool>
+                {
+                    Succeeded = false,
+                    ErrorMessage = "Error on register user"
+
+                };
+                return BadRequest(errRet);
+            }
+            //return Ok(await _permission.Get(permissionId, cancellationToken));
         }
 
         [HttpGet]
         [Route("getAll")]
         public async Task<ActionResult<List<Permission>>> GetAllPermissions(CancellationToken cancellationToken)
         {
-            return Ok(await _permission.GetAll(cancellationToken));
+            try
+            {
+                var response = await _permission.GetAll(cancellationToken);
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Register POST request");
+                var errRet = new DataResponse<bool>
+                {
+                    Succeeded = false,
+                    ErrorMessage = "Error on register user"
+
+                };
+                return BadRequest(errRet);
+            }
         }
 
         [HttpPost]
         [Route("create")]
-        public async Task<ActionResult<Permission>> CreatePermission([FromBody] Permission entity, CancellationToken cancellationToken)
+        public async Task<ActionResult<string>> CreatePermission([FromBody] PermissionDTO entity, CancellationToken cancellationToken)
         {
-            _permission.Add(entity);
-            await _unitOfWork.Save(cancellationToken);
+            try
+            {
+                var response = await _permission.CreatePermission(entity);
+                await _unitOfWork.Save(cancellationToken);
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Register POST request");
+                var errRet = new DataResponse<bool>
+                {
+                    Succeeded = false,
+                    ErrorMessage = "Error on register user"
 
-            return Ok();
+                };
+                return BadRequest(errRet);
+            }
         }
 
         [HttpPost]
         [Route("update")]
-        public async Task<ActionResult<Permission>> UpdatePermission([FromBody] Permission entity, CancellationToken cancellationToken)
+        public async Task<ActionResult<string>> UpdatePermission([FromBody] PermissionDTO entity, CancellationToken cancellationToken)
         {
-            _permission.Update(entity);
-            await _unitOfWork.Save(cancellationToken);
+            try
+            {
+                var response = await _permission.UpdatePermission(entity);
+                await _unitOfWork.Save(cancellationToken);
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Register POST request");
+                var errRet = new DataResponse<bool>
+                {
+                    Succeeded = false,
+                    ErrorMessage = "Error on register user"
 
-            return Ok();
+                };
+                return BadRequest(errRet);
+            }
         }
 
         [HttpPost]

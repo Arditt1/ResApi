@@ -13,11 +13,9 @@ namespace ResApi.DTA.Intefaces
 {
     public interface IMenuItem : IBaseService<MenuItem>
     {
-        Task<DataResponse<string>> Register(MenuItemDTO model);
-
+        Task<DataResponse<string>> CreateMenuItem(MenuItemDTO model);
         Task<DataResponse<string>> UpdateMenuItem(MenuItemDTO model);
         Task<List<MenuItemDTO>> GetAllMenuItems(CancellationToken cancellationToken);
-        Task<DataResponse<string>> Add(MenuItemDTO entity);
         Task<List<MenuItemDTO>> GetAllMenuItemsByCategory(int CategoryId);
     }
 }

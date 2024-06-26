@@ -25,7 +25,7 @@ namespace ResApi.DTA.Services
             _mapper = mapper;
         }
 
-        public async Task<DataResponse<string>> Add(CategoryMenuDTO entity)
+        public async Task<DataResponse<string>> CreateCategoryMenu(CategoryMenu entity)
         {
             try
             {
@@ -33,9 +33,8 @@ namespace ResApi.DTA.Services
 
                 if (entity != null)
                 {
-
                     var categoryExists = await _context.CategoryMenus.AnyAsync(x => x.CategoryName == entity.CategoryName);
-                    if(categoryExists)
+                    if(!categoryExists)
                     {
                         response.Succeeded = false;
                         response.Data = "Exists";
@@ -51,7 +50,6 @@ namespace ResApi.DTA.Services
                         response.Data = "Success";
                         return response;
                     }
-
                 }
                 else
                     response.Succeeded = false;
@@ -64,39 +62,32 @@ namespace ResApi.DTA.Services
             }
         }
 
-        public async Task<DataResponse<string>> Register(CategoryMenuDTO model)
+        public async Task<DataResponse<string>> UpdateCategoryMenu(CategoryMenuDTO model)
         {
-            var response = new DataResponse<string>() { Succeeded = false, Data = string.Empty };
-
-            bool checkIfUserExists = await _context.CategoryMenus
-                       .AnyAsync(x => x.CategoryName == model.CategoryName);
-            if (checkIfUserExists)
+            var response = new DataResponse<string>
             {
-                response.ErrorMessage = "Kategoria me emrin: " + model.CategoryName + " ekziston";
-                response.Succeeded = false;
-                return response;
-            }
+                Succeeded = false,
+                ErrorMessage = "Per shkak te arsyeve teknike nuk mund te perditesojme klientin"
+            };
 
             try
             {
-                CategoryMenuDTO categoryMenu = new CategoryMenuDTO();
-                categoryMenu.CategoryName = model.CategoryName;
-
-                var entity = _mapper.Map<CategoryMenu>(categoryMenu);
-                _cat.Add(entity);
-                // Adding the user to context of users.
-                if (categoryMenu != null)
-                {
+                //CategoryMenu categoryMenu = Extentions.AutoMapperProfile.MapForRegisterCategory(model);
+                var catMapped = _mapper.Map<CategoryMenu>(model);
+                _cat.Update(catMapped);
+                //var entity = _repository.Update(employee); // Update the user to context of users.
+                //if (entity != null)
+                //{
                     response.Succeeded = true;
-                    response.Data = "succes";
-                    return response;
-                }
+                    response.Data = "Success";
+                //}
             }
             catch (Exception e)
             {
-                response.ErrorMessage = "Per shkak te problemeve teknike nuk jemi ne gjendje te krijojme profilin.";
-                _logger.LogError(e, $"CreateCustomerProfile: On adding user in customer portal db error {e.Message}");
+                _logger.LogError(e, $"UpdateEmployee: Update customer failed when trying to save in Portal db {e.Message}");
+                response.ErrorMessage = "Per shkak te problemeve teknike nuk mund te perditesojme profilin";
             }
+
             return response;
         }
     }

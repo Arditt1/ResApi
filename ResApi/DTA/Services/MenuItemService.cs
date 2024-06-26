@@ -27,46 +27,6 @@ namespace ResApi.DTA.Services
 
         }
 
-		public async Task<DataResponse<string>> Add(MenuItemDTO entity)
-		{
-			try
-			{
-                var response = new DataResponse<string>() { Succeeded = false, Data = string.Empty };
-				if(entity != null)
-				{
-					var itemExists = await _context.MenuItems.AnyAsync(x => x.Name == entity.Name);
-					if (itemExists)
-					{
-                        response.Succeeded = false;
-                        response.Data = "Exists";
-                        return response;
-					}
-					else
-					{
-						var itemMapped = _mapper.Map<MenuItem>(entity);
-						_context.MenuItems.Add(itemMapped);
-						_context.SaveChanges();
-
-                        response.Succeeded = true;
-                        response.Data = "Success";
-                        return response;
-                    }
-				}
-				else
-				{
-                    response.Succeeded = false;
-                    response.Data = "Failure";
-                    return response;
-                }
-
-            }
-            catch 
-			{
-				throw;
-			}
-		}
-
-
 		public async Task<List<MenuItemDTO>> GetAllMenuItems(CancellationToken cancellationToken)
 		{
 			try
@@ -94,6 +54,7 @@ namespace ResApi.DTA.Services
 			}
 
 		}
+
 		public async Task<List<MenuItemDTO>> GetAllMenuItemsByCategory(int CategoryId)
 		{
 			try
@@ -119,35 +80,41 @@ namespace ResApi.DTA.Services
 			
 		}
 
-        public async Task<DataResponse<string>> Register(MenuItemDTO model)
+        public async Task<DataResponse<string>> CreateMenuItem(MenuItemDTO model)
         {
             var response = new DataResponse<string>() { Succeeded = false, Data = string.Empty };
 
-            bool checkIfUserExists = await _context.MenuItems
+            bool checkIfMenuItemExists = await _context.MenuItems
                        .AnyAsync(x => x.Name == model.Name);
-            if (checkIfUserExists)
+            if (checkIfMenuItemExists)
             {
-                response.ErrorMessage = "Perdoruesi me usernamin: " + model.Name + " ekziston";
+                response.ErrorMessage = "Menyja me emrin: " + model.Name + " ekziston";
                 return response;
             }
 
             try
             {
-                MenuItem menuItem = Extentions.AutoMapperProfile.MapForRegisterMenu(model);
-                _context.MenuItems.Add(menuItem);
+                var menuitemMapp = _mapper.Map<MenuItem>(model);
+                _context.MenuItems.Add(menuitemMapp);
+                _context.SaveChanges();
                 // Adding the user to context of users.
-                if (menuItem != null)
+                if (menuitemMapp != null)
                 {
                     response.Succeeded = true;
-                    response.Data = "Error";
+                    response.Data = "Success";
+                    return response;
+                }
+                else
+                {
+                    response.Succeeded = false;
+                    response.Data = "Failure";
                     return response;
                 }
             }
             catch (Exception e)
             {
                 response.ErrorMessage = "Per shkak te problemeve teknike nuk jemi ne gjendje te krijojme profilin.";
-                //RequestLogger.WriteResAPIRequests("HTTP POST Response BuyOffer: ", response);
-                //ILogger.Error(e, $"CreateCustomerProfile: On adding user in customer portal db error {e.Message}");
+                RequestLogger.WriteResAPIRequests("HTTP POST Response BuyOffer: ", response);
             }
             return response;
         }
@@ -162,14 +129,19 @@ namespace ResApi.DTA.Services
 
             try
             {
-                MenuItem employee = Extentions.AutoMapperProfile.MapForRegisterMenu(model);
-                _context.MenuItems.Update(employee);
+                var employeeMapp = _mapper.Map<MenuItem>(model);
+                _context.MenuItems.Update(employeeMapp);
                 //var entity = _repository.Update(employee); // Update the user to context of users.
-                //if (entity != null)
-                //{
-                //    response.Succeeded = true;
-                //    response.Data = true;
-                //}
+                if (employeeMapp != null)
+                {
+                    response.Succeeded = true;
+                    response.Data = "Success";
+                }
+                else
+                {
+                    response.Succeeded = false;
+                    response.Data = "Error";
+                }
             }
             catch (Exception e)
             {

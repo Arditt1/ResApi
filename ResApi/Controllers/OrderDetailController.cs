@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NLog;
+using ResApi.DataResponse;
 using ResApi.DTA.Intefaces;
+using ResApi.DTO;
 using ResApi.DTO.OrderDetail;
 using ResApi.Models;
 using System;
@@ -26,34 +28,92 @@ namespace ResApi.Controllers
         [Route("getOne")]
         public async Task<ActionResult<OrderDetail>> GetOrderDetail(int orderDetailId, CancellationToken cancellationToken)
         {
-            return Ok(await _orderDetail.Get(orderDetailId, cancellationToken));
+            try
+            {
+                var response = await _orderDetail.Get(orderDetailId, cancellationToken);
+                await _unitOfWork.Save(cancellationToken);
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Register POST request");
+                var errRet = new DataResponse<bool>
+                {
+                    Succeeded = false,
+                    ErrorMessage = "Error on register user"
+
+                };
+                return BadRequest(errRet);
+            }
         }
 
         [HttpGet]
         [Route("getAll")]
         public async Task<ActionResult<List<OrderDetail>>> GetAllOrderDetails(CancellationToken cancellationToken)
         {
-            return Ok(await _orderDetail.GetAll(cancellationToken));
+            try
+            {
+                var response = await _orderDetail.GetAll(cancellationToken);
+                await _unitOfWork.Save(cancellationToken);
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Register POST request");
+                var errRet = new DataResponse<bool>
+                {
+                    Succeeded = false,
+                    ErrorMessage = "Error on register user"
+
+                };
+                return BadRequest(errRet);
+            }
         }
 
         [HttpPost]
         [Route("create")]
-        public async Task<ActionResult<OrderDetail>> CreateOrderDetail([FromBody] OrderDetail entity, CancellationToken cancellationToken)
+        public async Task<ActionResult<OrderDetail>> CreateOrderDetail([FromBody] OrderDetailDTO entity, CancellationToken cancellationToken)
         {
-            _orderDetail.Add(entity);
-            await _unitOfWork.Save(cancellationToken);
+            try
+            {
+                var response = await _orderDetail.CreateOrderDetail(entity);
+                await _unitOfWork.Save(cancellationToken);
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Register POST request");
+                var errRet = new DataResponse<bool>
+                {
+                    Succeeded = false,
+                    ErrorMessage = "Error on register user"
 
-            return Ok();
+                };
+                return BadRequest(errRet);
+            }
         }
 
         [HttpPost]
         [Route("update")]
-        public async Task<ActionResult<OrderDetail>> UpdateOrderDetail([FromBody] OrderDetail entity, CancellationToken cancellationToken)
+        public async Task<ActionResult<OrderDetail>> UpdateOrderDetail([FromBody] OrderDetailDTO entity, CancellationToken cancellationToken)
         {
-            _orderDetail.Update(entity);
-            await _unitOfWork.Save(cancellationToken);
+            try
+            {
+                var response = await _orderDetail.UpdateOrderDetail(entity);
+                await _unitOfWork.Save(cancellationToken);
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Register POST request");
+                var errRet = new DataResponse<bool>
+                {
+                    Succeeded = false,
+                    ErrorMessage = "Error on register user"
 
-            return Ok();
+                };
+                return BadRequest(errRet);
+            }
         }
 
         [HttpPost]

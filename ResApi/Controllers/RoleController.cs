@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NLog;
+using ResApi.DataResponse;
 using ResApi.DTA.Intefaces;
 using ResApi.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,34 +26,90 @@ namespace ResApi.Controllers
         [Route("getOne")]
         public async Task<ActionResult<Role>> GetRole(int roleId, CancellationToken cancellationToken)
         {
-            return Ok(await _role.Get(roleId, cancellationToken));
+            try
+            {
+                var response = await _role.Get(roleId, cancellationToken);
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Register POST request");
+                var errRet = new DataResponse<bool>
+                {
+                    Succeeded = false,
+                    ErrorMessage = "Error on register user"
+
+                };
+                return BadRequest(errRet);
+            }
         }
 
         [HttpGet]
         [Route("getAll")]
         public async Task<ActionResult<List<Role>>> GetAllRoles(CancellationToken cancellationToken)
         {
-            return Ok(await _role.GetAll(cancellationToken));
+            try
+            {
+                var response = await _role.GetAll(cancellationToken);
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Register POST request");
+                var errRet = new DataResponse<bool>
+                {
+                    Succeeded = false,
+                    ErrorMessage = "Error on register user"
+
+                };
+                return BadRequest(errRet);
+            }
         }
 
         [HttpPost]
         [Route("create")]
-        public async Task<ActionResult<Role>> CreateRole([FromBody] Role entity, CancellationToken cancellationToken)
+        public async Task<ActionResult<Role>> CreateRole([FromBody] RoleDTO entity, CancellationToken cancellationToken)
         {
-            _role.Add(entity);
-            await _unitOfWork.Save(cancellationToken);
+            try
+            {
+                var response = await _role.CreateRole(entity);
+                await _unitOfWork.Save(cancellationToken);
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Register POST request");
+                var errRet = new DataResponse<bool>
+                {
+                    Succeeded = false,
+                    ErrorMessage = "Error on register user"
 
-            return Ok();
+                };
+                return BadRequest(errRet);
+            }
         }
 
         [HttpPost]
         [Route("update")]
-        public async Task<ActionResult<Role>> UpdateRole([FromBody] Role entity, CancellationToken cancellationToken)
+        public async Task<ActionResult<Role>> UpdateRole([FromBody] RoleDTO entity, CancellationToken cancellationToken)
         {
-            _role.Update(entity);
-            await _unitOfWork.Save(cancellationToken);
+            try
+            {
+                var response = await _role.UpdateRole(entity);
+                await _unitOfWork.Save(cancellationToken);
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Register POST request");
+                var errRet = new DataResponse<bool>
+                {
+                    Succeeded = false,
+                    ErrorMessage = "Error on register user"
 
-            return Ok();
+                };
+                return BadRequest(errRet);
+            }
         }
 
         [HttpPost]
@@ -69,6 +127,14 @@ namespace ResApi.Controllers
             await _unitOfWork.Save(cancellationToken);
 
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("getAllMenuItemsByCategory")]
+        public async Task<List<RoleDTO>> GetAllMenuItemsByCategory(string rolename)
+        {
+            var entity = await _role.GetEmployeesByRole(rolename);
+            return entity;
         }
 
     }

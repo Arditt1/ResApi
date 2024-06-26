@@ -75,7 +75,7 @@ namespace ResApi.Controllers
         {
             try
             {
-                var response = await _iMenuItem.Register(entity);
+                var response = await _iMenuItem.CreateMenuItem(entity);
                 await _unitOfWork.Save(cancellationToken);
                 return Ok(response);
             }
@@ -92,20 +92,6 @@ namespace ResApi.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("register")]
-        public async Task<DataResponse<string>> Add(MenuItemDTO entity)
-        {
-            try
-            {
-                var addingMenuItem = await _iMenuItem.Add(entity);
-                return addingMenuItem;
-            }
-            catch 
-            {
-                throw;
-            }
-        }
 
         [HttpPost]
         [Route("update")]

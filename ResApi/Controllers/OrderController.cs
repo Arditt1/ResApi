@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NLog;
+using ResApi.DataResponse;
 using ResApi.DTA.Intefaces;
+using ResApi.DTO;
 using ResApi.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,34 +27,95 @@ namespace ResApi.Controllers
         [Route("getOne")]
         public async Task<ActionResult<Order>> GetOrder(int orderId, CancellationToken cancellationToken)
         {
-            return Ok(await _order.Get(orderId, cancellationToken));
+            try
+            {
+                var response = await _order.Get(orderId, cancellationToken);
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Register POST request");
+                var errRet = new DataResponse<bool>
+                {
+                    Succeeded = false,
+                    ErrorMessage = "Error on register user"
+
+                };
+                return BadRequest(errRet);
+            }
+            //return Ok(await _order.Get(orderId, cancellationToken));
         }
 
         [HttpGet]
         [Route("getAll")]
         public async Task<ActionResult<List<Order>>> GetAllOrders(CancellationToken cancellationToken)
         {
-            return Ok(await _order.GetAll(cancellationToken));
+            try
+            {
+                var response = await _order.GetAll(cancellationToken);
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Register POST request");
+                var errRet = new DataResponse<bool>
+                {
+                    Succeeded = false,
+                    ErrorMessage = "Error on register user"
+
+                };
+                return BadRequest(errRet);
+            }
+            //return Ok(await _order.GetAll(cancellationToken));
         }
 
         [HttpPost]
         [Route("create")]
-        public async Task<ActionResult<Order>> CreateOrder([FromBody] Order entity, CancellationToken cancellationToken)
+        public async Task<ActionResult<Order>> CreateOrder([FromBody] OrderDTO entity, CancellationToken cancellationToken)
         {
-            _order.Add(entity);
-            await _unitOfWork.Save(cancellationToken);
+            try
+            {
+                var response = _order.CreateOrder(entity);
+                await _unitOfWork.Save(cancellationToken);
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Register POST request");
+                var errRet = new DataResponse<bool>
+                {
+                    Succeeded = false,
+                    ErrorMessage = "Error on register user"
 
-            return Ok();
+                };
+                return BadRequest(errRet);
+            }
+            //_order.Add(entity);
+            //await _unitOfWork.Save(cancellationToken);
+            //return Ok();
         }
 
         [HttpPost]
         [Route("update")]
-        public async Task<ActionResult<Order>> UpdateOrder([FromBody] Order entity, CancellationToken cancellationToken)
+        public async Task<ActionResult<Order>> UpdateOrder([FromBody] OrderDTO entity, CancellationToken cancellationToken)
         {
-            _order.Update(entity);
-            await _unitOfWork.Save(cancellationToken);
+            try
+            {
+                var response = _order.UpdateOrder(entity);
+                await _unitOfWork.Save(cancellationToken);
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Register POST request");
+                var errRet = new DataResponse<bool>
+                {
+                    Succeeded = false,
+                    ErrorMessage = "Error on register user"
 
-            return Ok();
+                };
+                return BadRequest(errRet);
+            }
         }
         [HttpPost]
         [Route("delete")]
