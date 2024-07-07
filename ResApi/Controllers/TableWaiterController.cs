@@ -46,10 +46,10 @@ namespace ResApi.Controllers
             }
         }
         [HttpGet]
-        [Route("getMyTables")]
-        public async Task<List<TableDTO>> MyTables(int waiterId)
+        [Route("getMyTables/{id}")]
+        public async Task<List<TableDTO>> MyTables(int id)
         {
-            return await _tableWaiter.MyTables(waiterId);
+            return await _tableWaiter.MyTables(id);
         }
 
         [HttpGet]
@@ -74,6 +74,18 @@ namespace ResApi.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("removeWaiterFromTable/{tableId}/{waiterId}")]
+        public async Task<ActionResult<DataResponse<string>>> RemoveWaiterFromTable( int tableId, int waiterId)
+        {
+            return Ok(await _tableWaiter.RemoveWaiterFromTable(tableId, waiterId));
+        }
+        [HttpPost]
+        [Route("assignTableToWaiter/{tableId}/{waiterId}")]
+        public async Task<ActionResult<DataResponse<string>>> AssignTableToWaiter(int tableId, int waiterId)
+        {
+            return Ok(await _tableWaiter.AssignTableToWaiter(tableId, waiterId));
+        }
         [HttpPost]
         [Route("create")]
         public async Task<ActionResult<TableWaiter>> CreateTableWaiter([FromBody] TableWaiter entity, CancellationToken cancellationToken)

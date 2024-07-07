@@ -31,7 +31,7 @@ namespace ResApi.DTA.Services
         public async Task<List<EmployeeDTO>> GetAllKamarierat(CancellationToken cancellationToken)
         {
             var entity = await _context.Employees
-                                     .Where(x => x.Role.RoleName == "Kamarier")
+                                     .Where(x=>x.RoleId == 3)
                                      .Include(x => x.TableWaiters)
                                      .Include(x => x.Role)
                                      .ToListAsync(cancellationToken);

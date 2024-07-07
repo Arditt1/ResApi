@@ -39,8 +39,70 @@ namespace ResApi.DTA.Services
             {
                 throw;
             }
+        }
+        public async Task<DataResponse<string>> RemoveWaiterFromTable(int tableId, int waiterId)
+        {
+            try
+            {
+                var response = new DataResponse<string>() { Succeeded = false, Data = string.Empty };
+
+                var entity = await _context.TableWaiters.Include(x => x.Table).Where(x => x.WaiterId == waiterId && x.TableId == tableId).FirstOrDefaultAsync();
+                
+                if(entity == null)
+                {
+                    throw new Exception("Table not found!");
+                }
+                else
+                {
+                    _context.TableWaiters.Remove(entity);
+                    await _context.SaveChangesAsync();
+
+                    response.Data = "true";
+                    response.Succeeded = true;
+                }
+
+                return response;
 
 
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error=", ex.Message);
+                throw;
+            }
+        }
+
+        public async Task<DataResponse<string>> AssignTableToWaiter(int tableId,int waiterId)
+        {
+            try
+            {
+                var response = new DataResponse<string>() { Succeeded = false, Data = string.Empty  };
+
+                var entity = await _context.TableWaiters.Include(x => x.Table).Where(x => x.WaiterId == waiterId && x.TableId == tableId).ToListAsync();
+                if(entity.Any(x=>x.TableId == tableId))
+                {
+                    throw new Exception("Table already assigned!");
+                }
+
+                TableWaiter twTable = new()
+                {
+                 TableId = tableId,
+                 WaiterId = waiterId,
+                };
+                _context.TableWaiters.Add(twTable);
+                await _context.SaveChangesAsync();
+
+                response.Succeeded = true;
+                response.Data = "true";
+
+                return response;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("error=", ex.Message);
+                throw;
+            }
         }
 
         public async Task<DataResponse<string>> Register(TableWaiterDTO entity)
