@@ -32,16 +32,18 @@ namespace ResApi.DTA.Services.Shared
         {
             entity.Deleted = true;
             Context.Update(entity);
+            Context.SaveChanges();
         }
 
         public void Update(T entity)
         {
             Context.Update(entity);
+            Context.SaveChanges();
         }
 
         public Task<List<T>> GetAll(CancellationToken cancellationToken)
         {
-            return Context.Set<T>().ToListAsync(cancellationToken);
+            return Context.Set<T>().Where(x=>x.Deleted == false).ToListAsync(cancellationToken);
         }
 
         public IQueryable<T> GetAllQueryable()

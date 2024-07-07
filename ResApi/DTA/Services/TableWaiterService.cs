@@ -108,7 +108,7 @@ namespace ResApi.DTA.Services
             }
             catch (Exception e)
             {
-                RequestLogger.WriteResAPIRequests("HTTP POST Response UpdateTableWaiter: ", response);
+                //RequestLogger.WriteResAPIRequests("HTTP POST Response UpdateTableWaiter: ", response);
                 response.ErrorMessage = "Per shkak te problemeve teknike nuk mund te perditesojme profilin";
             }
 

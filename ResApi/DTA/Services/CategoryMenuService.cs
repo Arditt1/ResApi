@@ -34,7 +34,7 @@ namespace ResApi.DTA.Services
                 if (entity != null)
                 {
                     var categoryExists = await _context.CategoryMenus.AnyAsync(x => x.CategoryName == entity.CategoryName);
-                    if(!categoryExists)
+                    if(categoryExists)
                     {
                         response.Succeeded = false;
                         response.Data = "Exists";
@@ -56,8 +56,9 @@ namespace ResApi.DTA.Services
                     response.Data = "Failure";
                     return response;
             }
-            catch 
+            catch(Exception ex)
             {
+                Console.WriteLine("Error=", ex.Message);
                 throw;
             }
         }
@@ -73,8 +74,13 @@ namespace ResApi.DTA.Services
             try
             {
                 //CategoryMenu categoryMenu = Extentions.AutoMapperProfile.MapForRegisterCategory(model);
-                var catMapped = _mapper.Map<CategoryMenu>(model);
-                _cat.Update(catMapped);
+                CategoryMenu catMenu = new()
+                {
+                 CategoryName=model.CategoryName,
+                 Id = (int)model.Id,
+                };
+                _context.CategoryMenus.Update(catMenu);
+                _context.SaveChanges();
                 //var entity = _repository.Update(employee); // Update the user to context of users.
                 //if (entity != null)
                 //{

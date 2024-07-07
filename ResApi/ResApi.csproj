@@ -25,9 +25,13 @@
   <ItemGroup>
     <None Remove="DTO\Tables\" />
     <None Remove="DTO\TableWaiter\" />
+    <None Remove="DTO\Role\" />
+    <None Remove="DTO\Permission\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DTO\Tables\" />
     <Folder Include="DTO\TableWaiter\" />
+    <Folder Include="DTO\Role\" />
+    <Folder Include="DTO\Permission\" />
   </ItemGroup>
 </Project>

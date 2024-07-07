@@ -61,7 +61,7 @@ namespace ResApi.DTA.Services
             catch (Exception e)
             {
                 response.ErrorMessage = "Per shkak te problemeve teknike nuk jemi ne gjendje te krijojme profilin.";
-                RequestLogger.WriteResAPIRequests("HTTP POST Response CreateOrder: ", response);
+                //RequestLogger.WriteResAPIRequests("HTTP POST Response CreateOrder: ", response);
             }
             return response;
         }
@@ -92,7 +92,7 @@ namespace ResApi.DTA.Services
             }
             catch (Exception e)
             {
-                RequestLogger.WriteResAPIRequests("HTTP POST Response UpdateOrder: ", response);
+                //RequestLogger.WriteResAPIRequests("HTTP POST Response UpdateOrder: ", response);
                 response.ErrorMessage = "Per shkak te problemeve teknike nuk mund te perditesojme profilin";
             }
 

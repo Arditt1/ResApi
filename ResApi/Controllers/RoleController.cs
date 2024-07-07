@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using NLog;
 using ResApi.DataResponse;
 using ResApi.DTA.Intefaces;
+using ResApi.DTO.Role;
 using ResApi.Models;
 using System;
 using System.Collections.Generic;
@@ -17,10 +19,12 @@ namespace ResApi.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRole _role;
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-        public RoleController(IUnitOfWork unitOfWork, IRole role)
+        private readonly IMapper _mapper;
+        public RoleController(IUnitOfWork unitOfWork, IRole role,IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _role = role;
+            _mapper = mapper;
         }
         [HttpGet]
         [Route("getOne")]
@@ -72,6 +76,7 @@ namespace ResApi.Controllers
         {
             try
             {
+                var temp = _mapper.Map<Role>(entity);
                 var response = await _role.CreateRole(entity);
                 await _unitOfWork.Save(cancellationToken);
                 return Ok(response);

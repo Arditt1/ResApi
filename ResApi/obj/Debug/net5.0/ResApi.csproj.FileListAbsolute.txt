@@ -80,6 +80,13 @@ C:/Users/ardit/Desktop/Ardit/ResApi_ab/ResApi/obj/Debug/net5.0/ref/ResApi.dll
 C:/Users/ardit/Desktop/Ardit/ResApi_ab/ResApi/obj/Debug/net5.0/ResApi.pdb
 C:/Users/ardit/Desktop/Ardit/ResApi_ab/ResApi/obj/Debug/net5.0/ResApi.genruntimeconfig.cache
 C:/Users/ardit/Desktop/Ardit/ResApi_ab/ResApi/obj/Debug/net5.0/ResApi.csproj.AssemblyReference.cache
+/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/obj/Debug/net5.0/ResApi.csproj.AssemblyReference.cache
+/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/obj/Debug/net5.0/ResApi.GeneratedMSBuildEditorConfig.editorconfig
+/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/obj/Debug/net5.0/ResApi.AssemblyInfoInputs.cache
+/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/obj/Debug/net5.0/ResApi.AssemblyInfo.cs
+/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/obj/Debug/net5.0/ResApi.csproj.CoreCompileInputs.cache
+/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/obj/Debug/net5.0/ResApi.MvcApplicationPartsAssemblyInfo.cs
+/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/obj/Debug/net5.0/ResApi.MvcApplicationPartsAssemblyInfo.cache
 /Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/bin/Debug/net5.0/appsettings.Development.json
 /Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/bin/Debug/net5.0/appsettings.json
 /Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/bin/Debug/net5.0/ResApi
@@ -138,13 +145,8 @@ C:/Users/ardit/Desktop/Ardit/ResApi_ab/ResApi/obj/Debug/net5.0/ResApi.csproj.Ass
 /Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/bin/Debug/net5.0/runtimes/win-x86/native/Microsoft.Data.SqlClient.SNI.pdb
 /Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/bin/Debug/net5.0/runtimes/win/lib/netstandard2.0/System.Runtime.Caching.dll
 /Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/bin/Debug/net5.0/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll
-/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/obj/Debug/net5.0/ResApi.csproj.AssemblyReference.cache
-/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/obj/Debug/net5.0/ResApi.GeneratedMSBuildEditorConfig.editorconfig
-/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/obj/Debug/net5.0/ResApi.AssemblyInfoInputs.cache
-/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/obj/Debug/net5.0/ResApi.AssemblyInfo.cs
-/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/obj/Debug/net5.0/ResApi.csproj.CoreCompileInputs.cache
-/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/obj/Debug/net5.0/ResApi.MvcApplicationPartsAssemblyInfo.cs
-/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/obj/Debug/net5.0/ResApi.MvcApplicationPartsAssemblyInfo.cache
+/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/bin/Debug/net5.0/NLog.dll
+/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/bin/Debug/net5.0/NLog.xml
 /Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/obj/Debug/net5.0/scopedcss/bundle/ResApi.styles.css
 /Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/obj/Debug/net5.0/staticwebassets/ResApi.StaticWebAssets.Manifest.cache
 /Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/obj/Debug/net5.0/staticwebassets/ResApi.StaticWebAssets.Pack.cache
@@ -159,5 +161,3 @@ C:/Users/ardit/Desktop/Ardit/ResApi_ab/ResApi/obj/Debug/net5.0/ResApi.csproj.Ass
 /Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/obj/Debug/net5.0/ResApi.pdb
 /Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/obj/Debug/net5.0/ResApi.genruntimeconfig.cache
 /Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/obj/Debug/net5.0/ref/ResApi.dll
-/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/bin/Debug/net5.0/NLog.dll
-/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/bin/Debug/net5.0/NLog.xml

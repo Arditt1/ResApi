@@ -1,6 +1,7 @@
 ﻿using ResApi.DataResponse;
 using ResApi.DTA.Intefaces.Shared;
 using ResApi.DTO;
+using ResApi.DTO.Permission;
 using ResApi.Models;
 using System.Threading.Tasks;
 

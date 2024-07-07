@@ -120,11 +120,11 @@ namespace ResApi.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("delete")]
-        public async Task<ActionResult> DeleteMenuItem([FromBody] int menuItemId, CancellationToken cancellationToken)
+        [HttpDelete]
+        [Route("delete/{id}")]
+        public async Task<ActionResult> DeleteMenuItem(int id, CancellationToken cancellationToken)
         {
-            var entity = await _iMenuItem.Get(menuItemId, cancellationToken);
+            var entity = await _iMenuItem.Get(id, cancellationToken);
 
             if (entity == null)
                 return BadRequest("No entity was found with the provided ID.");
@@ -140,7 +140,7 @@ namespace ResApi.Controllers
         [HttpGet]
         [Route("getMenuItemsWithCategories")]
         public async Task<ActionResult<List<MenuItemDTO>>> GetAllMenuItemsWithCategories(CancellationToken cancellationToken)
-        {
+         {
             try
             {
                 var entity = await _iMenuItem.GetAllMenuItems(cancellationToken);

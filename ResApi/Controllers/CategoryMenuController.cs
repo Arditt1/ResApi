@@ -37,6 +37,7 @@ namespace ResApi.Controllers
             }
             catch (Exception e)
             {
+                Console.WriteLine("Error=", e.Message);
                 //_logger.Error(e, "Register POST request");
                 var errRet = new DataResponse<bool>
                 {
@@ -78,7 +79,7 @@ namespace ResApi.Controllers
         {
             try
             {
-                _catMenu.CreateCategoryMenu(entity);
+                await _catMenu.CreateCategoryMenu(entity);
                 return Ok();
             }
             catch (Exception e)
@@ -103,7 +104,7 @@ namespace ResApi.Controllers
         {
             try
             {
-                _catMenu.UpdateCategoryMenu(entity);
+                await _catMenu.UpdateCategoryMenu(entity);
                 return Ok();
             }
             catch (Exception e)
@@ -122,13 +123,13 @@ namespace ResApi.Controllers
             //return Ok();
         }
 
-        [HttpPost]
-        [Route("delete")]
-        public async Task<ActionResult> DeleteCategoryMenu([FromBody] int CatMenuId, CancellationToken cancellationToken)
+        [HttpDelete]
+        [Route("delete/{id}")]
+        public async Task<ActionResult> DeleteCategoryMenu( int id, CancellationToken cancellationToken)
         {
             try
             {
-                var entity = await _catMenu.Get(CatMenuId, cancellationToken);
+                var entity = await _catMenu.Get(id, cancellationToken);
                 if (entity == null)
                     return BadRequest("No time log was found with the provided ID.");
 

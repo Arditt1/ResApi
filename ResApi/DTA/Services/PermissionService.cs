@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using ResApi.DataResponse;
 using ResApi.DTA.Intefaces;
 using ResApi.DTA.Services.Shared;
+using ResApi.DTO.Permission;
 using ResApi.Models;
 
 namespace ResApi.DTA.Services
@@ -56,7 +57,7 @@ namespace ResApi.DTA.Services
             catch (Exception e)
             {
                 response.ErrorMessage = "Per shkak te problemeve teknike nuk jemi ne gjendje te krijojme profilin.";
-                RequestLogger.WriteResAPIRequests("HTTP POST Response CreatePermission: ", response);
+                //RequestLogger.WriteResAPIRequests("HTTP POST Response CreatePermission: ", response);
             }
             return response;
         }
@@ -87,7 +88,7 @@ namespace ResApi.DTA.Services
             }
             catch (Exception e)
             {
-                RequestLogger.WriteResAPIRequests("HTTP POST Response UpdatePermission: ", response);
+                //RequestLogger.WriteResAPIRequests("HTTP POST Response UpdatePermission: ", response);
                 response.ErrorMessage = "Per shkak te problemeve teknike nuk mund te perditesojme profilin";
             }
 

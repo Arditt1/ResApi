@@ -32,6 +32,7 @@ namespace ResApi.DTA.Services
 			try
 			{
                 var entity = await _context.MenuItems
+                           .Where(x=>x.Deleted == false)
                            .Include(x => x.Category)
                            .Select(x => new MenuItemDTO()
                            {
@@ -48,8 +49,9 @@ namespace ResApi.DTA.Services
 
                 return menuItems;
             }
-			catch 
+			catch(Exception e)
 			{
+                Console.WriteLine("Error=", e);
 				throw;
 			}
 
@@ -61,7 +63,7 @@ namespace ResApi.DTA.Services
 			{
                 var entity = await _context.MenuItems
                                        .Include(x => x.Category)
-                                       .Where(x => x.CategoryId == CategoryId)
+                                       .Where(x => x.CategoryId == CategoryId && x.Deleted ==false)
                                        .Select(x => new MenuItemDTO()
                                        {
                                            Id = x.Id,
@@ -114,7 +116,7 @@ namespace ResApi.DTA.Services
             catch (Exception e)
             {
                 response.ErrorMessage = "Per shkak te problemeve teknike nuk jemi ne gjendje te krijojme profilin.";
-                RequestLogger.WriteResAPIRequests("HTTP POST Response BuyOffer: ", response);
+                //RequestLogger.WriteResAPIRequests("HTTP POST Response BuyOffer: ", response);
             }
             return response;
         }

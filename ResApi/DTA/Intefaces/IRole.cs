@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ResApi.DataResponse;
 using ResApi.DTA.Intefaces.Shared;
+using ResApi.DTO.Role;
 using ResApi.Models;
 
 namespace ResApi.DTA.Intefaces
@@ -12,6 +13,6 @@ namespace ResApi.DTA.Intefaces
 		Task<DataResponse<string>> CreateRole(RoleDTO model);
 		Task<DataResponse<string>> UpdateRole(RoleDTO model);
 		Task<List<RoleDTO>> GetEmployeesByRole(string roleName);
-	}
+    }
 }
 

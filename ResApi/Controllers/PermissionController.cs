@@ -2,6 +2,7 @@
 using NLog;
 using ResApi.DataResponse;
 using ResApi.DTA.Intefaces;
+using ResApi.DTO.Permission;
 using ResApi.Models;
 using System;
 using System.Collections.Generic;
