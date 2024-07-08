@@ -35,7 +35,22 @@ namespace ResApi.DTA.Services
                                      .Include(x => x.TableWaiters)
                                      .Include(x => x.Role)
                                      .ToListAsync(cancellationToken);
-            var kamarierat = _mapper.Map<List<EmployeeDTO>>(entity);
+
+            var kamarierat = await _context.Employees.Where(x => x.RoleId == 3 && x.Status != false)
+                                         .Include(x => x.TableWaiters)
+                                         .Include(x => x.Role)
+                                         .Select(x => new EmployeeDTO()
+                                         {
+                                             ContactInfo = x.ContactInfo,
+                                             Id = x.Id,
+                                             Name = x.Name,
+                                             RoleName = x.Role.RoleName,
+                                             Status = x.Status,
+                                             Surname = x.Surname,
+                                             Username = x.Username,
+                                             RoleId = x.RoleId,
+                                         }).ToListAsync(cancellationToken);
+
 
 
             return kamarierat;

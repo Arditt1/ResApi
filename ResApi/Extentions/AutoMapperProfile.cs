@@ -43,6 +43,8 @@ namespace ResApi.Extentions
             em.RoleId = empDTO.RoleId;
             em.Status = empDTO.Status;
             em.Surname = empDTO.Surname;
+            em.ContactInfo = empDTO.ContactInfo;
+            em.Status = true;
             return em;
         }
 
