@@ -108,10 +108,10 @@ namespace ResApi.DTA.Services
 
             try
             {
-                Employee employee = Extentions.AutoMapperProfile.MapForUpdate(model);
-                _emp.Add(employee);
+                var employeemap = _mapper.Map<Employee>(model);
+                _emp.Add(employeemap);
                 // Adding the user to context of users.
-                if (employee != null)
+                if (employeemap != null)
                 {
                     response.Succeeded = true;
                     response.Data = "Error";
