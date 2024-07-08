@@ -208,6 +208,13 @@ namespace ResApi.Controllers
                 return BadRequest(errRet);
             }
         }
+
+        [HttpPut]
+        [Route("removeEmployee/{Id}")]
+        public async Task<DataResponse<string>> RemoveEployee(int Id)
+        {
+            return await _emp.RemoveEployee(Id);
+        }
     }
 }
 

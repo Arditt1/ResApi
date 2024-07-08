@@ -21,6 +21,7 @@ namespace ResApi.DTA.Services.Shared
         public void Add(T entity)
         {
             Context.Add(entity);
+            Context.SaveChanges();
         }
 
         public Task<T?> Get(int id, CancellationToken cancellationToken)
