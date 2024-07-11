@@ -5,6 +5,7 @@ using ResApi.DTA.Intefaces.Shared;
 using ResApi.DTO.Tables;
 using ResApi.Models;
 using System.Collections.Generic;
+using ResApi.DTO;
 
 namespace ResApi.DTA.Intefaces
 {
@@ -12,7 +13,7 @@ namespace ResApi.DTA.Intefaces
     {
         Task<DataResponse<string>> Register(TableDTO entity);
         Task<List<TableDTO>> FreeTables();
-
+        Task<EmployeeDTO> WaiterInfo(int tableId);
     }
 }
 

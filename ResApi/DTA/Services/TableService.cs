@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using ResApi.DataResponse;
 using ResApi.DTA.Intefaces;
 using ResApi.DTA.Services.Shared;
+using ResApi.DTO;
 using ResApi.DTO.Tables;
 using ResApi.Models;
 
@@ -40,6 +41,28 @@ namespace ResApi.DTA.Services
 			}
 			catch
 			{
+				throw;
+			}
+		}
+		public async Task<EmployeeDTO> WaiterInfo(int tableId)
+		{
+			try
+			{
+				var entity = await _context.TableWaiters.Include(x => x.Waiter)
+												  .Where(x => x.TableId == tableId)
+												  .Select(x => new EmployeeDTO()
+												  {
+													 Id = x.Waiter.Id,
+													 Username= x.Waiter.Username,
+													 ContactInfo = x.Waiter.ContactInfo,
+													 TableId = x.TableId,
+												  }).FirstOrDefaultAsync();
+				return entity;
+
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine("Error=", ex.Message);
 				throw;
 			}
 		}

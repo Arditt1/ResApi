@@ -12,6 +12,7 @@ namespace ResApi.DTO
         public string? Password { get; set; }
         public bool? Status { get; set; }
         public string? ContactInfo { get; set; }
+        public int? TableId { get; set; }
     }
 }
 

@@ -132,7 +132,7 @@ namespace ResApi.DTA.Services
 
                 await _context.SaveChangesAsync();
 
-                response.Data = "True";
+                response.Data = "Perdoruesi u fshie me sukses!";
                 response.Succeeded = true;
                 return response;
 
@@ -154,7 +154,8 @@ namespace ResApi.DTA.Services
                        .AnyAsync(x => x.Username == model.Username); 
             if (checkIfUserExists)
             {
-                response.ErrorMessage = "Perdoruesi me usernamin: " + model.Username + " ekziston";
+                response.Data = "Verejtje! Perdoruesi me usernamin: '" + model.Username + "' momentalisht ekziston.";
+                response.Succeeded = false;
                 return response;
             }
 
@@ -183,7 +184,7 @@ namespace ResApi.DTA.Services
                 if (employee != null)
                 {
                     response.Succeeded = true;
-                    response.Data = "Error";
+                    response.Data = "Perdoruesi me username: '" + employee.Username + "' u regjistrua me sukses!";
                     return response;
                 }
             }

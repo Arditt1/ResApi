@@ -2,6 +2,7 @@
 using NLog;
 using ResApi.DataResponse;
 using ResApi.DTA.Intefaces;
+using ResApi.DTO;
 using ResApi.DTO.Tables;
 using ResApi.Models;
 using System;
@@ -135,8 +136,16 @@ namespace ResApi.Controllers
 
             return Ok();
         }
-
-
+        [HttpGet]
+        [Route("waiterInfo/{tableId}")]
+        public async Task<ActionResult<EmployeeDTO>> WaiterInfo(int tableId)
+        {
+            var entity = await _table.WaiterInfo(tableId);
+            if (entity == null)
+                return NotFound();
+            else
+                return Ok(entity);
+        }
     }
 }
 

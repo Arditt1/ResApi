@@ -1,41 +1,27 @@
 ﻿<Properties StartupConfiguration="{CF3C8B4C-7B71-4D41-B0E7-62F7D323FCEF}|Default" GitUserInfo="UsingGIT">
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/Controllers/MenuItemController.cs" relfile="ResApi/Controllers/MenuItemController.cs" line="52" column="1" />
-      <Breakpoint file="/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/Controllers/EmployeeController.cs" relfile="ResApi/Controllers/EmployeeController.cs" line="101" column="1" />
-    </BreakpointStore>
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.ItemProperties.ResApi PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ResApi/DTA/Services/EmployeeService.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ResApi/mykey">
     <Files>
-      <File FileName="ResApi/DTA/Services/EmployeeService.cs" Line="137" Column="18" />
-      <File FileName="ResApi/DTA/Services/TableService.cs" />
-      <File FileName="ResApi/Controllers/EmployeeController.cs" />
-      <File FileName="ResApi/appsettings.json" Line="15" Column="1" />
+      <File FileName="ResApi/mykey" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="ResApi" expanded="True">
             <Node name="ResApi" expanded="True">
-              <Node name="Controllers" expanded="True" />
-              <Node name="DTA" expanded="True">
-                <Node name="Intefaces" expanded="True" />
-                <Node name="Services" expanded="True">
-                  <Node name="Shared" expanded="True" />
-                </Node>
-              </Node>
-              <Node name="Extentions" expanded="True" />
-              <Node name="Models" expanded="True">
-                <Node name="Shared" expanded="True" />
-              </Node>
+              <Node name="mykey" selected="True" />
             </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/Controllers/MenuItemController.cs" relfile="ResApi/Controllers/MenuItemController.cs" line="52" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.ResApi PreferredExecutionTarget="/Applications/Google Chrome.app" />
 </Properties>
