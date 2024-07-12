@@ -37,6 +37,8 @@ namespace ResApi.Models
                 entity.HasKey(e => e.Id)
                     .HasName("PK__Category__19093A2B9ED53588");
 
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
                 entity.ToTable("CategoryMenu");
 
                 entity.Property(e => e.Id).HasColumnName("Id");
@@ -56,6 +58,8 @@ namespace ResApi.Models
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("Id");
+
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.ContactInfo)
                     .HasMaxLength(255)
@@ -92,6 +96,8 @@ namespace ResApi.Models
             {
                 entity.Property(e => e.Id).HasColumnName("Id");
 
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
                 entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
 
                 entity.Property(e => e.Description).HasColumnType("text");
@@ -111,6 +117,8 @@ namespace ResApi.Models
             modelBuilder.Entity<Order>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("Id");
+
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.OrderTime).HasColumnType("datetime");
 
@@ -135,6 +143,8 @@ namespace ResApi.Models
             {
                 entity.Property(e => e.Id).HasColumnName("Id");
 
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
                 entity.Property(e => e.MenuItemId).HasColumnName("MenuItemID");
 
                 entity.Property(e => e.OrderId).HasColumnName("OrderID");
@@ -156,6 +166,8 @@ namespace ResApi.Models
             {
                 entity.Property(e => e.Id).HasColumnName("Id");
 
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
                 entity.Property(e => e.Permission1)
                     .HasMaxLength(255)
                     .IsUnicode(false)
@@ -173,6 +185,8 @@ namespace ResApi.Models
             {
                 entity.Property(e => e.Id).HasColumnName("Id");
 
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
                 entity.Property(e => e.RoleName)
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -181,11 +195,15 @@ namespace ResApi.Models
             modelBuilder.Entity<Table>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("Id");
+
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
             });
 
             modelBuilder.Entity<TableWaiter>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("Id");
+
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.TableId).HasColumnName("TableID");
 

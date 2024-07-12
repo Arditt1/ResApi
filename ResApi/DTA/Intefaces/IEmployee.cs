@@ -16,6 +16,7 @@ namespace ResApi.DTA.Intefaces
         Task<DataResponse<string>> UpdateEmployee(EmployeeDTO model);
         Task<DataResponse<bool>> ChangePassword(ChangePasswordDto model, CancellationToken cancellationToken);//DisableEmployee
         Task<DataResponse<bool>> DisableEmployee(DisableEmployeeDTO model, CancellationToken cancellationToken);
+        Task<DataResponse<string>> RemoveEployee(int Id);
     }
 }
 

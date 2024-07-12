@@ -31,11 +31,26 @@ namespace ResApi.DTA.Services
         public async Task<List<EmployeeDTO>> GetAllKamarierat(CancellationToken cancellationToken)
         {
             var entity = await _context.Employees
-                                     .Where(x=>x.RoleId == 3)
+                                     .Where(x => x.Status == true)
                                      .Include(x => x.TableWaiters)
                                      .Include(x => x.Role)
                                      .ToListAsync(cancellationToken);
-            var kamarierat = _mapper.Map<List<EmployeeDTO>>(entity);
+
+            var kamarierat = await _context.Employees.Where(x => x.Status != false)
+                                         .Include(x => x.TableWaiters)
+                                         .Include(x => x.Role)
+                                         .Select(x => new EmployeeDTO()
+                                         {
+                                             ContactInfo = x.ContactInfo,
+                                             Id = x.Id,
+                                             Name = x.Name,
+                                             RoleName = x.Role.RoleName,
+                                             Status = x.Status,
+                                             Surname = x.Surname,
+                                             Username = x.Username,
+                                             RoleId = x.RoleId,
+                                         }).ToListAsync(cancellationToken);
+
 
 
             return kamarierat;
@@ -94,6 +109,43 @@ namespace ResApi.DTA.Services
 
         }
 
+        public async Task<DataResponse<string>> RemoveEployee(int Id)
+        {
+                var response = new DataResponse<string>() { Succeeded = false, Data = string.Empty };
+            try
+            {
+                bool checkIfUserExists = await _context.Employees.AnyAsync(x => x.Id == Id);
+                if (!checkIfUserExists)
+                {
+                    response.ErrorMessage = "Perdoruesi me id: " + Id + " nuk ekziston!";
+                    return response;
+                }
+                var employeeTables = await _context.TableWaiters.Include(x => x.Table).Where(x => x.WaiterId == Id).ToListAsync();
+                foreach(var emp in employeeTables)
+                { 
+                    _context.TableWaiters.Remove(emp);
+                }
+
+                var employee = await _context.Employees.FirstOrDefaultAsync(x => x.Id == Id);
+                employee.Status = false;
+                _context.Employees.Update(employee);
+
+                await _context.SaveChangesAsync();
+
+                response.Data = "True";
+                response.Succeeded = true;
+                return response;
+
+
+            }
+            catch (Exception ex)
+            {
+                response.ErrorMessage = "Per shkak te problemeve teknike nuk jemi ne gjendje te krijojme profilin.";
+                _logger.LogError(ex, $"CreateCustomerProfile: On adding user in customer portal db error {ex.Message}");
+            }
+            return response;
+        }
+
         public async Task<DataResponse<string>> Register(EmployeeDTO model)
         {
             var response = new DataResponse<string>() { Succeeded = false, Data = string.Empty };
@@ -108,10 +160,27 @@ namespace ResApi.DTA.Services
 
             try
             {
-                var employeemap = _mapper.Map<Employee>(model);
-                _emp.Add(employeemap);
+                Employee employee = new()
+                {
+                  Password    = model.Password,
+                  Username    = model.Username,
+                  Surname     = model.Surname,
+                  RoleId      = model.RoleId,
+                  Name        = model.Name,
+                  ContactInfo = model.ContactInfo,
+                  CreatedAt   = DateTime.Now,
+                  CreatedBy   = "Admin",
+                  Deleted     = false,
+                  Status      = true,
+                  ModifiedAt  = DateTime.Now,
+                  ModifiedBy  = "Admin",
+                };
+
+
+                _context.Employees.Add(employee);
+                _context.SaveChanges();
                 // Adding the user to context of users.
-                if (employeemap != null)
+                if (employee != null)
                 {
                     response.Succeeded = true;
                     response.Data = "Error";
