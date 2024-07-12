@@ -136,7 +136,7 @@ namespace ResApi.Controllers
                 var errRet = new DataResponse<bool>
                 {
                     Succeeded = false,
-                    ErrorMessage = "Error on register user"
+                    ErrorMessage = "Error on updating user"
 
                 };
                 return BadRequest(errRet);
@@ -175,7 +175,7 @@ namespace ResApi.Controllers
                 var errRet = new DataResponse<bool>
                 {
                     Succeeded = false,
-                    ErrorMessage = "Error on register user"
+                    ErrorMessage = "Error on changing password"
 
                 };
                 return BadRequest(errRet);
@@ -202,11 +202,18 @@ namespace ResApi.Controllers
                 var errRet = new DataResponse<bool>
                 {
                     Succeeded = false,
-                    ErrorMessage = "Error on register user"
+                    ErrorMessage = "Error on disabling the employee"
 
                 };
                 return BadRequest(errRet);
             }
+        }
+
+        [HttpPut]
+        [Route("removeEmployee/{Id}")]
+        public async Task<DataResponse<string>> RemoveEployee(int Id)
+        {
+            return await _emp.RemoveEployee(Id);
         }
     }
 }
