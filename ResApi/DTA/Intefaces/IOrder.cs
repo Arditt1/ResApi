@@ -2,6 +2,8 @@
 using ResApi.DTA.Intefaces.Shared;
 using ResApi.DTO;
 using ResApi.Models;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ResApi.DTA.Intefaces
@@ -10,6 +12,7 @@ namespace ResApi.DTA.Intefaces
     {
         Task<DataResponse<string>> CreateOrder(OrderDTO model);
         Task<DataResponse<string>> UpdateOrder(OrderDTO model);
+        Task<List<OrderDTO>> OrdersToKitchen(int orderid, CancellationToken cancellationToken);
     }
 }
 

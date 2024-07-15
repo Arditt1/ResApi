@@ -9,6 +9,8 @@ namespace ResApi.DTO
 
         public int? TableId { get; set; }
         public int? WaiterId { get; set; }
+        public int? MenuItemsId { get; set; }
+        public string? Waiter { get; set; }
         public DateTime? OrderTime { get; set; }
         public decimal? TotalPrice { get; set; }
     }

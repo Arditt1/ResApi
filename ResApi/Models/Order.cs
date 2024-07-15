@@ -18,6 +18,8 @@ namespace ResApi.Models
 
         public virtual Table? Table { get; set; }
         public virtual Employee? Waiter { get; set; }
+
+        public virtual OrderDetail? OrderDetailss { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }
