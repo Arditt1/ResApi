@@ -4,16 +4,14 @@
     <Files>
       <File FileName="ResApi/Controllers/EmployeeController.cs" />
       <File FileName="ResApi/Controllers/OrderController.cs" />
-      <File FileName="ResApi/appsettings.json" />
-      <File FileName="ResApi/DTA/Services/OrderDetailService.cs" Line="104" Column="31" />
-      <File FileName="ResApi/Controllers/OrderDetailController.cs" />
-      <File FileName="ResApi/DataResponse/DataContext.cs" Line="12" Column="28" />
+      <File FileName="ResApi/DTA/Services/OrderDetailService.cs" Line="67" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="ResApi" expanded="True">
-            <Node name="ResApi" selected="True">
+            <Node name="ResApi" expanded="True">
+              <Node name="Controllers" expanded="True" />
               <Node name="DTA" expanded="True">
                 <Node name="Services" expanded="True" />
               </Node>
@@ -27,7 +25,6 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/Controllers/MenuItemController.cs" relfile="ResApi/Controllers/MenuItemController.cs" line="52" column="1" />
-      <Breakpoint file="/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/DTA/Services/OrderDetailService.cs" relfile="ResApi/DTA/Services/OrderDetailService.cs" line="71" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

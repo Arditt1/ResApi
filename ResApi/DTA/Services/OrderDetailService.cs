@@ -31,27 +31,29 @@ namespace ResApi.DTA.Services
             try
             {
                 var entity = await _context.OrderDetails
-                           .Include(x => x.Order)
+                           .Include(x => x.Order).ThenInclude(x => x.Waiter)
                            .Include(x => x.MenuItem)
-                           .Include(x => x.Order.Waiter)
                            .Select(x => new GetAllOrderDetailsDTO()
                            {
-                               CategoryId = (int)x.MenuItem.CategoryId,
-                               WaiterId = x.Order.WaiterId,
-                               MenuItemId = x.MenuItemId,
-                               OrderId = x.OrderId,
-                               TotalPrice = x.TotalPrice,
-                               TableId = x.Order.TableId,
+                               CategoryId = (int)(x.MenuItem.CategoryId ?? default(int)),
+                               WaiterId = (int)(x.Order.WaiterId ?? default(int)),
+                               MenuItemId = (int)(x.MenuItemId ?? default(int)),
+                               OrderId = (int)(x.OrderId ?? default(int)),
+                               TotalPrice = (decimal)(x.TotalPrice ?? default(decimal)),
+                               TableId = (int)(x.Order.TableId ?? default(int)) ,
                                Id = x.Id,
-                               CategoryName = x.MenuItem.Category.CategoryName,
-                               MenuItemName = x.MenuItem.Name,
+                               CategoryName = x.MenuItem.Category.CategoryName ?? string.Empty,
+                               MenuItemName = x.MenuItem.Name ?? string.Empty,
                                TableNr = x.Order.Table.TableNumber,
-                               WaiterUsername = x.Order.Waiter.Name,
+                               WaiterUsername = x.Order.Waiter.Name ?? string.Empty,
+                               OrderPrice = x.OrderPrice,
                                MenuItems = x.Order.OrderDetails.Select(od => new MenuItemDTO
                                {
                                    Id = od.MenuItem.Id,
-                                   Name = od.MenuItem.Name,
-                                   Price = od.MenuItem.Price,
+                                   Name = od.MenuItem.Name ?? string.Empty,
+                                   Price = od.MenuItem.Price ?? default(decimal),
+                                   CategoryId = (int?)(od.MenuItem.CategoryId ?? default(int)),
+
                                }).ToList(),
                            })
                            .ToListAsync(cancellationToken);
@@ -67,7 +69,7 @@ namespace ResApi.DTA.Services
 
 		}
 
-        public async Task<DataResponse<string>> OrderFood (List<OrderFoodDTO> props,int? tableId, int? waiterId, CancellationToken cancellationToken)
+        public async Task<DataResponse<string>> OrderFood (List<OrderFoodDTO> props,int? tableId, int? waiterId, decimal totalPrice, CancellationToken cancellationToken)
         {
             var response = new DataResponse<string>() { Succeeded = false, Data = string.Empty };
 
@@ -90,14 +92,16 @@ namespace ResApi.DTA.Services
                     OrderId = latestOrderInserted,
                     MenuItemId = item.MenuItemId,
                     Quantity = item.Quantity,
-                    TotalPrice = item.TotalPrice,
+                    OrderPrice = item.OrderPrice,
+                    TotalPrice = item.OrderPrice * item.Quantity,
+
                 }).ToList();
 
                 _context.OrderDetails.AddRange(orderDetails);
 
                 await _context.SaveChangesAsync(cancellationToken);
 
-                response.Data = "Success";
+                response.Data = "Porosia u shtua me sukses!";
                 response.Succeeded = true;
 
             }

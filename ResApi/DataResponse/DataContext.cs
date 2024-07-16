@@ -126,6 +126,8 @@ namespace ResApi.Models
 
                 entity.Property(e => e.WaiterId).HasColumnName("WaiterID");
 
+                entity.Property(e => e.Status).HasColumnName("Status");
+
                 entity.HasOne(d => d.Table)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.TableId)
@@ -144,6 +146,7 @@ namespace ResApi.Models
                 entity.Property(e => e.MenuItemId).HasColumnName("MenuItemID");
                 entity.Property(e => e.OrderId).HasColumnName("OrderID");
                 entity.Property(e => e.TotalPrice).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.OrderPrice).HasColumnType("decimal(10, 2)");
 
                 entity.HasOne(d => d.MenuItem)
                     .WithMany(p => p.OrderDetails)

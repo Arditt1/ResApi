@@ -11,6 +11,7 @@ namespace ResApi.DTO.OrderDetail
 		public List<MenuItemDTO> MenuItems { get; set; }
 		public string? CategoryName { get; set; }
 		public decimal? TotalPrice { get; set; }
+		public decimal? OrderPrice { get; set; }
 		public int? TableNr { get; set; }
 		public string? WaiterUsername { get; set; }
 
