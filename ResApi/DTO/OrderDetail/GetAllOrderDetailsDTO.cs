@@ -1,15 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
+using ResApi.Models;
+
 namespace ResApi.DTO.OrderDetail
 {
 	public class GetAllOrderDetailsDTO
 	{
 		public int? Id { get; set; }
 		public int? OrderId { get; set; }
-		public int? MenuItemId { get; set; }
+		public List<MenuItemDTO> MenuItems { get; set; }
+		public string? CategoryName { get; set; }
+		public decimal? TotalPrice { get; set; }
+		public int? TableNr { get; set; }
+		public string? WaiterUsername { get; set; }
+
 		public int CategoryId { get; set; }
-		public decimal? Price { get; set; }
-		public int? TableId { get; set; }
 		public int? WaiterId { get; set; }
+		public int? MenuItemId { get; set; }
+		public int? TableId { get; set; }
+		public string? MenuItemName { get; set; }
+
+
 	}
 }
 

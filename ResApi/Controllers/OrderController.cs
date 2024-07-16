@@ -118,28 +118,28 @@ namespace ResApi.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("OrdersToKitchen")]
-        public async Task<ActionResult<Order>> OrdersToKitchen([FromBody] int orderid, CancellationToken cancellationToken)
-        {
-            try
-            {
-                var response = _order.OrdersToKitchen(orderid, cancellationToken);
-                await _unitOfWork.Save(cancellationToken);
-                return Ok(response);
-            }
-            catch (Exception e)
-            {
-                _logger.Error(e, "Register POST request");
-                var errRet = new DataResponse<bool>
-                {
-                    Succeeded = false,
-                    ErrorMessage = "Error on OrdersToKitchen"
+        //[HttpPost]
+        //[Route("OrdersToKitchen")]
+        //public async Task<ActionResult<Order>> OrdersToKitchen([FromBody] int orderid, CancellationToken cancellationToken)
+        //{
+        //    try
+        //    {
+        //        var response = _order.OrdersToKitchen(orderid, cancellationToken);
+        //        await _unitOfWork.Save(cancellationToken);
+        //        return Ok(response);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        _logger.Error(e, "Register POST request");
+        //        var errRet = new DataResponse<bool>
+        //        {
+        //            Succeeded = false,
+        //            ErrorMessage = "Error on OrdersToKitchen"
 
-                };
-                return BadRequest(errRet);
-            }
-        }
+        //        };
+        //        return BadRequest(errRet);
+        //    }
+        //}
 
         [HttpPost]
         [Route("delete")]

@@ -48,7 +48,7 @@ namespace ResApi.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.Photo)
-                    .HasMaxLength(50)
+                    .HasMaxLength(400)
                     .IsUnicode(false);
             });
 
@@ -124,8 +124,6 @@ namespace ResApi.Models
 
                 entity.Property(e => e.TableId).HasColumnName("TableID");
 
-                entity.Property(e => e.TotalPrice).HasColumnType("decimal(10, 2)");
-
                 entity.Property(e => e.WaiterId).HasColumnName("WaiterID");
 
                 entity.HasOne(d => d.Table)
@@ -142,14 +140,10 @@ namespace ResApi.Models
             modelBuilder.Entity<OrderDetail>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("Id");
-
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
-
                 entity.Property(e => e.MenuItemId).HasColumnName("MenuItemID");
-
                 entity.Property(e => e.OrderId).HasColumnName("OrderID");
-
-                entity.Property(e => e.Price).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.TotalPrice).HasColumnType("decimal(10, 2)");
 
                 entity.HasOne(d => d.MenuItem)
                     .WithMany(p => p.OrderDetails)

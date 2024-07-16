@@ -26,11 +26,11 @@ namespace ResApi.Controllers
         }
         [HttpGet]
         [Route("getOne")]
-        public async Task<ActionResult<OrderDetail>> GetOrderDetail(int orderDetailId, CancellationToken cancellationToken)
+        public async Task<ActionResult<OrderDetail>> GetOrderDetail(int orderId, CancellationToken cancellationToken)
         {
             try
             {
-                var response = await _orderDetail.Get(orderDetailId, cancellationToken);
+                var response = await _orderDetail.GetOneOrderDetail(orderId, cancellationToken);
                 await _unitOfWork.Save(cancellationToken);
                 return Ok(response);
             }
@@ -53,9 +53,33 @@ namespace ResApi.Controllers
         {
             try
             {
-                var response = await _orderDetail.GetAll(cancellationToken);
+                var response = await _orderDetail.GetAllOrderDetails(cancellationToken);
                 await _unitOfWork.Save(cancellationToken);
                 return Ok(response);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "Register POST request");
+                var errRet = new DataResponse<bool>
+                {
+                    Succeeded = false,
+                    ErrorMessage = "Error on register user"
+
+                };
+                return BadRequest(errRet);
+            }
+        }
+        [HttpPost]
+        [Route("orderFood")]
+        public async Task<ActionResult<DataResponse<string>>> OrderFood(List<OrderFoodDTO> props, int? tableId, int? waiterId, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var entity = await _orderDetail.OrderFood(props, tableId, waiterId, cancellationToken);
+                if (entity.Succeeded)
+                    return Ok(entity);
+                else
+                    return NotFound();
             }
             catch (Exception e)
             {

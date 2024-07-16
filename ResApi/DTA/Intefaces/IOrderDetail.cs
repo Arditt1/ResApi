@@ -14,6 +14,8 @@ namespace ResApi.DTA.Intefaces
         Task<List<GetAllOrderDetailsDTO>> GetAllOrderDetails(CancellationToken cancellationToken);
         Task<DataResponse<string>> CreateOrderDetail(OrderDetailDTO model);
         Task<DataResponse<string>> UpdateOrderDetail(OrderDetailDTO model);
+        Task<GetAllOrderDetailsDTO> GetOneOrderDetail(int orderId, CancellationToken cancellationToken);
+        Task<DataResponse<string>> OrderFood(List<OrderFoodDTO> props, int? tableId, int? waiterId, CancellationToken cancellationToken);
     }
 }
 

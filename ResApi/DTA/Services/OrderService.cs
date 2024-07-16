@@ -98,37 +98,37 @@ namespace ResApi.DTA.Services
 
             return response;
         }
-        public async Task<List<OrderDTO>> OrdersToKitchen(int orderid, CancellationToken cancellationToken)
-        {
-            var response = new DataResponse<string>
-            {
-                Succeeded = false,
-                ErrorMessage = "Per shkak te arsyeve teknike nuk mund te perditesojme klientin"
-            };
+        //public async Task<List<OrderDTO>> OrdersToKitchen(int orderid, CancellationToken cancellationToken)
+        //{
+        //    var response = new DataResponse<string>
+        //    {
+        //        Succeeded = false,
+        //        ErrorMessage = "Per shkak te arsyeve teknike nuk mund te perditesojme klientin"
+        //    };
 
-            try
-            {
-                var orders = await _context.Orders.Where(x => x.Id == orderid)
-                                         .Select(x => new OrderDTO()
-                                         {
-                                             TableId = x.TableId,
-                                             Id = x.Id,
-                                             WaiterId = x.WaiterId,
-                                             OrderTime = x.OrderTime,
-                                             MenuItemsId = x.OrderDetailss.MenuItemId
-                                         }).ToListAsync(cancellationToken);
+        //    try
+        //    {
+        //        var orders = await _context.Orders.Where(x => x.Id == orderid)
+        //                                 .Select(x => new OrderDTO()
+        //                                 {
+        //                                     TableId = x.TableId,
+        //                                     Id = x.Id,
+        //                                     WaiterId = x.WaiterId,
+        //                                     OrderTime = x.OrderTime,
+        //                                     MenuItemsId = x.OrderDetails.MenuItemId
+        //                                 }).ToListAsync(cancellationToken);
 
 
 
-                return orders;
-            }
-            catch (Exception e)
-            {
-                //RequestLogger.WriteResAPIRequests("HTTP POST Response UpdateOrder: ", response);
-                response.ErrorMessage = "Per shkak te problemeve teknike nuk mund te perditesojme profilin";
-            }
-            return null;
-        }
+        //        return orders;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        //RequestLogger.WriteResAPIRequests("HTTP POST Response UpdateOrder: ", response);
+        //        response.ErrorMessage = "Per shkak te problemeve teknike nuk mund te perditesojme profilin";
+        //    }
+        //    return null;
+        //}
 
     }
 }

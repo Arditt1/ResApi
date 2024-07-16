@@ -28,27 +28,120 @@ namespace ResApi.DTA.Services
 		}
 		public async Task<List<GetAllOrderDetailsDTO>> GetAllOrderDetails(CancellationToken cancellationToken)
 		{
-			var entity = await _context.OrderDetails
-									   .Include(x => x.Order)
-									   .Include(x => x.MenuItem)
-									   .Include(x => x.Order.Waiter)
-									   .Select(x => new GetAllOrderDetailsDTO()
-									   {
-										 CategoryId = (int)x.MenuItem.CategoryId,
-										 WaiterId = x.Order.WaiterId,
-										 MenuItemId = x.MenuItemId,
-										 OrderId = x.OrderId,
-										 Price = x.Price,
-										 TableId = x.Order.TableId,
-										 Id = x.Id,
+            try
+            {
+                var entity = await _context.OrderDetails
+                           .Include(x => x.Order)
+                           .Include(x => x.MenuItem)
+                           .Include(x => x.Order.Waiter)
+                           .Select(x => new GetAllOrderDetailsDTO()
+                           {
+                               CategoryId = (int)x.MenuItem.CategoryId,
+                               WaiterId = x.Order.WaiterId,
+                               MenuItemId = x.MenuItemId,
+                               OrderId = x.OrderId,
+                               TotalPrice = x.TotalPrice,
+                               TableId = x.Order.TableId,
+                               Id = x.Id,
+                               CategoryName = x.MenuItem.Category.CategoryName,
+                               MenuItemName = x.MenuItem.Name,
+                               TableNr = x.Order.Table.TableNumber,
+                               WaiterUsername = x.Order.Waiter.Name,
+                               MenuItems = x.Order.OrderDetails.Select(od => new MenuItemDTO
+                               {
+                                   Id = od.MenuItem.Id,
+                                   Name = od.MenuItem.Name,
+                                   Price = od.MenuItem.Price,
+                               }).ToList(),
+                           })
+                           .ToListAsync(cancellationToken);
 
-									   })
-									   .ToListAsync(cancellationToken);
+                var orderDetails = _mapper.Map<List<GetAllOrderDetailsDTO>>(entity);
+                return orderDetails;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Ex=", ex.Message);
+                throw;
+            }
 
-			var orderDetails = _mapper.Map<List<GetAllOrderDetailsDTO>>(entity);
-			return orderDetails;
 		}
 
+        public async Task<DataResponse<string>> OrderFood (List<OrderFoodDTO> props,int? tableId, int? waiterId, CancellationToken cancellationToken)
+        {
+            var response = new DataResponse<string>() { Succeeded = false, Data = string.Empty };
+
+            try
+            { 
+
+                var orders = new Order()
+                {
+                     TableId = tableId,
+                     WaiterId = waiterId,
+                     OrderTime = DateTime.Now,
+                };
+                _context.Orders.Add(orders);
+                await _context.SaveChangesAsync(cancellationToken);
+
+                var latestOrderInserted = await _context.Orders.OrderByDescending(x => x.OrderTime).Select(x=>x.Id).FirstOrDefaultAsync(cancellationToken);
+
+                var orderDetails = props.Select(item => new OrderDetail
+                {
+                    OrderId = latestOrderInserted,
+                    MenuItemId = item.MenuItemId,
+                    Quantity = item.Quantity,
+                    TotalPrice = item.TotalPrice,
+                }).ToList();
+
+                _context.OrderDetails.AddRange(orderDetails);
+
+                await _context.SaveChangesAsync(cancellationToken);
+
+                response.Data = "Success";
+                response.Succeeded = true;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Ex=", ex.Message);
+                response.Data = ex.Message;
+                response.Succeeded = false;
+            }
+            return response;
+
+        }
+
+        public async Task<GetAllOrderDetailsDTO> GetOneOrderDetail(int orderId, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var entity = await _context.OrderDetails
+                            .Where(x=>x.OrderId == orderId)
+                           .Include(x => x.Order)
+                           .Include(x => x.MenuItem)
+                           .Include(x => x.Order.Waiter)
+                           .Select(x => new GetAllOrderDetailsDTO()
+                           {
+                               OrderId = x.OrderId,
+                               TotalPrice = x.TotalPrice,
+                               CategoryName = x.MenuItem.Category.CategoryName,
+                               TableNr = x.Order.Table.TableNumber,
+                               WaiterUsername = x.Order.Waiter.Name,
+                               MenuItems = x.Order.OrderDetails.Select(od => new MenuItemDTO
+                               {
+                                   Id= od.MenuItem.Id,
+                                   Name = od.MenuItem.Name,
+                                   Price = od.MenuItem.Price
+                               }).ToList(),
+                           }).FirstOrDefaultAsync(cancellationToken);
+                return entity;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Ex=", ex.Message);
+                throw;
+            }
+        }
 
         public async Task<DataResponse<string>> CreateOrderDetail(OrderDetailDTO model)
         {

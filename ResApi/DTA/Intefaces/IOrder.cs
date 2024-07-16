@@ -12,7 +12,7 @@ namespace ResApi.DTA.Intefaces
     {
         Task<DataResponse<string>> CreateOrder(OrderDTO model);
         Task<DataResponse<string>> UpdateOrder(OrderDTO model);
-        Task<List<OrderDTO>> OrdersToKitchen(int orderid, CancellationToken cancellationToken);
+        //Task<List<OrderDTO>> OrdersToKitchen(int orderid, CancellationToken cancellationToken);
     }
 }
 
