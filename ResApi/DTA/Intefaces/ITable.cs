@@ -11,7 +11,7 @@ namespace ResApi.DTA.Intefaces
 {
 	public interface ITable : IBaseService<Table>
     {
-        Task<DataResponse<string>> Register(TableDTO entity);
+        Task<DataResponse<string>> Register(int tableNumber);
         Task<List<TableDTO>> FreeTables();
         Task<EmployeeDTO> WaiterInfo(int tableId);
     }

@@ -68,14 +68,14 @@ namespace ResApi.DTA.Services
 		}
 
 
-		public async Task<DataResponse<string>> Register(TableDTO entity)
+		public async Task<DataResponse<string>> Register(int tableNumber)
 		{
 			try
 			{
                 var response = new DataResponse<string>() { Succeeded = false, Data = string.Empty };
-				if(entity != null)
+				if(tableNumber > 0)
 				{
-					var tableExists = await _context.Tables.AnyAsync(x => x.TableNumber == entity.TableNumber);
+					var tableExists = await _context.Tables.AnyAsync(x => x.TableNumber == tableNumber);
 					if (tableExists)
 					{
                         response.Succeeded = false;
@@ -84,7 +84,14 @@ namespace ResApi.DTA.Services
 					}
 					else
 					{
-						var tableMapped = _mapper.Map<Table>(entity);
+						Table tbl = new()
+						{
+							TableNumber = tableNumber,
+							Seats = 5,
+						};
+
+
+						var tableMapped = _mapper.Map<Table>(tbl);
 						_context.Tables.Add(tableMapped);
 						_context.SaveChanges();
 

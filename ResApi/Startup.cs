@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,12 +8,9 @@ using Microsoft.OpenApi.Models;
 using ResApi.DTA.Intefaces;
 using ResApi.DTA.Services;
 using ResApi.DTA.Services.Shared;
-using ResApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ResApi.Extentions;
+using ResApi.Hubs;
+using ResApi.Models;
 
 namespace ResApi
 {
@@ -47,10 +42,9 @@ namespace ResApi
             services.AddScoped<IRole, RoleService>();
             services.AddScoped<ITable, TableService>();
             services.AddScoped<ITableWaiter, TableWaiterService>();
-
-
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+            services.AddSignalR();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -60,7 +54,7 @@ namespace ResApi
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder => builder
-                    .WithOrigins("http://localhost:3000")
+                    .WithOrigins("http://localhost:3000", "https://res-app-ochre.vercel.app/porosite")
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials());
@@ -93,6 +87,7 @@ namespace ResApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<OrderHub>("/orderHub");
             });
 
             //app.Run();

@@ -1,31 +1,33 @@
-﻿<Properties StartupConfiguration="{CF3C8B4C-7B71-4D41-B0E7-62F7D323FCEF}|Default" GitUserInfo="UsingGIT">
-  <MonoDevelop.Ide.ItemProperties.ResApi PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ResApi/DTA/Services/OrderDetailService.cs">
+﻿<Properties GitUserInfo="UsingGIT" StartupConfiguration="{CF3C8B4C-7B71-4D41-B0E7-62F7D323FCEF}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ResApi/Controllers/OrderDetailController.cs">
     <Files>
-      <File FileName="ResApi/Controllers/EmployeeController.cs" />
-      <File FileName="ResApi/Controllers/OrderController.cs" Line="1" Column="1" />
-      <File FileName="ResApi/DTA/Services/OrderDetailService.cs" Line="89" Column="18" />
-      <File FileName="ResApi/appsettings.json" Line="8" Column="5" />
-      <File FileName="ResApi/Controllers/OrderDetailController.cs" Line="56" Column="1" />
-      <File FileName="ResApi/DTA/Intefaces/IOrderDetail.cs" Line="18" Column="120" />
-      <File FileName="ResApi/Models/Order.cs" Line="15" Column="43" />
+      <File FileName="ResApi/Hubs/OrderHub.cs" Line="11" Column="1" />
+      <File FileName="ResApi/Controllers/OrderController.cs" Line="10" Column="30" />
+      <File FileName="ResApi/Controllers/OrderDetailController.cs" Line="84" Column="77" />
+      <File FileName="ResApi/Startup.cs" Line="44" Column="62" />
+      <File FileName="ResApi/Program.cs" Line="16" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="ResApi" expanded="True">
-            <Node name="ResApi" selected="True" />
+          <Node name="ResApi">
+            <Node name="ResApi" selected="True">
+              <Node name="Controllers" expanded="True" />
+              <Node name="Hubs" expanded="True" />
+            </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.ResApi PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/Controllers/MenuItemController.cs" relfile="ResApi/Controllers/MenuItemController.cs" line="52" column="1" />
+      <Breakpoint file="/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/Controllers/OrderDetailController.cs" relfile="ResApi/Controllers/OrderDetailController.cs" line="84" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
 </Properties>

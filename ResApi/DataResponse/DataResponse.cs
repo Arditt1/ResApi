@@ -15,6 +15,7 @@ namespace ResApi.DataResponse
         public int Count { get; set; }
         public decimal Limit { get; set; }
         public string LimitDescription { get; set; }
+        public T DataObject { get; set; }
         /// <summary>
         /// TO BE INTRODUCED
         /// </summary>

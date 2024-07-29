@@ -26,48 +26,69 @@ namespace ResApi.DTA.Services
 			_context = context;
 			_mapper = mapper;
 		}
-		public async Task<List<GetAllOrderDetailsDTO>> GetAllOrderDetails(CancellationToken cancellationToken)
-		{
+        public async Task<List<GetAllOrderDetailsDTO>> GetAllOrderDetails(CancellationToken cancellationToken)
+        {
             try
             {
-                var entity = await _context.OrderDetails
-                           .Include(x => x.Order).ThenInclude(x => x.Waiter)
-                           .Include(x => x.MenuItem)
-                           .Select(x => new GetAllOrderDetailsDTO()
-                           {
-                               CategoryId = (int)(x.MenuItem.CategoryId ?? default(int)),
-                               WaiterId = (int)(x.Order.WaiterId ?? default(int)),
-                               MenuItemId = (int)(x.MenuItemId ?? default(int)),
-                               OrderId = (int)(x.OrderId ?? default(int)),
-                               TotalPrice = (decimal)(x.TotalPrice ?? default(decimal)),
-                               TableId = (int)(x.Order.TableId ?? default(int)) ,
-                               Id = x.Id,
-                               CategoryName = x.MenuItem.Category.CategoryName ?? string.Empty,
-                               MenuItemName = x.MenuItem.Name ?? string.Empty,
-                               TableNr = x.Order.Table.TableNumber,
-                               WaiterUsername = x.Order.Waiter.Name ?? string.Empty,
-                               OrderPrice = x.OrderPrice,
-                               MenuItems = x.Order.OrderDetails.Select(od => new MenuItemDTO
-                               {
-                                   Id = od.MenuItem.Id,
-                                   Name = od.MenuItem.Name ?? string.Empty,
-                                   Price = od.MenuItem.Price ?? default(decimal),
-                                   CategoryId = (int?)(od.MenuItem.CategoryId ?? default(int)),
+                var entity = await _context.Orders
+                    .Where(o => o.Status != "Completed")
+                    .Select(o => new GetAllOrderDetailsDTO()
+                    {
+                        Id = o.Id,
+                        OrderId = o.Id,
+                        TableId = o.TableId,
+                        TableNr = o.Table.TableNumber,
+                        WaiterUsername = o.Waiter.Name ?? string.Empty,
+                        MenuItems = o.OrderDetails.Select(od => new MenuItemDTO
+                        {
+                            Id = od.MenuItem.Id,
+                            Name = od.MenuItem.Name ?? string.Empty,
+                            Price = od.MenuItem.Price ?? default(decimal),
+                            CategoryId = (int?)(od.MenuItem.CategoryId ?? default(int)),
+                            Quantity = od.Quantity,
+                            OrderPrice = od.MenuItem.Price * od.Quantity,
+                        }).ToList(),
+                        TotalPrice = o.OrderDetails.Sum(od => od.Quantity * od.MenuItem.Price),
+                        Quantity = (int)o.OrderDetails.Sum(od => od.Quantity),
+                        Status = o.Status,
+                        OrderTime = o.OrderTime,
+                    })
+                    .OrderBy(dto => dto.Status != "New")
+                    .ThenByDescending(dto => dto.OrderTime)
+                    .ToListAsync(cancellationToken);
 
-                               }).ToList(),
-                           })
-                           .ToListAsync(cancellationToken);
-
-                var orderDetails = _mapper.Map<List<GetAllOrderDetailsDTO>>(entity);
-                return orderDetails;
+                return entity;
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Ex=", ex.Message);
                 throw;
             }
+        }
 
-		}
+        public async Task<DataResponse<string>> ChangeOrdersStatus(int orderId,string statusName)
+        {
+            var response = new DataResponse<string>() { Succeeded = false, Data = string.Empty };
+            try
+            {
+                var myOrderId = _context.OrderDetails.Where(x => x.Id == orderId).Select(x=>x.OrderId).FirstOrDefault();
+                var myOrder = _context.Orders.Where(x => x.Id == myOrderId).FirstOrDefault();
+                myOrder.Status = statusName;
+                _context.Orders.Update(myOrder);
+                await _context.SaveChangesAsync();
+
+                response.Data = "Statusi u ndryshua me sukses!";
+                response.Succeeded = true;
+
+
+            }catch(Exception ex)
+            {
+                Console.WriteLine("Ex=", ex.Message);
+                response.Data = ex.Message;
+                response.Succeeded = false;
+            }
+            return response;
+        }
 
         public async Task<DataResponse<string>> OrderFood (List<OrderFoodDTO> props,int? tableId, int? waiterId, decimal totalPrice, CancellationToken cancellationToken)
         {
@@ -81,6 +102,7 @@ namespace ResApi.DTA.Services
                      TableId = tableId,
                      WaiterId = waiterId,
                      OrderTime = DateTime.Now,
+                     Status = "New",
                 };
                 _context.Orders.Add(orders);
                 await _context.SaveChangesAsync(cancellationToken);
@@ -93,17 +115,18 @@ namespace ResApi.DTA.Services
                     MenuItemId = item.MenuItemId,
                     Quantity = item.Quantity,
                     OrderPrice = item.OrderPrice,
-                    TotalPrice = item.OrderPrice * item.Quantity,
 
                 }).ToList();
+
+                
+                orderDetails.ForEach(item => item.TotalPrice = item.OrderPrice * item.Quantity);
 
                 _context.OrderDetails.AddRange(orderDetails);
 
                 await _context.SaveChangesAsync(cancellationToken);
 
-                response.Data = "Porosia u shtua me sukses!";
+                response.Data = "Porosia me numer #"+ latestOrderInserted +" u shtua me sukses!";
                 response.Succeeded = true;
-
             }
             catch (Exception ex)
             {
@@ -131,6 +154,7 @@ namespace ResApi.DTA.Services
                                CategoryName = x.MenuItem.Category.CategoryName,
                                TableNr = x.Order.Table.TableNumber,
                                WaiterUsername = x.Order.Waiter.Name,
+                               Status = x.Order.Status,
                                MenuItems = x.Order.OrderDetails.Select(od => new MenuItemDTO
                                {
                                    Id= od.MenuItem.Id,
@@ -155,7 +179,7 @@ namespace ResApi.DTA.Services
             {
                 var orderdetailMapp = _mapper.Map<OrderDetail>(model);
                 _context.OrderDetails.Add(orderdetailMapp);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 // Adding the orderdetailMapp to context.
                 if (orderdetailMapp != null)
                 {

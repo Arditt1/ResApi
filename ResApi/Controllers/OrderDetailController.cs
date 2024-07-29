@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using IdentityModel;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using NLog;
 using ResApi.DataResponse;
 using ResApi.DTA.Intefaces;
 using ResApi.DTO;
 using ResApi.DTO.OrderDetail;
+using ResApi.Hubs;
 using ResApi.Models;
 using System;
 using System.Collections.Generic;
@@ -19,10 +22,13 @@ namespace ResApi.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IOrderDetail _orderDetail;
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-        public OrderDetailController(IUnitOfWork unitOfWork, IOrderDetail orderDetail)
+        private readonly IHubContext<OrderHub> _hubContext;
+
+        public OrderDetailController(IUnitOfWork unitOfWork, IOrderDetail orderDetail, IHubContext<OrderHub> hubContext)
         {
             _unitOfWork = unitOfWork;
             _orderDetail = orderDetail;
+            _hubContext = hubContext;
         }
         [HttpGet]
         [Route("getOne")]
@@ -76,14 +82,46 @@ namespace ResApi.Controllers
             try
             {
                 var entity = await _orderDetail.OrderFood(props, tableId, waiterId,totalPrice, cancellationToken);
+
                 if (entity.Succeeded)
+                {
+                    await _hubContext.Clients.All.SendAsync("NewOrder", entity.Data);
                     return Ok(entity);
+                }
                 else
                     return NotFound();
             }
             catch (Exception e)
             {
                 _logger.Error(e, "Register POST request");
+                var errRet = new DataResponse<bool>
+                {
+                    Succeeded = false,
+                    ErrorMessage = "Error on register user"
+
+                };
+                return BadRequest(errRet);
+            }
+        }
+        [HttpPut]
+        [Route("changeStatus")]
+        public async Task<ActionResult<DataResponse<string>>> ChangeOrdersStatus(int orderId, string statusName)
+        {
+            try
+            {
+                var result = await _orderDetail.ChangeOrdersStatus(orderId, statusName);
+                if (result.Succeeded)
+                {
+                    await _hubContext.Clients.All.SendAsync("changeOrder", result.Data);
+
+                    return Ok(result);
+                }
+                else
+                    return result;
+            }
+            catch(Exception ex)
+            {
+                _logger.Error(ex, "Register POST request");
                 var errRet = new DataResponse<bool>
                 {
                     Succeeded = false,

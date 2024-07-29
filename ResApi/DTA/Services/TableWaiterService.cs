@@ -40,13 +40,13 @@ namespace ResApi.DTA.Services
                 throw;
             }
         }
-        public async Task<DataResponse<string>> RemoveWaiterFromTable(int tableId, int waiterId)
+        public async Task<DataResponse<string>> RemoveWaiterFromTable(int tableNumber, int waiterId)
         {
             try
             {
                 var response = new DataResponse<string>() { Succeeded = false, Data = string.Empty };
 
-                var entity = await _context.TableWaiters.Include(x => x.Table).Where(x => x.WaiterId == waiterId && x.TableId == tableId).FirstOrDefaultAsync();
+                var entity = await _context.TableWaiters.Include(x => x.Table).Where(x => x.WaiterId == waiterId && x.Table.TableNumber == tableNumber).FirstOrDefaultAsync();
                 
                 if(entity == null)
                 {
@@ -72,17 +72,19 @@ namespace ResApi.DTA.Services
             }
         }
 
-        public async Task<DataResponse<string>> AssignTableToWaiter(int tableId,int waiterId)
+        public async Task<DataResponse<string>> AssignTableToWaiter(int tableNumber,int waiterId)
         {
             try
             {
                 var response = new DataResponse<string>() { Succeeded = false, Data = string.Empty  };
 
-                var entity = await _context.TableWaiters.Include(x => x.Table).Where(x => x.WaiterId == waiterId && x.TableId == tableId).ToListAsync();
-                if(entity.Any(x=>x.TableId == tableId))
+                var entity = await _context.TableWaiters.Include(x => x.Table).Where(x => x.WaiterId == waiterId && x.Table.TableNumber == tableNumber).ToListAsync();
+                if(entity.Any(x=>x.Table.TableNumber == tableNumber))
                 {
                     throw new Exception("Table already assigned!");
                 }
+
+                var tableId = _context.Tables.Where(x => x.TableNumber == tableNumber).Select(x=>x.Id).First();
 
                 TableWaiter twTable = new()
                 {

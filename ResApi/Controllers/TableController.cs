@@ -92,11 +92,11 @@ namespace ResApi.Controllers
         }
         [HttpPost]
         [Route("register")]
-        public async Task<DataResponse<string>> Register(TableDTO entity)
+        public async Task<DataResponse<string>> Register(int tableNumber)
         {
             try
             {
-                var addingTable = await _table.Register(entity);
+                var addingTable = await _table.Register(tableNumber);
                 return addingTable;
             }
             catch
