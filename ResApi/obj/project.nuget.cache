@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "YTEYxxsCSKBjmidhb5O0CvwOV3fRj8VZRt5AU33pqd8imftMzADErDeOEi9foPgYAGnCuVsSA9vrJ0YCbFqveA==",
+  "dgSpecHash": "AQxvZ/HRmy5nj1faIWmzwDCuU2MixSISrWhf0xiBPfoCUhVcS1Jr7Bwmj9RWAxCuFGa5mwCdYLQiPj5lWVqzdQ==",
   "success": true,
   "projectFilePath": "/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/ResApi.csproj",
   "expectedPackageFiles": [
@@ -75,6 +75,8 @@
     "/Users/leoramadani/.nuget/packages/microsoft.win32.systemevents/4.7.0/microsoft.win32.systemevents.4.7.0.nupkg.sha512",
     "/Users/leoramadani/.nuget/packages/newtonsoft.json/13.0.1/newtonsoft.json.13.0.1.nupkg.sha512",
     "/Users/leoramadani/.nuget/packages/newtonsoft.json.bson/1.0.2/newtonsoft.json.bson.1.0.2.nupkg.sha512",
+    "/Users/leoramadani/.nuget/packages/npgsql/5.0.10/npgsql.5.0.10.nupkg.sha512",
+    "/Users/leoramadani/.nuget/packages/npgsql.entityframeworkcore.postgresql/5.0.10/npgsql.entityframeworkcore.postgresql.5.0.10.nupkg.sha512",
     "/Users/leoramadani/.nuget/packages/runtime.native.system/4.3.0/runtime.native.system.4.3.0.nupkg.sha512",
     "/Users/leoramadani/.nuget/packages/serilog/4.0.0/serilog.4.0.0.nupkg.sha512",
     "/Users/leoramadani/.nuget/packages/swashbuckle.aspnetcore/5.6.3/swashbuckle.aspnetcore.5.6.3.nupkg.sha512",
