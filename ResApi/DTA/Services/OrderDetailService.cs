@@ -32,11 +32,13 @@ namespace ResApi.DTA.Services
             {
                 var entity = await _context.Orders
                     .Where(o => o.Status != "Completed")
+                    .Include(o => o.Table) // Eagerly load Table entity
+                    .Include(o => o.OrderDetails)
+                        .ThenInclude(od => od.MenuItem) // Eagerly load MenuItem entity
                     .Select(o => new GetAllOrderDetailsDTO()
                     {
                         Id = o.Id,
                         OrderId = o.Id,
-                        TableId = o.TableId,
                         TableNr = o.Table.TableNumber,
                         WaiterUsername = o.Waiter.Name ?? string.Empty,
                         MenuItems = o.OrderDetails.Select(od => new MenuItemDTO
@@ -56,6 +58,7 @@ namespace ResApi.DTA.Services
                     .OrderBy(dto => dto.Status != "New")
                     .ThenByDescending(dto => dto.OrderTime)
                     .ToListAsync(cancellationToken);
+
 
                 return entity;
             }

@@ -54,7 +54,7 @@ namespace ResApi
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder => builder
-                    .WithOrigins("http://localhost:3000", "https://res-app-ochre.vercel.app/porosite", "https://restapp-9dd987208cbd.herokuapp.com")
+                    .WithOrigins("http://localhost:3000")
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials());
