@@ -1,3 +1,4 @@
+using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,8 @@ using ResApi.DTA.Services.Shared;
 using ResApi.Extentions;
 using ResApi.Hubs;
 using ResApi.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ResApi
 {
@@ -33,7 +36,7 @@ namespace ResApi
 
             services.AddAutoMapper(typeof(AutoMapperProfile));
 
-            services.AddScoped<ICategoryMenu, CategoryMenuService>();   
+            services.AddScoped<ICategoryMenu, CategoryMenuService>();
             services.AddScoped<IEmployee, EmployeeService>();
             services.AddScoped<IMenuItem, MenuItemService>();
             services.AddScoped<IOrderDetail, OrderDetailService>();
@@ -43,6 +46,7 @@ namespace ResApi
             services.AddScoped<ITable, TableService>();
             services.AddScoped<ITableWaiter, TableWaiterService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IAuth, AuthService>();
 
             services.AddSignalR();
             services.AddControllers();
@@ -62,9 +66,25 @@ namespace ResApi
 
             services.AddHttpContextAccessor();
 
+
+            var key = Encoding.ASCII.GetBytes(Configuration["Jwt:Key"]);
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuer = true,
+                            ValidateAudience = true,
+                            ValidateLifetime = true,
+                            ValidateIssuerSigningKey = true,
+                            ValidIssuer = Configuration["Jwt:Issuer"],
+                            ValidAudience = Configuration["Jwt:Issuer"],
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                        };
+                    });
+
+
         }
-
-
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -82,6 +102,7 @@ namespace ResApi
 
             app.UseCors("CorsPolicy");
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
