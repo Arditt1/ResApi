@@ -10,6 +10,7 @@ using ResApi.DataResponse;
 using ResApi.DTA.Intefaces;
 using ResApi.DTA.Services.Shared;
 using ResApi.DTO;
+using ResApi.DTO.LoginDTO;
 using ResApi.DTO.OrderDetail;
 using ResApi.Models;
 
@@ -26,38 +27,76 @@ namespace ResApi.DTA.Services
 			_context = context;
 			_mapper = mapper;
 		}
-        public async Task<List<GetAllOrderDetailsDTO>> GetAllOrderDetails(CancellationToken cancellationToken)
+        public async Task<List<GetAllOrderDetailsDTO>> GetAllOrderDetails(UserDTO user, CancellationToken cancellationToken)
         {
             try
             {
-                var entity = await _context.Orders
-                    .Where(o => o.Status != "Completed")
-                    .Include(o => o.Table) // Eagerly load Table entity
-                    .Include(o => o.OrderDetails)
-                        .ThenInclude(od => od.MenuItem) // Eagerly load MenuItem entity
-                    .Select(o => new GetAllOrderDetailsDTO()
-                    {
-                        Id = o.Id,
-                        OrderId = o.Id,
-                        TableNr = o.Table.TableNumber,
-                        WaiterUsername = o.Waiter.Name ?? string.Empty,
-                        MenuItems = o.OrderDetails.Select(od => new MenuItemDTO
-                        {
-                            Id = od.MenuItem.Id,
-                            Name = od.MenuItem.Name ?? string.Empty,
-                            Price = od.MenuItem.Price ?? default(decimal),
-                            CategoryId = (int?)(od.MenuItem.CategoryId ?? default(int)),
-                            Quantity = od.Quantity,
-                            OrderPrice = od.MenuItem.Price * od.Quantity,
-                        }).ToList(),
-                        TotalPrice = o.OrderDetails.Sum(od => od.Quantity * od.MenuItem.Price),
-                        Quantity = (int)o.OrderDetails.Sum(od => od.Quantity),
-                        Status = o.Status,
-                        OrderTime = o.OrderTime,
-                    })
-                    .OrderBy(dto => dto.Status != "New")
-                    .ThenByDescending(dto => dto.OrderTime)
-                    .ToListAsync(cancellationToken);
+                var entity = new List<GetAllOrderDetailsDTO>();
+
+                if(user.Username.ToLower() != "admin")
+                {
+                    entity = await _context.Orders
+                   .Where(o => o.Status != "Completed" && o.WaiterId == user.Id)
+                   .Include(o => o.Table) // Eagerly load Table entity
+                   .Include(o => o.OrderDetails)
+                       .ThenInclude(od => od.MenuItem) // Eagerly load MenuItem entity
+                   .Select(o => new GetAllOrderDetailsDTO()
+                   {
+                       Id = o.Id,
+                       OrderId = o.Id,
+                       TableNr = o.Table.TableNumber,
+                       WaiterUsername = o.Waiter.Name ?? string.Empty,
+                       MenuItems = o.OrderDetails.Select(od => new MenuItemDTO
+                       {
+                           Id = od.MenuItem.Id,
+                           Name = od.MenuItem.Name ?? string.Empty,
+                           Price = od.MenuItem.Price ?? default(decimal),
+                           CategoryId = (int?)(od.MenuItem.CategoryId ?? default(int)),
+                           Quantity = od.Quantity,
+                           OrderPrice = od.MenuItem.Price * od.Quantity,
+                       }).ToList(),
+                       TotalPrice = o.OrderDetails.Sum(od => od.Quantity * od.MenuItem.Price),
+                       Quantity = (int)o.OrderDetails.Sum(od => od.Quantity),
+                       Status = o.Status,
+                       OrderTime = o.OrderTime,
+                   })
+                   .OrderBy(dto => dto.Status != "New")
+                   .ThenByDescending(dto => dto.OrderTime)
+                   .ToListAsync(cancellationToken);
+                }
+                else
+                {
+                    entity = await _context.Orders
+                   .Where(o => o.Status != "Completed")
+                   .Include(o => o.Table) // Eagerly load Table entity
+                   .Include(o => o.OrderDetails)
+                       .ThenInclude(od => od.MenuItem) // Eagerly load MenuItem entity
+                   .Select(o => new GetAllOrderDetailsDTO()
+                   {
+                       Id = o.Id,
+                       OrderId = o.Id,
+                       TableNr = o.Table.TableNumber,
+                       WaiterUsername = o.Waiter.Name ?? string.Empty,
+                       MenuItems = o.OrderDetails.Select(od => new MenuItemDTO
+                       {
+                           Id = od.MenuItem.Id,
+                           Name = od.MenuItem.Name ?? string.Empty,
+                           Price = od.MenuItem.Price ?? default(decimal),
+                           CategoryId = (int?)(od.MenuItem.CategoryId ?? default(int)),
+                           Quantity = od.Quantity,
+                           OrderPrice = od.MenuItem.Price * od.Quantity,
+                       }).ToList(),
+                       TotalPrice = o.OrderDetails.Sum(od => od.Quantity * od.MenuItem.Price),
+                       Quantity = (int)o.OrderDetails.Sum(od => od.Quantity),
+                       Status = o.Status,
+                       OrderTime = o.OrderTime,
+                   })
+                   .OrderBy(dto => dto.Status != "New")
+                   .ThenByDescending(dto => dto.OrderTime)
+                   .ToListAsync(cancellationToken);
+                }
+
+                
 
 
                 return entity;

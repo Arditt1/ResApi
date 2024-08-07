@@ -14,6 +14,7 @@ namespace ResApi.DTA.Intefaces
         Task<DataResponse<string>> Register(int tableNumber);
         Task<List<TableDTO>> FreeTables();
         Task<EmployeeDTO> WaiterInfo(int tableId);
+        Task<List<TableDTO>> GetAllTAbles(int waiterId,string username);
     }
 }
 

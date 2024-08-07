@@ -3,21 +3,19 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="ResApi/Controllers/AuthController.cs">
     <Files>
       <File FileName="ResApi/Startup.cs" />
-      <File FileName="ResApi/Controllers/AuthController.cs" Line="78" Column="69" />
+      <File FileName="ResApi/Controllers/AuthController.cs" Line="51" Column="38" />
       <File FileName="ResApi/appsettings.json" />
-      <File FileName="ResApi/ResApi.csproj" Line="31" Column="82" />
-      <File FileName="ResApi/DTA/Services/AuthService.cs" Line="30" Column="45" />
+      <File FileName="ResApi/ResApi.csproj" />
+      <File FileName="ResApi/DTA/Services/AuthService.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="ResApi" expanded="True">
-            <Node name="ResApi">
+            <Node name="ResApi" expanded="True">
               <Node name="Controllers" expanded="True" />
               <Node name="DTA" expanded="True">
-                <Node name="Services" expanded="True">
-                  <Node name="AuthService.cs" selected="True" />
-                </Node>
+                <Node name="Services" expanded="True" />
               </Node>
               <Node name="DTO" expanded="True">
                 <Node name="LoginDTO" expanded="True" />

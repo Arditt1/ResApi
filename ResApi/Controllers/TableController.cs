@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NLog;
 using ResApi.DataResponse;
 using ResApi.DTA.Intefaces;
@@ -7,6 +8,7 @@ using ResApi.DTO.Tables;
 using ResApi.Models;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -43,6 +45,26 @@ namespace ResApi.Controllers
 
                 };
                 return BadRequest(errRet);
+            }
+        }
+        [HttpGet]
+        [Route("getAllTables")]
+        [Authorize]
+        public async Task<ActionResult<List<Table>>> GetAllTables2()
+        {
+            try
+            {
+                var userId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+                var username = User.FindFirst(ClaimTypes.Name)?.Value;
+
+                var entity = await _table.GetAllTAbles(userId, username);
+                return Ok(entity);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Ex=", ex.Message);
+                throw;
             }
         }
 

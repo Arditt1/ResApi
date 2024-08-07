@@ -44,6 +44,31 @@ namespace ResApi.DTA.Services
 				throw;
 			}
 		}
+		public async Task<List<TableDTO>> GetAllTAbles(int waiterId,string username)
+		{
+			var entity = new List<TableDTO>();
+
+			if(username.ToLower() == "admin")
+			{
+                entity = await _context.TableWaiters.Include(x => x.Table)
+                                                 .Select(x => new TableDTO()
+                                                 {
+                                                     Id = x.Id,
+                                                     TableNumber = x.Table.TableNumber,
+                                                 }).ToListAsync();
+			}
+			else
+			{
+                entity = await _context.TableWaiters.Include(x => x.Table).Where(x => x.WaiterId == waiterId)
+                                 .Select(x => new TableDTO()
+                                 {
+                                     Id = x.Id,
+                                     TableNumber = x.Table.TableNumber,
+                                 }).ToListAsync();
+            }
+
+			return entity;
+		}
 		public async Task<EmployeeDTO> WaiterInfo(int tableId)
 		{
 			try

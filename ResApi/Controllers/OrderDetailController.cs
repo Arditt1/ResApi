@@ -1,15 +1,18 @@
 ﻿using IdentityModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using NLog;
 using ResApi.DataResponse;
 using ResApi.DTA.Intefaces;
 using ResApi.DTO;
+using ResApi.DTO.LoginDTO;
 using ResApi.DTO.OrderDetail;
 using ResApi.Hubs;
 using ResApi.Models;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -52,29 +55,42 @@ namespace ResApi.Controllers
                 return BadRequest(errRet);
             }
         }
-
         [HttpGet]
         [Route("getAll")]
+        [Authorize]
         public async Task<ActionResult<List<OrderDetail>>> GetAllOrderDetails(CancellationToken cancellationToken)
         {
             try
             {
-                var response = await _orderDetail.GetAllOrderDetails(cancellationToken);
+                var username = User.FindFirst(ClaimTypes.Name)?.Value;
+                var role = User.FindFirst(ClaimTypes.Role)?.Value;
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if(string.IsNullOrEmpty(userId))
+                    return Unauthorized(new { message = "Invalid token" });
+
+                UserDTO user = new()
+                {
+                    Id = Convert.ToInt32(userId),
+                    Username = username,
+                    RoleName = role,
+                };
+
+                var response = await _orderDetail.GetAllOrderDetails(user, cancellationToken);
                 await _unitOfWork.Save(cancellationToken);
                 return Ok(response);
             }
             catch (Exception e)
             {
-                //_logger.Error(e, "Register POST request");
                 var errRet = new DataResponse<bool>
                 {
                     Succeeded = false,
                     ErrorMessage = "Error on register user"
-
                 };
                 return BadRequest(errRet);
             }
         }
+
         [HttpPost]
         [Route("orderFood")]
         public async Task<ActionResult<DataResponse<string>>> OrderFood(List<OrderFoodDTO> props, int? tableId, int? waiterId, decimal totalPrice, CancellationToken cancellationToken)
@@ -194,23 +210,23 @@ namespace ResApi.Controllers
 
             return Ok();
         }
-        [HttpGet]
-        [Route("getAllOrderDetails")]
-        public async Task<ActionResult<List<GetAllOrderDetailsDTO>>> GetAllOrderDetailsMapped(CancellationToken cancellationToken)
-        {
-            try
-            {
-                var entity = await _orderDetail.GetAllOrderDetails(cancellationToken);
-                if (entity == null)
-                    return NotFound();
-                else
-                    return Ok(entity);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        }
+        //[HttpGet]
+        //[Route("getAllOrderDetails")]
+        //public async Task<ActionResult<List<GetAllOrderDetailsDTO>>> GetAllOrderDetailsMapped(CancellationToken cancellationToken)
+        //{
+        //    try
+        //    {
+        //        var entity = await _orderDetail.GetAllOrderDetails(cancellationToken);
+        //        if (entity == null)
+        //            return NotFound();
+        //        else
+        //            return Ok(entity);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw;
+        //    }
+        //}
     }
 }
 

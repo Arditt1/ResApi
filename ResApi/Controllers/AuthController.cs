@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using ResApi.DTA.Intefaces;
 using ResApi.DTO.LoginDTO;
-using static IdentityServer4.Models.IdentityResources;
 
 namespace ResApi.Controllers
 {
@@ -59,6 +58,8 @@ namespace ResApi.Controllers
                     Subject = GenerateClaims(user),
                     Expires = DateTime.UtcNow.AddMinutes(15),
                     SigningCredentials = credentials,
+                    Audience = _config["Jwt:Audience"],  // Set the Audience here
+                    Issuer = _config["Jwt:Issuer"],      // Set the Issuer here
                 };
 
                 var token = handler.CreateToken(tokenDescriptor);
@@ -77,7 +78,10 @@ namespace ResApi.Controllers
         {
             var claims = new ClaimsIdentity(new[] {
                 new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.Role, user.RoleName) });
+                new Claim(ClaimTypes.Role, user.RoleName),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+
+            });
         
 
             //foreach (var role in user.Roles)
