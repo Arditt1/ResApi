@@ -33,10 +33,10 @@ namespace ResApi.DTA.Services
             {
                 var entity = new List<GetAllOrderDetailsDTO>();
 
-                if(user.Username.ToLower() != "admin")
+                if(user.RoleName.ToLower() != "admin")
                 {
                     entity = await _context.Orders
-                   .Where(o => o.Status != "Completed" && o.WaiterId == user.Id)
+                   .Where(o => o.Status != "Completed" && o.WaiterId == user.Id || o.Status !="Cancelled" && o.WaiterId == user.Id)
                    .Include(o => o.Table) // Eagerly load Table entity
                    .Include(o => o.OrderDetails)
                        .ThenInclude(od => od.MenuItem) // Eagerly load MenuItem entity
@@ -46,6 +46,7 @@ namespace ResApi.DTA.Services
                        OrderId = o.Id,
                        TableNr = o.Table.TableNumber,
                        WaiterUsername = o.Waiter.Name ?? string.Empty,
+                       WaiterId = o.WaiterId,
                        MenuItems = o.OrderDetails.Select(od => new MenuItemDTO
                        {
                            Id = od.MenuItem.Id,
@@ -113,7 +114,7 @@ namespace ResApi.DTA.Services
             var response = new DataResponse<string>() { Succeeded = false, Data = string.Empty };
             try
             {
-                var myOrderId = _context.OrderDetails.Where(x => x.Id == orderId).Select(x=>x.OrderId).FirstOrDefault();
+                var myOrderId = _context.OrderDetails.Where(x => x.OrderId == orderId).Select(x=>x.OrderId).FirstOrDefault();
                 var myOrder = _context.Orders.Where(x => x.Id == myOrderId).FirstOrDefault();
                 myOrder.Status = statusName;
                 _context.Orders.Update(myOrder);

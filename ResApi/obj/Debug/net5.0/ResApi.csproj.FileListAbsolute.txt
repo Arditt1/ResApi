@@ -172,3 +172,9 @@ C:/Users/ardit/Desktop/Ardit/ResApi_ab/ResApi/obj/Debug/net5.0/ResApi.csproj.Ass
 /Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/bin/Debug/net5.0/System.Net.WebSockets.WebSocketProtocol.dll
 /Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/bin/Debug/net5.0/System.Text.Encodings.Web.dll
 /Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/bin/Debug/net5.0/System.Text.Json.dll
+/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/bin/Debug/net5.0/Lib.Net.Http.EncryptedContentEncoding.dll
+/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/bin/Debug/net5.0/Lib.Net.Http.WebPush.dll
+/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/bin/Debug/net5.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/bin/Debug/net5.0/Microsoft.IdentityModel.Abstractions.dll
+/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/bin/Debug/net5.0/Npgsql.dll
+/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/bin/Debug/net5.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll

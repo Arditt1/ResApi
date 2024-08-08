@@ -1,38 +1,32 @@
 ﻿<Properties StartupConfiguration="{CF3C8B4C-7B71-4D41-B0E7-62F7D323FCEF}|Default" GitUserInfo="UsingGIT">
-  <MonoDevelop.Ide.ItemProperties.ResApi PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ResApi/Controllers/AuthController.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ResApi/Program.cs">
     <Files>
-      <File FileName="ResApi/Startup.cs" />
-      <File FileName="ResApi/Controllers/AuthController.cs" Line="51" Column="38" />
-      <File FileName="ResApi/appsettings.json" />
-      <File FileName="ResApi/ResApi.csproj" />
-      <File FileName="ResApi/DTA/Services/AuthService.cs" />
+      <File FileName="ResApi/Controllers/TableController.cs" Line="59" Column="67" />
+      <File FileName="ResApi/DTA/Services/TableService.cs" Line="17" Column="56" />
+      <File FileName="ResApi/DTA/Intefaces/ITable.cs" Line="17" Column="67" />
+      <File FileName="ResApi/DTA/Services/OrderDetailService.cs" Line="55" Column="88" />
+      <File FileName="ResApi/Controllers/OrderDetailController.cs" Line="66" Column="16" />
+      <File FileName="ResApi/Program.cs" Line="16" Column="51" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="ResApi" expanded="True">
-            <Node name="ResApi" expanded="True">
-              <Node name="Controllers" expanded="True" />
-              <Node name="DTA" expanded="True">
-                <Node name="Services" expanded="True" />
-              </Node>
-              <Node name="DTO" expanded="True">
-                <Node name="LoginDTO" expanded="True" />
-              </Node>
-            </Node>
+            <Node name="ResApi" selected="True" />
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.ResApi PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/Controllers/MenuItemController.cs" relfile="ResApi/Controllers/MenuItemController.cs" line="52" column="1" />
       <Breakpoint file="/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/DTA/Services/EmployeeService.cs" relfile="ResApi/DTA/Services/EmployeeService.cs" line="114" column="1" />
+      <Breakpoint file="/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/Controllers/TableController.cs" relfile="ResApi/Controllers/TableController.cs" line="78" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

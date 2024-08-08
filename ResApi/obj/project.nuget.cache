@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "uBTANV25ErgXbDHNsJnYDbz6p8GRRPGPtmm/PaGlRfvvbtyONqkg56YWELkuW6MydSfhkKAx1mOoxWLOZMtWSw==",
+  "dgSpecHash": "UXffEwGbQvEoDj0OyxeZkMTTVLS/Pg+YQtTBzzHByxxk/2Pfnn2YR4dJrrupspX3+9rrxxF79WKdTOHPQqURfw==",
   "success": true,
   "projectFilePath": "/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/ResApi.csproj",
   "expectedPackageFiles": [
@@ -16,7 +16,7 @@
     "/Users/leoramadani/.nuget/packages/microsoft.aspnet.webapi.client/6.0.0/microsoft.aspnet.webapi.client.6.0.0.nupkg.sha512",
     "/Users/leoramadani/.nuget/packages/microsoft.aspnet.webapi.core/5.3.0/microsoft.aspnet.webapi.core.5.3.0.nupkg.sha512",
     "/Users/leoramadani/.nuget/packages/microsoft.aspnetcore.authentication.abstractions/2.2.0/microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
-    "/Users/leoramadani/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/6.0.32/microsoft.aspnetcore.authentication.jwtbearer.6.0.32.nupkg.sha512",
+    "/Users/leoramadani/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/5.0.17/microsoft.aspnetcore.authentication.jwtbearer.5.0.17.nupkg.sha512",
     "/Users/leoramadani/.nuget/packages/microsoft.aspnetcore.authentication.openidconnect/3.1.0/microsoft.aspnetcore.authentication.openidconnect.3.1.0.nupkg.sha512",
     "/Users/leoramadani/.nuget/packages/microsoft.aspnetcore.authorization/2.2.0/microsoft.aspnetcore.authorization.2.2.0.nupkg.sha512",
     "/Users/leoramadani/.nuget/packages/microsoft.aspnetcore.authorization.policy/2.2.0/microsoft.aspnetcore.authorization.policy.2.2.0.nupkg.sha512",
@@ -66,8 +66,8 @@
     "/Users/leoramadani/.nuget/packages/microsoft.identitymodel.abstractions/8.0.1/microsoft.identitymodel.abstractions.8.0.1.nupkg.sha512",
     "/Users/leoramadani/.nuget/packages/microsoft.identitymodel.jsonwebtokens/8.0.1/microsoft.identitymodel.jsonwebtokens.8.0.1.nupkg.sha512",
     "/Users/leoramadani/.nuget/packages/microsoft.identitymodel.logging/8.0.1/microsoft.identitymodel.logging.8.0.1.nupkg.sha512",
-    "/Users/leoramadani/.nuget/packages/microsoft.identitymodel.protocols/6.35.0/microsoft.identitymodel.protocols.6.35.0.nupkg.sha512",
-    "/Users/leoramadani/.nuget/packages/microsoft.identitymodel.protocols.openidconnect/6.35.0/microsoft.identitymodel.protocols.openidconnect.6.35.0.nupkg.sha512",
+    "/Users/leoramadani/.nuget/packages/microsoft.identitymodel.protocols/6.7.1/microsoft.identitymodel.protocols.6.7.1.nupkg.sha512",
+    "/Users/leoramadani/.nuget/packages/microsoft.identitymodel.protocols.openidconnect/6.7.1/microsoft.identitymodel.protocols.openidconnect.6.7.1.nupkg.sha512",
     "/Users/leoramadani/.nuget/packages/microsoft.identitymodel.tokens/8.0.1/microsoft.identitymodel.tokens.8.0.1.nupkg.sha512",
     "/Users/leoramadani/.nuget/packages/microsoft.net.http.headers/2.2.0/microsoft.net.http.headers.2.2.0.nupkg.sha512",
     "/Users/leoramadani/.nuget/packages/microsoft.netcore.platforms/3.1.0/microsoft.netcore.platforms.3.1.0.nupkg.sha512",

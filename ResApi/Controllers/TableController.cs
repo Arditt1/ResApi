@@ -56,8 +56,9 @@ namespace ResApi.Controllers
             {
                 var userId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
                 var username = User.FindFirst(ClaimTypes.Name)?.Value;
+                var role = User.FindFirst(ClaimTypes.Role)?.Value;
 
-                var entity = await _table.GetAllTAbles(userId, username);
+                var entity = await _table.GetAllTAbles(userId, role);
                 return Ok(entity);
 
             }

@@ -44,11 +44,11 @@ namespace ResApi.DTA.Services
 				throw;
 			}
 		}
-		public async Task<List<TableDTO>> GetAllTAbles(int waiterId,string username)
+		public async Task<List<TableDTO>> GetAllTAbles(int waiterId,string role)
 		{
 			var entity = new List<TableDTO>();
 
-			if(username.ToLower() == "admin")
+			if(role.ToLower() == "admin")
 			{
                 entity = await _context.TableWaiters.Include(x => x.Table)
                                                  .Select(x => new TableDTO()
