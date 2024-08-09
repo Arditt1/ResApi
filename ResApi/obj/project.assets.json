@@ -7609,26 +7609,33 @@
     ]
   },
   "packageFolders": {
-    "/Users/leoramadani/.nuget/packages/": {}
+    "C:\\Users\\ardit\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/ResApi.csproj",
+      "projectUniqueName": "C:\\Users\\ardit\\Desktop\\Ardit\\ResApi_ab\\ResApi\\ResApi.csproj",
       "projectName": "ResApi",
-      "projectPath": "/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/ResApi.csproj",
-      "packagesPath": "/Users/leoramadani/.nuget/packages/",
-      "outputPath": "/Users/leoramadani/Documents/personal/ardit/ResApi/ResApi/obj/",
+      "projectPath": "C:\\Users\\ardit\\Desktop\\Ardit\\ResApi_ab\\ResApi\\ResApi.csproj",
+      "packagesPath": "C:\\Users\\ardit\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ardit\\Desktop\\Ardit\\ResApi_ab\\ResApi\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "/Users/leoramadani/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\ardit\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
-        "/usr/local/share/dotnet/sdk/7.0.316/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
+        "https://www.nuget.org/api/v2/": {}
       },
       "frameworks": {
         "net6.0": {
@@ -7640,6 +7647,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -7742,7 +7754,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.316/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303\\RuntimeIdentifierGraph.json"
       }
     }
   },
