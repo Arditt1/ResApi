@@ -74,7 +74,7 @@ namespace ResApi.DTA.Services
 			try
 			{
 				var entity = await _context.TableWaiters.Include(x => x.Waiter)
-												  .Where(x => x.TableId == tableId)
+												  .Where(x => x.Id == tableId)
 												  .Select(x => new EmployeeDTO()
 												  {
 													 Id = x.Waiter.Id,

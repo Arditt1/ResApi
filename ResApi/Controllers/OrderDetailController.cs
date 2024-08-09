@@ -97,6 +97,7 @@ namespace ResApi.Controllers
         {
             try
             {
+
                 var entity = await _orderDetail.OrderFood(props, tableId, waiterId,totalPrice, cancellationToken);
 
                 if (entity.Succeeded)

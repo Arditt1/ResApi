@@ -36,7 +36,7 @@ namespace ResApi.DTA.Services
                 if(user.RoleName.ToLower() != "admin")
                 {
                     entity = await _context.Orders
-                   .Where(o => o.Status != "Completed" && o.WaiterId == user.Id || o.Status !="Cancelled" && o.WaiterId == user.Id)
+                   .Where(o => o.Status != "Completed" && o.WaiterId == user.Id && o.Status !="Cancelled")
                    .Include(o => o.Table) // Eagerly load Table entity
                    .Include(o => o.OrderDetails)
                        .ThenInclude(od => od.MenuItem) // Eagerly load MenuItem entity
@@ -120,6 +120,22 @@ namespace ResApi.DTA.Services
                 _context.Orders.Update(myOrder);
                 await _context.SaveChangesAsync();
 
+                if(statusName == "Completed")
+                {
+                    var details = GetOneOrderDetailForPayment(orderId);
+                    if(details != null)
+                    {
+                        var priceorder = details.Result.OrderPrice;
+                        var priceorder2 = details.Result.TotalPrice;
+                        var Quantity = details.Result.Quantity;
+                        var waiter = details.Result.WaiterUsername;
+                        foreach (var menuItem in details.Result.MenuItems)
+                        {
+                            Console.WriteLine($"Menu Item - ID: {menuItem.Id}, Name: {menuItem.Name}, Price: {menuItem.Price}");
+                        }
+                    }
+                }
+
                 response.Data = "Statusi u ndryshua me sukses!";
                 response.Succeeded = true;
 
@@ -138,11 +154,19 @@ namespace ResApi.DTA.Services
             var response = new DataResponse<string>() { Succeeded = false, Data = string.Empty };
 
             try
-            { 
+            {
+                var tablewaiteridoriginal = await _context.TableWaiters
+                .Where(t => t.Id == tableId)
+                .Select(t => t.TableId)
+                .FirstOrDefaultAsync(cancellationToken);
 
+                var tableidoriginal =  await _context.Tables
+                .Where(t => t.Id == tablewaiteridoriginal)
+                .Select(t => t.TableNumber)
+                .FirstOrDefaultAsync(cancellationToken);
                 var orders = new Order()
                 {
-                     TableId = tableId,
+                     TableId = tablewaiteridoriginal,
                      WaiterId = waiterId,
                      OrderTime = DateTime.Now,
                      Status = "New",
@@ -205,6 +229,39 @@ namespace ResApi.DTA.Services
                                    Price = od.MenuItem.Price
                                }).ToList(),
                            }).FirstOrDefaultAsync(cancellationToken);
+                return entity;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Ex=", ex.Message);
+                throw;
+            }
+        }
+
+        public async Task<GetAllOrderDetailsDTO> GetOneOrderDetailForPayment(int orderId)
+        {
+            try
+            {
+                var entity = await _context.OrderDetails
+                            .Where(x => x.OrderId == orderId)
+                           .Include(x => x.Order)
+                           .Include(x => x.MenuItem)
+                           .Include(x => x.Order.Waiter)
+                           .Select(x => new GetAllOrderDetailsDTO()
+                           {
+                               OrderId = x.OrderId,
+                               TotalPrice = x.TotalPrice,
+                               CategoryName = x.MenuItem.Category.CategoryName,
+                               TableNr = x.Order.Table.TableNumber,
+                               WaiterUsername = x.Order.Waiter.Name,
+                               Status = x.Order.Status,
+                               MenuItems = x.Order.OrderDetails.Select(od => new MenuItemDTO
+                               {
+                                   Id = od.MenuItem.Id,
+                                   Name = od.MenuItem.Name,
+                                   Price = od.MenuItem.Price
+                               }).ToList(),
+                           }).FirstOrDefaultAsync();
                 return entity;
             }
             catch (Exception ex)
